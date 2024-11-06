@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import './App.scss'
 import AppRouter from './Router'
 
