@@ -1,0 +1,139 @@
+@use "./Colors.scss";
+@use "sass:math";
+
+$top-article-height: 500px;
+
+.hero {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+
+    .top {
+        flex: 2;
+        display: flex;
+        flex-direction: row;
+
+        .left {
+            flex: 2;
+            margin-right: 10px;
+        }
+
+        .right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .cont {
+            color: Colors.$main-white-color;
+            width: 100%;
+            position: relative;
+
+            a {
+                color: Colors.$main-white-color;
+            }
+
+            img {
+                width: 100%;
+                height: $top-article-height;
+                object-fit: cover;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: $top-article-height;
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+                z-index: 1;
+            }
+
+            .texts {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                z-index: 2;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+
+                .type {
+                    border-top: 2px solid Colors.$dark-gray-color;
+                    width: 23px;
+                    margin: 10px;
+                }
+
+                h3 {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin: 10px;
+                }
+
+                .author {
+                    margin: 10px;
+
+                    a {
+                        color: Colors.$dark-gray-color;
+                    }
+                }
+            }
+        }
+
+        .second {
+            height: math.div($top-article-height, 2);
+
+            img {
+                width: 100%;
+                height: math.div($top-article-height, 2);
+                object-fit: cover;
+            }
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: math.div($top-article-height, 2);
+                background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+                z-index: 1;
+            }
+
+        }
+
+
+    }
+
+    .headlines {
+        flex: 1;
+        color: Colors.$main-white-color;
+        margin-left: 10px;
+
+        .head {
+            h2 {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            ul {
+                list-style: disc;
+                margin: 20px;
+
+                li {
+                    margin-bottom: 10px;
+
+                    a {
+                        color: Colors.$main-white-color
+                    }
+                }
+            }
+        }
+    }
+}

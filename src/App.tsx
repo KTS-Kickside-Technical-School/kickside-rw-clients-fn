@@ -7,9 +7,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
-      {/* <Router> */}
-        <AppRouter />
-      {/* </Router> */}
+      <AppRouter />
     </BrowserRouter>
   )
 }

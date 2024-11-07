@@ -1,12 +1,13 @@
 import { Route, Routes } from "react-router-dom"
-import TestingPage from "./testingPage"
+
+import Homepage from "./pages/client/Homepage"
 
 const AppRouter = () => {
     return (
         <div>
             <Routes>
-                <Route path="/test" element={<TestingPage />}>
-                    <Route path="child" element={<TestingPage />} />
+                <Route path="/" element={<Homepage />}>
+                    {/* <Route path="child" element={<TestingPage />} /> */}
                 </Route>
             </Routes>
         </div>
