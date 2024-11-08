@@ -1,33 +1,11 @@
-import { useEffect, useRef, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 import articleImage from "../../assets/images/GettyImages-2084803237.webp";
 import AdvertsmentSection from "./AdvertsmentSection";
-import { toast, ToastContainer } from "react-toastify";
-import { getAllArticles } from "../../utils/requests/apiRequests";
+import { ToastContainer } from "react-toastify";
 import { formatDate } from "../../utils/helpers/reusableFunctions";
 
-const Hero = () => {
-    const [articles, setArticles]: any = useState([]);
-    const hasFetched = useRef(false);
-
-    useEffect(() => {
-        if (!hasFetched.current) {
-            fetchAllArticles();
-            hasFetched.current = true;
-        }
-    }, []);
-
-    const fetchAllArticles = async () => {
-        try {
-            const response = await getAllArticles();
-            setArticles(response.articles);
-            toast.success("Articles fetched successfully");
-        } catch (error: any) {
-            console.error("Error fetching articles:", error);
-            toast.error("Unkown error occured");
-        }
-    };
+const Hero = ({ articles }: any) => {
 
     return (
         <>
