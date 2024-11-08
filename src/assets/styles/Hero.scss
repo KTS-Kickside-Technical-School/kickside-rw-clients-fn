@@ -71,9 +71,14 @@ $top-article-height: 500px;
                 }
 
                 h3 {
-                    font-size: 24px;
                     font-weight: bold;
                     margin: 10px;
+                    font-size: 24px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
                 }
 
                 .author {
