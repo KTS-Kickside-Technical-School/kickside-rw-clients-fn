@@ -21,16 +21,20 @@ const Homepage = () => {
     };
 
     return (
-        <div className="container">
-            <div className="homepage">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white text-2xl">
+            <div className="homepage border-4 border-dashed border-yellow-300 p-4 rounded-lg shadow-lg">
+                <div className="bg-primary">
+                    Hello dear
+                </div>
                 <ClientsHeader articles={articles} />
                 <Hero articles={articles} />
-                <div className="ad-cont">
+                <div className="ad-cont mt-6 bg-gray-800 p-6 rounded-md">
                     <AdvertsmentSection />
                 </div>
             </div>
         </div>
-    )
+    );
+
 }
 
 export default Homepage
