@@ -1,9 +1,9 @@
 import "react-toastify/dist/ReactToastify.css";
 
 import articleImage from "../../assets/images/GettyImages-2084803237.webp";
-import AdvertsmentSection from "./AdvertsmentSection";
+import AdvertsmentSection from "./AdvertisementSection";
 import { ToastContainer } from "react-toastify";
-import { formatDate } from "../../utils/helpers/reusableFunctions";
+import { formatDate } from "../utils/helpers/reusableFunctions";
 
 const Hero = ({ articles }: any) => {
 
