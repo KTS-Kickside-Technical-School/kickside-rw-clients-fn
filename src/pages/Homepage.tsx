@@ -87,7 +87,6 @@ const Homepage = () => {
                             )}
                         </div>
 
-
                         <div className="flex-1 lg:flex-grow space-y-4">
                             {loading ? (
                                 <SkeletonLoader count={3} />
