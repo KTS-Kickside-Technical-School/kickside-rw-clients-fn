@@ -1,41 +1,28 @@
 import axios from "axios";
 
+const getToken = () => {
+    return localStorage.getItem("token");
+}
+
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
+    timeout: 100000,
     headers: {
-        "Content-Type": "application/json",
-    },
-});
-
-const getToken = () => {
-    const token = sessionStorage.getItem('token');
-
-    if (token) {
-        return token;
+        "Content-Type": "application/json"
     }
-}
+})
 
 axiosInstance.interceptors.request.use(
     (config) => {
         const token = getToken();
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        if (config.data instanceof FormData) {
-            config.headers['Content-Type'] = 'multipart/form-data';
-        } else {
-            config.headers['Content-Type'] = 'application/json';
+            config.headers["Authorization"] = `Bearer ${token}`;
         }
         return config;
     },
-    (error) => Promise.reject(error)
-);
-
-const getErrorMessage = (msg: unknown): string => {
-    if (axios.isAxiosError(msg) && msg.response) {
-        return msg.response.data.message || msg.response.data.error;
+    (error) => {
+        return Promise.reject(error);
     }
-    return "An unknown error occurred";
-};
+)
 
-export { axiosInstance, getErrorMessage };
+export default axiosInstance;
