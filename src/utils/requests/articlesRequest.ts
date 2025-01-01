@@ -23,3 +23,12 @@ export const getPublishedArticles = async () => {
         return handleError(error)
     }
 }
+
+export const getSingleArticle = async (slug: String) => {
+    try {
+        const response = await axiosInstance.get(`/api/articles/get-single-article/${slug}`);
+        return response.data
+    } catch (error: any) {
+        return handleError(error)
+    }
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaSearch, FaTimes, FaBars } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Header = () => {
     const articles: any = []; // Replace with actual articles data
@@ -21,9 +22,9 @@ const Header = () => {
     return (
         <header className="text-white py-4 bg-primary">
             <div className="text-center px-4">
-                <a href="/" className="block mb-4">
+                <Link to="/" className="block mb-4">
                     <h1 className="font-bold text-2xl">KICKSIDE</h1>
-                </a>
+                </Link>
 
                 <div className="bg-dark w-full md:w-[80%] m-auto p-3 rounded-full px-5">
                     {!isSearchOpen ? (

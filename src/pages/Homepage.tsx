@@ -37,6 +37,8 @@ const Homepage = () => {
         fetchArticles();
     }, []);
 
+    console.log("Articles", articles)
+
     return (
         <>
             <SEO title="Home: Kickside Rw - Best of Tech, Sports and Showbizz. All Trending news in one place" />
@@ -51,7 +53,7 @@ const Homepage = () => {
                                 ) : (
                                     <>
                                         <img
-                                            src={articles[0]?.image || ""}
+                                            src={articles[0]?.coverImage || ""}
                                             alt={articles[0]?.title || "Featured"}
                                             className="absolute inset-0 w-full h-full object-cover z-0 rounded-lg"
                                         />
@@ -66,7 +68,7 @@ const Homepage = () => {
                                                 </Link>
                                             </div>
                                             <Link
-                                                to={`article/${articles[0]?._id}`}
+                                                to={`/${articles[0]?._id}`}
                                                 className="text-white text-lg sm:text-base md:text-lg lg:text-xl font-bold mt-2 line-clamp-3"
                                             >
                                                 {articles[0]?.title}
@@ -100,7 +102,7 @@ const Homepage = () => {
                                             key={article?._id}
                                         >
                                             <img
-                                                src={article?.image || ""}
+                                                src={article?.coverImage || ""}
                                                 alt={article?.title || ""}
                                                 className="absolute inset-0 w-full h-full object-cover z-0"
                                             />
@@ -115,7 +117,7 @@ const Homepage = () => {
                                                     </Link>
                                                 </div>
                                                 <Link
-                                                    to={`article/${article?._id}`}
+                                                    to={`/${article?._id}`}
                                                     className="text-white line-clamp-2 mt-2 text-sm md:text-base"
                                                 >
                                                     {article?.title}
@@ -141,7 +143,7 @@ const Homepage = () => {
                                             >
                                                 <strong className="mx-3">{index + 1}.</strong>
                                                 <Link
-                                                    to={`/article/${article?._id}`}
+                                                    to={`/${article?._id}`}
                                                     className="hover:text-gray-200 transition"
                                                 >
                                                     {article?.title}
