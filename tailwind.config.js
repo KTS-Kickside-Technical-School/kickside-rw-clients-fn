@@ -9,9 +9,10 @@ export default {
       colors: {
         primary: '#3E60F4',
         secondary: '#4C94E7',
-        accent: '#10B981',
+        accent: '#14D163',
         dark: "#000000",
-        graytext: "#D8D8D8"
+        graytext: "#D8D8D8",
+        yellow: "#FFFF00"
       },
     },
   },
