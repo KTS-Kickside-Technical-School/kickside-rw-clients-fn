@@ -6,6 +6,7 @@ import Logo from '/logo.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { userLogin } from '../../utils/requests/authRequest';
 import ButtonSpinner from '../../Components/ButtonSpinner';
+import SEO from '../../utils/SEO';
 
 const StaffLogin = () => {
     const [email, setEmail] = useState('');
@@ -64,6 +65,7 @@ const StaffLogin = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-700">
             <ToastContainer />
+            <SEO title="Staff: Login as Kickside Staff - Kickside Rwanda" />
             <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
                 <div className="flex flex-col items-center mb-6">
                     <img src={Logo} alt="Kickside Logo" className="w-16 h-16 mb-2" />
