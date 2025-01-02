@@ -7,6 +7,7 @@ import AdvertisementSection from '../Components/AdvertisementSection';
 import { GoGraph } from 'react-icons/go';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import Footer from '../Components/Footer';
 
 interface Article {
     title: string;
@@ -141,6 +142,7 @@ const ArticleDetails: React.FC = () => {
                     </aside>
                 </div>
             </div>
+            <Footer />
         </>
     );
 };

@@ -7,6 +7,7 @@ import Header from "../Components/Header";
 
 import { getPublishedArticles } from "../utils/requests/articlesRequest";
 import SEO from "../utils/SEO";
+import Footer from "../Components/Footer";
 
 const SkeletonLoader = ({ count }: { count: number }) => (
     <>
@@ -160,6 +161,7 @@ const Homepage = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </>
     );
 };
