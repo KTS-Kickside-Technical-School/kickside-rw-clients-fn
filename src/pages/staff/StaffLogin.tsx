@@ -15,7 +15,7 @@ const StaffLogin = () => {
 
     const navigate = useNavigate()
 
-    const handleLogin = async (e) => {
+    const handleLogin = async (e: any) => {
         setIsLoading(true)
         e.preventDefault();
 
