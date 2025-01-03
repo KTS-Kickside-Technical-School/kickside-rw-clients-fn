@@ -7,20 +7,44 @@ const RichTextEditor = ({
     onChange,
     placeholder = "Enter text here",
 }: any) => {
-    const quillRef = React.useRef(null); 
+    const quillRef = React.useRef(null);
 
     const modules = {
         toolbar: {
             container: [
-                [{ header: "1" }, { header: "2" }, { font: [] }],
-                [{ list: "ordered" }, { list: "bullet" }],
+                // Header dropdown (includes font size options)
+                [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+                // Font family
+                [{ font: [] }],
+
+                // Font size
+                [{ size: ["small", false, "large", "huge"] }],
+
+                // Text alignment
                 [{ align: [] }],
-                ["bold", "italic", "underline"],
-                ["link", "image"],
+
+                // Bold, italic, underline, strikethrough
+                ["bold", "italic", "underline", "strike"],
+
+                // Text color and background color
                 [{ color: [] }, { background: [] }],
+
+                // Ordered list, bullet list, and indentation
+                [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
+
+                // Blockquote and code block
+                ["blockquote", "code-block"],
+
+                // Links, images, and videos
+                ["link", "image", "video"],
+
+                // Clean formatting
+                ["clean"],
             ],
         },
     };
+
 
     return (
         <div className={`relative`}>

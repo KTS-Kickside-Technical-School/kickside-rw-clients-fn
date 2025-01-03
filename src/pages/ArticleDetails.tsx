@@ -65,7 +65,7 @@ const ArticleDetails: React.FC = () => {
             <SEO title={`${article?.title || 'Article'} - Kickside Rwanda`} />
             <div className="bg-gray-100 min-h-screen">
                 <Header />
-                <div className="p-6 flex flex-col lg:flex-row w-[90%] lg:w-[80%] mx-auto items-center gap-8">
+                <div className="p-6 flex flex-col lg:flex-row w-[90%] min-h-[40vh] lg:w-[80%] mx-auto items-center gap-8">
                     {isLoading ? (
                         <Skeleton className="w-full lg:w-1/2 h-64 rounded-lg" />
                     ) : (
@@ -101,7 +101,11 @@ const ArticleDetails: React.FC = () => {
                         ) : article?.content && isHTMLContent(article.content) ? (
                             <div dangerouslySetInnerHTML={{ __html: article.content }} />
                         ) : (
-                            <p>{article?.content || 'No content available.'}</p>
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: article?.content || "No content available.",
+                                }}
+                            ></div>
                         )}
                     </div>
                     <aside className="w-full lg:w-1/3">
