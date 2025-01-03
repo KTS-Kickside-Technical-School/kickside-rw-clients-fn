@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getSingleArticle } from '../utils/requests/articlesRequest';
+import { getPublishedArticles, getSingleArticle } from '../utils/requests/articlesRequest';
 import SEO from '../utils/SEO';
 import Header from '../Components/Header';
 import AdvertisementSection from '../Components/AdvertisementSection';
-import { GoGraph } from 'react-icons/go';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from '../Components/Footer';
 import { ArticleType } from "../utils/types/Article"
+import RelatedArticles from '../Components/RelatedArticles';
 
 const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -24,6 +24,8 @@ const formatDate = (dateString: string): string => {
 const ArticleDetails: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
     const [article, setArticle] = useState<ArticleType | null>(null);
+    const [articles, setArticles] = useState<any[]>([]);
+
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +48,20 @@ const ArticleDetails: React.FC = () => {
             fetchSingleArticle(slug);
         }
     }, [slug]);
+
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await getPublishedArticles();
+                setArticles(response.articles || []);
+            } catch (error) {
+                console.error("Error fetching articles:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchArticles();
+    }, []);
 
     const isHTMLContent = (content: string): boolean => {
         const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -110,7 +126,7 @@ const ArticleDetails: React.FC = () => {
                     </div>
                     <aside className="w-full lg:w-1/3">
                         <AdvertisementSection />
-                        <div className="bg-gray-200 p-4 rounded-lg shadow-lg mt-6">
+                        {/* <div className="bg-gray-200 p-4 rounded-lg shadow-lg mt-6">
                             <div className="flex items-center mb-4">
                                 <GoGraph className="text-primary text-2xl mr-2" />
                                 <h3 className="text-xl font-semibold text-gray-800">Most Popular</h3>
@@ -131,8 +147,14 @@ const ArticleDetails: React.FC = () => {
                                     )
                                 )}
                             </ul>
-                        </div>
+                        </div> */}
                     </aside>
+                </div>
+                <div className="p-6 flex flex-col lg:flex-row w-[90%] lg:w-[80%] mx-auto gap-8">
+                    <RelatedArticles
+                        title="Latest articles"
+                        articles={articles}
+                    />
                 </div>
             </div>
             <Footer />

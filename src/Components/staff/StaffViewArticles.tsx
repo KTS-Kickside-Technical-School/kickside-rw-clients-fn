@@ -7,6 +7,7 @@ import { getOwnArticles } from "../../utils/requests/articlesRequest";
 import { toast, ToastContainer } from "react-toastify";
 import ReactPaginate from "react-paginate";
 import { formatDateTime } from "../../utils/helpers/articleHelpers";
+import SEO from "../../utils/SEO";
 
 const StaffViewArticles = () => {
     const [articles, setArticles] = useState([]);
@@ -69,7 +70,7 @@ const StaffViewArticles = () => {
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
             <ToastContainer />
-
+            <SEO title="View Articles - Kickside RW" />
             <div className="max-w-8xl mx-auto">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-3xl font-bold text-gray-900">Articles list</h1>

@@ -9,8 +9,8 @@ import AuthGuard from "./Components/staff/AuthGuard";
 import StaffViewArticles from "./Components/staff/StaffViewArticles";
 import StaffNotFound from "./pages/staff/StaffNotFound";
 import StaffViewArticleDetails from "./Components/staff/StaffViewArticleDetails";
-import StaffNewArticle from "./pages/staff/StaffNewArticle";
 import NotFound from "./pages/Notfound";
+import StaffNewArticle from "./pages/staff/StaffNewArticle";
 
 const AppRouter = () => {
     const isAuthenticated = Boolean(sessionStorage.getItem("token"));
