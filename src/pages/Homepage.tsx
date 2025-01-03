@@ -38,8 +38,6 @@ const Homepage = () => {
         fetchArticles();
     }, []);
 
-    console.log("Articles", articles)
-
     return (
         <>
             <SEO title="Home: Kickside Rw - Best of Tech, Sports and Showbizz. All Trending news in one place" />
@@ -161,7 +159,7 @@ const Homepage = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     );
 };

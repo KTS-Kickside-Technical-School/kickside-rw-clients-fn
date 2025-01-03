@@ -8,18 +8,7 @@ import { GoGraph } from 'react-icons/go';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from '../Components/Footer';
-
-interface Article {
-    title: string;
-    coverImage: string;
-    content: string;
-    category: string;
-    author: {
-        firstName: string;
-        lastName: string;
-    };
-    createdAt: string;
-}
+import { ArticleType } from "../utils/types/Article"
 
 const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -34,7 +23,7 @@ const formatDate = (dateString: string): string => {
 
 const ArticleDetails: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
-    const [article, setArticle] = useState<Article | null>(null);
+    const [article, setArticle] = useState<ArticleType | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
