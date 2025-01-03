@@ -44,14 +44,13 @@ const StaffLogin = () => {
             } else {
                 setEmail('');
                 setPassword('');
-                console.log(response);
                 sessionStorage.setItem('token', response.session.content)
                 toast.success(response.message);
                 if (response.user.role === "Admin") {
                     navigate('/staff/admin/dashboard');
                 }
                 else {
-                    navigate('/journalist/dashboard');
+                    navigate('/staff/journalist/dashboard');
                 }
             }
         } catch (error) {

@@ -32,3 +32,21 @@ export const getSingleArticle = async (slug: String) => {
         return handleError(error)
     }
 }
+
+export const getOwnArticles = async () => {
+    try {
+        const response = await axiosInstance.get("/api/articles/get-own-articles");
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
+
+export const publishArticle = async (data: any) => {
+    try {
+        const response = await axiosInstance.post("/api/articles/create-article", data);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
