@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import RichTextEditor from "../../Components/staff/RichTextEditor";
 import { uploadImageToCloudinary } from "../../utils/helpers/cloudinary";
 import { publishArticle } from "../../utils/requests/articlesRequest";
+import SEO from "../../utils/SEO";
 
 const StaffNewArticle = () => {
     const [category, setCategory] = useState("");
@@ -17,6 +18,7 @@ const StaffNewArticle = () => {
     const [errors, setErrors] = useState<any>({});
     const [loading, setLoading] = useState(false);
 
+    // Function to handle image upload to Cloudinary
     const handleImageUpload = async (file: any) => {
         try {
             setUploadProgress(0);
@@ -29,6 +31,7 @@ const StaffNewArticle = () => {
         }
     };
 
+    // Handle the image drop zone
     const handleDrop = async (acceptedFiles: any) => {
         const file = acceptedFiles[0];
         if (file) {
@@ -59,6 +62,7 @@ const StaffNewArticle = () => {
         onDrop: handleDrop,
     });
 
+    // Validate the form before submission
     const validateForm = () => {
         const newErrors: any = {};
         if (!title) newErrors.title = "Title is required.";
@@ -69,6 +73,7 @@ const StaffNewArticle = () => {
         return Object.keys(newErrors).length === 0;
     };
 
+    // Handle form submission
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (!validateForm()) {
@@ -100,13 +105,13 @@ const StaffNewArticle = () => {
     return (
         <div className="p-6 bg-gray-50 min-h-screen">
             <ToastContainer />
+            <SEO title="New Article - Kickside Rw" />
             <div className="max-w-4xl mx-auto">
+                <h1 className="text-3xl font-bold text-gray-800 mb-6">Create New Article</h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Cover Image
-                            </label>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">Cover Image</label>
                             <div
                                 {...getRootProps()}
                                 className="relative border-2 border-gray-300 border-dashed rounded-lg p-4 flex justify-center items-center cursor-pointer"
@@ -121,9 +126,7 @@ const StaffNewArticle = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <p className="text-gray-500">
-                                        Drag & Drop or Click to Upload an Image
-                                    </p>
+                                    <p className="text-gray-500">Drag & Drop or Click to Upload an Image</p>
                                 )}
                             </div>
                             {errors.coverImage && (
@@ -131,9 +134,7 @@ const StaffNewArticle = () => {
                             )}
                             {uploadProgress > 0 && uploadProgress < 100 && (
                                 <div className="mt-2">
-                                    <p className="text-sm text-gray-500 mb-1">
-                                        Uploading: {uploadProgress}%
-                                    </p>
+                                    <p className="text-sm text-gray-500 mb-1">Uploading: {uploadProgress}%</p>
                                     <div className="w-full bg-gray-200 rounded-md">
                                         <div
                                             style={{ width: `${uploadProgress}%` }}
@@ -143,10 +144,9 @@ const StaffNewArticle = () => {
                                 </div>
                             )}
                         </div>
+
                         <div>
-                            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
-                                Title
-                            </label>
+                            <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">Title</label>
                             <input
                                 type="text"
                                 id="title"
@@ -155,14 +155,11 @@ const StaffNewArticle = () => {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             />
-                            {errors.title && (
-                                <p className="text-red-500 text-sm mt-1">{errors.title}</p>
-                            )}
+                            {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
                         </div>
+
                         <div>
-                            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
-                                Category
-                            </label>
+                            <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">Category</label>
                             <input
                                 list="categories"
                                 name="category"
@@ -176,24 +173,20 @@ const StaffNewArticle = () => {
                                 <option value="Sports" />
                                 <option value="Showbiz" />
                             </datalist>
-                            {errors.category && (
-                                <p className="text-red-500 text-sm mt-1">{errors.category}</p>
-                            )}
+                            {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category}</p>}
                         </div>
+
                         <div>
-                            <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
-                                Content
-                            </label>
+                            <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">Content</label>
                             <RichTextEditor
                                 value={content}
                                 onChange={setContent}
-                                placeholder="Enter blog description"
+                                placeholder="Enter article contents"
                             />
-                            {errors.content && (
-                                <p className="text-red-500 text-sm mt-1">{errors.content}</p>
-                            )}
+                            {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
                         </div>
                     </div>
+
                     <div className="flex justify-end">
                         <button
                             type="submit"
