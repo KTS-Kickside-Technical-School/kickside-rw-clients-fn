@@ -46,12 +46,8 @@ const StaffLogin = () => {
                 setPassword('');
                 sessionStorage.setItem('token', response.session.content)
                 toast.success(response.message);
-                if (response.user.role === "Admin") {
-                    navigate('/staff/admin/dashboard');
-                }
-                else {
-                    navigate('/staff/journalist/dashboard');
-                }
+                navigate('/staff/dashboard');
+
             }
         } catch (error) {
             toast.error('Login failed. Please check your credentials.');

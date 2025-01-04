@@ -151,10 +151,14 @@ const ArticleDetails: React.FC = () => {
                     </aside>
                 </div>
                 <div className="p-6 flex flex-col lg:flex-row w-[90%] lg:w-[80%] mx-auto gap-8">
-                    <RelatedArticles
-                        title="Latest articles"
-                        articles={articles}
-                    />
+                    {isLoading ? (
+                        <Skeleton className="w-full lg:w-1/2 h-64 rounded-lg" />
+                    ) : (
+                        <RelatedArticles
+                            title="Latest articles"
+                            articles={articles}
+                        />
+                    )}
                 </div>
             </div>
             <Footer />

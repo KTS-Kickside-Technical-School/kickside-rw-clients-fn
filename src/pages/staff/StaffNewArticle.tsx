@@ -8,6 +8,7 @@ import RichTextEditor from "../../Components/staff/RichTextEditor";
 import { uploadImageToCloudinary } from "../../utils/helpers/cloudinary";
 import { publishArticle } from "../../utils/requests/articlesRequest";
 import SEO from "../../utils/SEO";
+import ButtonSpinner from "../../Components/ButtonSpinner";
 
 const StaffNewArticle = () => {
     const [category, setCategory] = useState("");
@@ -194,7 +195,7 @@ const StaffNewArticle = () => {
                             disabled={loading}
                         >
                             {loading ? (
-                                <span className="loader"></span>
+                                <ButtonSpinner />
                             ) : (
                                 <>
                                     <FiSave className="mr-2" />
