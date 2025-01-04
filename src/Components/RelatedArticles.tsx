@@ -32,7 +32,7 @@ const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
                                     {article.category}
                                 </Link>
                                 <Link
-                                    to={`/news/${article._id}`}
+                                    to={`/news/${article.slug}`}
                                     className="block text-lg text-gray-900 font-medium my-2 line-clamp-2"
                                 >
                                     {article.title}
