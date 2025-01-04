@@ -21,7 +21,7 @@ const AppRouter = () => {
     return (
         <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/:slug" element={<ArticleDetails />} />
+            <Route path="news/:slug" element={<ArticleDetails />} />
             <Route path="/staff">
                 <Route path="login" element={<StaffLogin />} />
                 <Route path="" element={<AuthGuard isAuthenticated={isAuthenticated} />}>
@@ -33,8 +33,8 @@ const AppRouter = () => {
                         <Route path="*" element={<StaffNotFound />} />
                     </Route>
                 </Route>
-                <Route path="*" element={<NotFound backUrl={backUrl} />} />
             </Route>
+            <Route path="*" element={<NotFound backUrl={backUrl} />} />
         </Routes>
     );
 };

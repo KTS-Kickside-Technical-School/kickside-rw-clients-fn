@@ -46,7 +46,7 @@ const Homepage = () => {
                     </Link>
                 </div>
                 <Link
-                    to={`/${article?._id}`}
+                    to={`/news/${article?._id}`}
                     className="text-white line-clamp-2 mt-2 text-sm md:text-base"
                 >
                     {article?.title}
@@ -60,7 +60,7 @@ const Homepage = () => {
             {articles.slice(4, 8).map((article: any, index) => (
                 <li className="text-white text-sm md:text-lg font-medium flex" key={article?._id}>
                     <strong className="mx-3">{index + 1}.</strong>
-                    <Link to={`/${article?._id}`} className="hover:text-gray-200 transition">
+                    <Link to={`/news/${article?._id}`} className="hover:text-gray-200 transition">
                         {article?.title}
                     </Link>
                 </li>
@@ -98,7 +98,7 @@ const Homepage = () => {
                                             </Link>
                                         </div>
                                         <Link
-                                            to={`/${articles[0]?._id}`}
+                                            to={`/news/${articles[0]?._id}`}
                                             className="text-white text-lg sm:text-base md:text-lg lg:text-xl font-bold mt-2 line-clamp-3"
                                         >
                                             {articles[0]?.title}
