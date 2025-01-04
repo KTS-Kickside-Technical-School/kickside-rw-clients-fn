@@ -6,7 +6,7 @@ const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
         <div className="p-6">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
-                {seeMore === true && (
+                {seeMore !== false && (
                     <Link
                         to="/articles"
                         className="inline-block px-6 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow-md transition-all duration-300 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -32,7 +32,7 @@ const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
                                     {article.category}
                                 </Link>
                                 <Link
-                                    to={`/${article._id}`}
+                                    to={`/news/${article._id}`}
                                     className="block text-lg text-gray-900 font-medium my-2 line-clamp-2"
                                 >
                                     {article.title}
