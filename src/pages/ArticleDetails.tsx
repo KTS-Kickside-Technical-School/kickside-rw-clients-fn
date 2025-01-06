@@ -88,11 +88,12 @@ const ArticleDetails: React.FC = () => {
 
     const [comment, setComment] = useState("");
     const [isCommentsLoading, setIsCommentsLoading] = useState(false);
-    const [commentMessage, setCommentMessage] = useState({})
+    const [commentMessage, setCommentMessage] = useState<any>({})
 
     const handlePostComments = async (e: any) => {
         e.preventDefault();
         setIsCommentsLoading(true);
+        setCommentMessage({})
         try {
             const response = await postComment({ article: article?._id, comment });
             console.log(response);
@@ -167,11 +168,15 @@ const ArticleDetails: React.FC = () => {
                                 ></div>
                                 <div className='p-2 pb-4 mt-3 border-t-2 border-l-2 border-grayac'>
                                     <Link to="" className="flex-row flex items-center">
-                                        <img src={Avatar} alt="Avatar" className="w-10 h-10 rounded-full" />
+                                        <img src={article?.author?.profile || Avatar} alt="Avatar" className="w-10 h-10 rounded-full" />
                                         <div className="flex-1 pl-4 text-gray-800">
+
                                             {article?.author
                                                 ? `${article.author.firstName} ${article.author.lastName}`
                                                 : "Journalist Names"}
+                                            <p className='text-grayac'>
+                                                {article?.author?.rank}
+                                            </p>
                                         </div>
                                     </Link>
                                     <div className="font-bold pt-3">
@@ -235,6 +240,12 @@ const ArticleDetails: React.FC = () => {
 
                         )}
                         <form onSubmit={handlePostComments} className="space-y-4 mt-4" method='post'>
+                            {commentMessage?.success && (
+                                <div className="text-green-500 text-sm">{commentMessage.success}</div>
+                            )}
+                            {commentMessage?.error && (
+                                <div className="text-red-500 text-sm">{commentMessage.error}</div>
+                            )}
                             <textarea
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}

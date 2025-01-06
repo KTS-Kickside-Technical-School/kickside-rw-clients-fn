@@ -7,4 +7,6 @@ export interface Author {
     firstName: string;
     lastName: string;
     bio: string;
+    profile: string;
+    rank: string;
 }
