@@ -31,3 +31,12 @@ export const userResetPassword = async (
         return handleError(error)
     }
 }
+
+export const userLogout = async (token: any) => {
+    try {
+        const response = await axiosInstance.post('/api/auth/logout', { token });
+        return response.data;
+    } catch (error) {
+        return handleError(error)
+    }
+}
