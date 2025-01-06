@@ -50,8 +50,8 @@ const AppRouter = () => {
                     <Route path="login" element={<StaffLogin />} />
                     <Route path="forgot-password" element={<ForgotPassword />} />
                     <Route path="reset-password" element={<ResetPassword />} />
-                    <Route path="" element={<AuthGuard isAuthenticated={isAuthenticated} />}>
-                        <Route path="" element={<JournalistsLayout onLogout={logout} />}>
+                    <Route element={<AuthGuard isAuthenticated={isAuthenticated} />}>
+                        <Route element={<JournalistsLayout onLogout={logout} />}>
                             <Route path="dashboard" element={<JournalistDashboard />} />
                             <Route path="articles" element={<StaffViewArticles />} />
                             <Route path="article/new" element={<StaffNewArticle />} />

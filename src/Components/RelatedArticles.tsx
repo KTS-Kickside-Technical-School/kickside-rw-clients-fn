@@ -3,7 +3,7 @@ import { formatDistanceToNow } from "date-fns";
 
 const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
     return (
-        <div className="p-6">
+        <div className="pb-3">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
                 {seeMore !== false && (

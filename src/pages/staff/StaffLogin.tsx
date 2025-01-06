@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { userLogin } from '../../utils/requests/authRequest';
 import ButtonSpinner from '../../Components/ButtonSpinner';
 import SEO from '../../utils/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const StaffLogin = () => {
     const [email, setEmail] = useState('');
@@ -58,78 +59,83 @@ const StaffLogin = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-700">
-            <ToastContainer />
-            <SEO title="Staff: Login as Kickside Staff - Kickside Rwanda" />
-            <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-                <div className="flex flex-col items-center mb-6">
-                    <img src={Logo} alt="Kickside Logo" className="w-16 h-16 mb-2" />
-                    <h1 className="text-2xl font-bold text-gray-800">Staff Login</h1>
-                    <p className="text-gray-500 text-sm">Welcome back! Please log in to continue.</p>
-                </div>
-
-                <form onSubmit={handleLogin} className="space-y-6">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            Email Address
-                        </label>
-                        <input
-                            type="text"
-                            id="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your email"
-                        />
+        <>
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow" />
+            </Helmet>
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-700">
+                <ToastContainer />
+                <SEO title="Staff: Login as Kickside Staff - Kickside Rwanda" />
+                <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
+                    <div className="flex flex-col items-center mb-6">
+                        <img src={Logo} alt="Kickside Logo" className="w-16 h-16 mb-2" />
+                        <h1 className="text-2xl font-bold text-gray-800">Staff Login</h1>
+                        <p className="text-gray-500 text-sm">Welcome back! Please log in to continue.</p>
                     </div>
 
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Password
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            placeholder="Enter your password"
-                        />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <label className="flex items-center text-sm text-gray-600">
+                    <form onSubmit={handleLogin} className="space-y-6">
+                        <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                                Email Address
+                            </label>
                             <input
-                                type="checkbox"
-                                className="mr-2 border-gray-300 focus:ring-blue-500"
+                                type="text"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter your email"
                             />
-                            Remember me
-                        </label>
-                        <Link to="/staff/forgot-password" className="text-sm text-blue-500 hover:underline">
-                            Forgot password?
-                        </Link>
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter your password"
+                            />
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <label className="flex items-center text-sm text-gray-600">
+                                <input
+                                    type="checkbox"
+                                    className="mr-2 border-gray-300 focus:ring-blue-500"
+                                />
+                                Remember me
+                            </label>
+                            <Link to="/staff/forgot-password" className="text-sm text-blue-500 hover:underline">
+                                Forgot password?
+                            </Link>
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            {isLoading ? (
+                                <ButtonSpinner />
+                            ) : (
+                                <>
+                                    <BiLogIn size={20} />
+                                    <span>Login</span>
+                                </>
+                            )}
+                        </button>
+                    </form>
+
+                    <div className="mt-6 text-center text-sm text-gray-500">
+                        Need help? <Link to="/support" className="text-blue-500 hover:underline">Contact Support</Link>
                     </div>
-
-                    <button
-                        type="submit"
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                        {isLoading ? (
-                            <ButtonSpinner />
-                        ) : (
-                            <>
-                                <BiLogIn size={20} />
-                                <span>Login</span>
-                            </>
-                        )}
-                    </button>
-                </form>
-
-                <div className="mt-6 text-center text-sm text-gray-500">
-                    Need help? <Link to="/support" className="text-blue-500 hover:underline">Contact Support</Link>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
