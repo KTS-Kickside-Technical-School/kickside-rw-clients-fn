@@ -105,7 +105,7 @@ const StaffLogin = () => {
                             />
                             Remember me
                         </label>
-                        <Link to="/forgot-password" className="text-sm text-blue-500 hover:underline">
+                        <Link to="/staff/forgot-password" className="text-sm text-blue-500 hover:underline">
                             Forgot password?
                         </Link>
                     </div>

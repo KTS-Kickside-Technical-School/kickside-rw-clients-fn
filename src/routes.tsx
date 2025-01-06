@@ -11,6 +11,8 @@ import StaffNotFound from "./pages/staff/StaffNotFound";
 import StaffViewArticleDetails from "./Components/staff/StaffViewArticleDetails";
 import NotFound from "./pages/Notfound";
 import StaffNewArticle from "./pages/staff/StaffNewArticle";
+import ForgotPassword from "./pages/staff/ForgotPassword";
+import ResetPassword from "./pages/staff/ResetPassword";
 
 const AppRouter = () => {
     const isAuthenticated = Boolean(sessionStorage.getItem("token"));
@@ -24,6 +26,8 @@ const AppRouter = () => {
             <Route path="news/:slug" element={<ArticleDetails />} />
             <Route path="/staff">
                 <Route path="login" element={<StaffLogin />} />
+                <Route path="forgot-password" element={<ForgotPassword />} />
+                <Route path="reset-password" element={<ResetPassword />} />
                 <Route path="" element={<AuthGuard isAuthenticated={isAuthenticated} />}>
                     <Route path="" element={<JournalistsLayout />}>
                         <Route path="dashboard" element={<JournalistDashboard />} />
