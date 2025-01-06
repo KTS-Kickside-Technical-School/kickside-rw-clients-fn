@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 const SEO = ({
-    title = "Kickside Rw: Best of Tech, Sports and Showbizz. All trending news in one place",
+    title = "Kickside Rw: Best of Tech, Sports and Showbizz. All trending news in Rwanda and East Africa in one place",
     description = "Default Description",
     keywords = "News, Rwanda, Tech, technologies, Sports, Talents, Startups, Kigali, Hub of Innovation",
     author = "Ndahimana Bonheur",
@@ -13,8 +13,30 @@ const SEO = ({
     twitterCard = "summary_large_image",
     twitterCreator = "@kickside_rw",
     canonicalUrl,
-    structuredData, // Pass JSON-LD structured data for SEO
 }: any) => {
+
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": ogType,
+        "headline": title,
+        "description": description,
+        "author": {
+            "@type": "Person",
+            "name": `${author}`,
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Kickside Rwanda",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "/logo.svg",
+            },
+        },
+        "mainEntityOfPage": window.location.href,
+        "image": ogImage || '/logo.svg',
+    };
+
+
     return (
         <Helmet>
             <title>{title}</title>

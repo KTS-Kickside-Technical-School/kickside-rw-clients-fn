@@ -78,7 +78,18 @@ const ArticleDetails: React.FC = () => {
 
     return (
         <>
-            <SEO title={`${article?.title || 'Article'} - Kickside Rwanda`} />
+            <SEO
+                title={`${article?.title || 'Article'} - Kickside Rwanda`}
+                description={article?.content}
+                author={`${article?.author.firstName} ${article?.author.lastName}`}
+                ogTitle={`${article?.title} || 'Article'`}
+                ogDescription={article?.content}
+                ogImage={article?.coverImage || '/logo.svg'}
+                ogUrl={window.location.href}
+                ogType="article"
+                twitterCard="summary_large_image"
+                twitterCreator="@kickside_rw"
+            />
             <div className="bg-gray-100 min-h-screen">
                 <Header />
                 <div className="p-6 flex flex-col lg:flex-row w-[90%] min-h-[40vh] lg:w-[80%] mx-auto items-center gap-8">

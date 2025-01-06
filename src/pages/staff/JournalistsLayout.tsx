@@ -2,18 +2,14 @@ import { Outlet } from "react-router-dom";
 import JournalistsSideBar from "../../Components/staff/StaffSideBar";
 import JournalistHeader from "../../Components/staff/JournalistHeader";
 
-const JournalistsLayout = () => {
+const JournalistsLayout = ({ onLogout }: any) => {
     return (
         <div className="flex h-screen overflow-hidden">
-            {/* Sidebar */}
-            <JournalistsSideBar />
+            <JournalistsSideBar onLogout={onLogout} />
 
-            {/* Main Content Area */}
             <div className="flex-grow flex flex-col">
-                {/* Header */}
-                <JournalistHeader />
+                <JournalistHeader onLogout={onLogout} />
 
-                {/* Outlet Content with Scroll */}
                 <main className="flex-grow overflow-y-auto bg-gray-100 p-6">
                     <Outlet />
                 </main>
