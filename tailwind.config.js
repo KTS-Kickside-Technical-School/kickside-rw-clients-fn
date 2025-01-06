@@ -12,7 +12,8 @@ export default {
         accent: '#14D163',
         dark: "#000000",
         graytext: "#D8D8D8",
-        yellow: "#FFFF00"
+        yellow: "#FFFF00",
+        grayac: "#ACACAC"
       },
     },
   },

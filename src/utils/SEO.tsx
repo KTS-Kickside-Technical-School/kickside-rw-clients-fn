@@ -36,6 +36,8 @@ const SEO = ({
         "image": ogImage || '/logo.svg',
     };
 
+    const isStaffRoute = location.pathname.startsWith("/staff");
+
 
     return (
         <Helmet>
@@ -60,6 +62,12 @@ const SEO = ({
 
             {structuredData && (
                 <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+            )}
+
+            {isStaffRoute && (
+                <>
+                    <meta name="robots" content="noindex, nofollow" />
+                </>
             )}
         </Helmet>
     );

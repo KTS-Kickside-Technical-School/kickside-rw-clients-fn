@@ -50,3 +50,12 @@ export const publishArticle = async (data: any) => {
         return handleError(error)
     }
 }
+
+export const postComment = async (data: any) => {
+    try {
+        const response = await axiosInstance.post("/api/articles/post-comments", data);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}

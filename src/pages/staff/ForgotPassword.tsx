@@ -8,6 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { userForgotPassword } from '../../utils/requests/authRequest';
 import ButtonSpinner from '../../Components/ButtonSpinner';
 import SEO from '../../utils/SEO';
+import { Helmet } from 'react-helmet-async';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -52,6 +53,9 @@ const ForgotPassword = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-700">
             <ToastContainer />
+            <Helmet>
+                <meta name="robots" content="noindex, nofollow" />
+            </Helmet>
             <SEO title="Staff: Forgot password as Kickside Staff - Kickside Rwanda" />
             <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
                 {isMailSent ? (
