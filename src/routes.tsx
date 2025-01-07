@@ -42,7 +42,11 @@ const AppRouter = () => {
     const fetchUserProfile = async () => {
         try {
             const response = await userViewProfile();
-            setProfile(response.data.user);
+            if (response.status !== 200) {
+                toast.error(response.message);
+                return;
+            }
+            setProfile(response?.data?.user);
         } catch (error: any) {
             toast.error(error?.message || "Profile not found. Please try again.");
         }
