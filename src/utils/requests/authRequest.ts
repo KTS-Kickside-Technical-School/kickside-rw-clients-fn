@@ -40,3 +40,22 @@ export const userLogout = async (token: any) => {
         return handleError(error)
     }
 }
+
+export const userViewProfile = async () => {
+    try {
+        const response = await axiosInstance.get('/api/auth/get-profile');
+        return response.data;
+    } catch (error) {
+        return handleError(error)
+    }
+}
+
+export const userUpdateProfile = async (data: any) => {
+    try {
+        console.log("Data to send", data)
+        const response = await axiosInstance.put("/api/auth/update-profile", data)
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}

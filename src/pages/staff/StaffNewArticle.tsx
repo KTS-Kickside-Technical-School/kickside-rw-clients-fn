@@ -19,7 +19,6 @@ const StaffNewArticle = () => {
     const [errors, setErrors] = useState<any>({});
     const [loading, setLoading] = useState(false);
 
-    // Function to handle image upload to Cloudinary
     const handleImageUpload = async (file: any) => {
         try {
             setUploadProgress(0);
@@ -32,7 +31,6 @@ const StaffNewArticle = () => {
         }
     };
 
-    // Handle the image drop zone
     const handleDrop = async (acceptedFiles: any) => {
         const file = acceptedFiles[0];
         if (file) {
@@ -63,7 +61,6 @@ const StaffNewArticle = () => {
         onDrop: handleDrop,
     });
 
-    // Validate the form before submission
     const validateForm = () => {
         const newErrors: any = {};
         if (!title) newErrors.title = "Title is required.";
@@ -74,7 +71,6 @@ const StaffNewArticle = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    // Handle form submission
     const handleSubmit = async (e: any) => {
         e.preventDefault();
         if (!validateForm()) {
