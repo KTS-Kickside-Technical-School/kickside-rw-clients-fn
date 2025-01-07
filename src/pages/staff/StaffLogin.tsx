@@ -68,7 +68,9 @@ const StaffLogin = () => {
                 <SEO title="Staff: Login as Kickside Staff - Kickside Rwanda" />
                 <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
                     <div className="flex flex-col items-center mb-6">
-                        <img src={Logo} alt="Kickside Logo" className="w-16 h-16 mb-2" />
+                        <Link to="/">
+                            <img src={Logo} alt="Kickside Logo" className="w-16 h-16 mb-2" />
+                        </Link>
                         <h1 className="text-2xl font-bold text-gray-800">Staff Login</h1>
                         <p className="text-gray-500 text-sm">Welcome back! Please log in to continue.</p>
                     </div>

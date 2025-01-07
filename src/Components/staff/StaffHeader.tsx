@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Avatar from "/avatar.svg";
+import { Link } from "react-router-dom";
 
-const JournalistHeader = ({ onLogout }: any) => {
+const StaffHeader = ({ onLogout, profile }: any) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     return (
@@ -22,7 +23,7 @@ const JournalistHeader = ({ onLogout }: any) => {
                     onClick={() => setIsProfileOpen((prev) => !prev)}
                 >
                     <img
-                        src={Avatar}
+                        src={profile?.profile || Avatar}
                         alt="Profile"
                         className="w-8 h-8 rounded-full"
                     />
@@ -31,13 +32,17 @@ const JournalistHeader = ({ onLogout }: any) => {
                     <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg w-40">
                         <ul className="py-2">
                             <li>
-                                <button className="w-full text-left px-4 py-2 hover:bg-gray-200 transition">
+                                <Link
+                                    to={"settings"}
+                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition cursor-pointer block bg-gray-100 rounded-md text-gray-800"
+                                    onClick={() => setIsProfileOpen((prev) => !prev)}
+                                >
                                     Settings
-                                </button>
+                                </Link>
                             </li>
                             <li>
                                 <button
-                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition"
+                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition bg-gray-100 rounded-md text-gray-800"
                                     onClick={onLogout}
                                 >
                                     Logout
@@ -45,10 +50,11 @@ const JournalistHeader = ({ onLogout }: any) => {
                             </li>
                         </ul>
                     </div>
+
                 )}
             </div>
         </header>
     );
 };
 
-export default JournalistHeader;
+export default StaffHeader;
