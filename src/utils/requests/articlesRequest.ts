@@ -59,3 +59,66 @@ export const postComment = async (data: any) => {
         return handleError(error)
     }
 }
+
+export const getAllArticles = async () => {
+    try {
+        const response = await axiosInstance.get("/api/articles/get-all-articles");
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
+
+export const staffGetSingleArticle = async (id: any) => {
+    try {
+        const response = await axiosInstance.get(`/api/articles/get-own-single-article/${id}`);
+        return response.data
+    } catch (error: any) {
+        return handleError(error)
+    }
+}
+
+export const staffToggleArticlePublish = async (id: any) => {
+    try {
+        const response = await axiosInstance.put(`/api/articles/toggle-article-publish/${id}`);
+        return response.data
+    } catch (error: any) {
+        return handleError(error)
+    }
+}
+
+export const staffDeleteArticle = async (id: any) => {
+    try {
+        const response = await axiosInstance.delete(`/api/articles/delete-article/${id}`);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
+
+export const getArticleEditRequests = async () => {
+    try {
+        const response = await axiosInstance.get("/api/articles/get-all-articles-edit-requests");
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
+
+export const approveEditRequest = async (id: any) => {
+    try {
+        const response = await axiosInstance.put(`/api/articles/confirm-edit-request/${id}`);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
+
+export const journalistRequestEditAccess = async (id: any) => {
+    try {
+        const response = await axiosInstance.post(`/api/articles/request-edit-access/${id}`);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}

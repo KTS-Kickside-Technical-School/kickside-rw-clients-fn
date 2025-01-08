@@ -34,12 +34,16 @@ const ResetPassword = () => {
 
         if (!token) {
             toast.error('Invalid or missing token');
+            console.error('Token missing:', token);
             return;
         }
 
         try {
             setIsLoading(true);
+            console.log('Sending token and password to backend:', token, newPassword); // Debugging log
             const response = await userResetPassword(token, newPassword);
+
+            console.log('API response:', response);
 
             if (response.status !== 200) {
                 toast.error(response.message || 'Failed to reset password');
@@ -48,11 +52,13 @@ const ResetPassword = () => {
                 toast.success('Password reset successfully');
             }
         } catch (error) {
+            console.error('Error during password reset:', error); // Debugging log
             toast.error('An error occurred. Please try again later.');
         } finally {
             setIsLoading(false);
         }
     };
+
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-indigo-700">

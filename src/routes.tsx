@@ -56,12 +56,6 @@ const AppRouter = () => {
         fetchUserProfile();
     }, []);
 
-    useEffect(() => {
-        if (profile) {
-            fetchUserProfile();
-        }
-    }, [profile]);
-
     return (
         <>
             <Routes>
@@ -74,7 +68,7 @@ const AppRouter = () => {
                     <Route element={<AuthGuard isAuthenticated={isAuthenticated} />}>
                         <Route element={<StaffLayout onLogout={logout} profile={profile} />}>
                             <Route path="dashboard" element={<JournalistDashboard />} />
-                            <Route path="articles" element={<StaffViewArticles />} />
+                            <Route path="articles" element={<StaffViewArticles profile={profile} />} />
                             <Route path="article/new" element={<StaffNewArticle />} />
                             <Route path="article/:id" element={<StaffViewArticleDetails />} />
                             <Route

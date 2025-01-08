@@ -8,5 +8,7 @@ export interface ArticleType {
     category: string;
     author: Author;
     createdAt: string;
+    updatedAt: string;
     status: string;
+    isEditable: boolean;
 }
