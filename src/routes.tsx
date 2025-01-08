@@ -42,7 +42,11 @@ const AppRouter = () => {
     const fetchUserProfile = async () => {
         try {
             const response = await userViewProfile();
-            setProfile(response.data.user);
+            if (response.status !== 200) {
+                toast.error(response.message);
+                return;
+            }
+            setProfile(response?.data?.user);
         } catch (error: any) {
             toast.error(error?.message || "Profile not found. Please try again.");
         }
@@ -51,12 +55,6 @@ const AppRouter = () => {
     useEffect(() => {
         fetchUserProfile();
     }, []);
-
-    useEffect(() => {
-        if (profile) {
-            fetchUserProfile();
-        }
-    }, [profile]);
 
     return (
         <>
@@ -70,7 +68,7 @@ const AppRouter = () => {
                     <Route element={<AuthGuard isAuthenticated={isAuthenticated} />}>
                         <Route element={<StaffLayout onLogout={logout} profile={profile} />}>
                             <Route path="dashboard" element={<JournalistDashboard />} />
-                            <Route path="articles" element={<StaffViewArticles />} />
+                            <Route path="articles" element={<StaffViewArticles profile={profile} />} />
                             <Route path="article/new" element={<StaffNewArticle />} />
                             <Route path="article/:id" element={<StaffViewArticleDetails />} />
                             <Route
