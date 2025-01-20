@@ -11,6 +11,7 @@ import { ArticleType } from "../utils/types/Article"
 import RelatedArticles from '../Components/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from "/avatar.svg";
+import { BsEye } from 'react-icons/bs';
 
 const formatDate = (dateString: string): string => {
     const options: Intl.DateTimeFormatOptions = {
@@ -61,15 +62,17 @@ const ArticleDetails: React.FC = () => {
             setIsRelatedArticlesLoading(true);
             try {
                 const response = await getPublishedArticles();
-                setArticles(response.articles || []);
+                setArticles(response?.articles || []);
             } catch (error) {
                 console.error('Error fetching related articles:', error);
             } finally {
                 setIsRelatedArticlesLoading(false);
             }
         };
+
         fetchArticles();
     }, []);
+
 
     const isHTMLContent = (content: string): boolean => {
         const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -145,9 +148,22 @@ const ArticleDetails: React.FC = () => {
                                     {article?.title}
                                 </h1>
                                 <span className='mt-3'>
-                                    Written by {article?.author?.firstName} {article?.author?.lastName} on
+                                    Written by {article?.author?.firstName || "Unknown"} {article?.author?.lastName || "Author"} on
                                     {" "} {formatDate(article?.createdAt || "")}
                                 </span>
+                                <p className="flex items-center py-2">
+                                    <div className="flex items-center bg-gray-50 p-2 rounded-md shadow-sm">
+                                        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700">
+                                            <BsEye className="text-xl" aria-label="Views Icon" />
+                                        </span>
+
+                                        <strong className="ml-3 text-gray-900 text-sm font-semibold">
+                                            {article?.views || 0}
+                                        </strong>
+                                    </div>
+                                </p>
+
+
                             </>
                         )}
                     </div>
