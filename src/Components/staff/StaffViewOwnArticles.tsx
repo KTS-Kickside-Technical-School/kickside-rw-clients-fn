@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiEdit, FiEye, FiPlus } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 import { ArticleType } from "../../utils/types/Article";
-import { getOwnArticles, getAllArticles, journalistRequestEditAccess } from "../../utils/requests/articlesRequest";
+import { getOwnArticles, journalistRequestEditAccess } from "../../utils/requests/articlesRequest";
 import { toast, ToastContainer } from "react-toastify";
 import ReactPaginate from "react-paginate";
 import { formatDateTime } from "../../utils/helpers/articleHelpers";
@@ -98,7 +98,11 @@ const StaffViewOwnArticles = ({ profile }: any) => {
                         New Article
                     </Link>
                 </div>
-
+                {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+                        {error}
+                    </div>
+                )}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
                     <ArticlesListSubHeader profile={profile} />
 

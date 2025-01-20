@@ -103,6 +103,11 @@ const StaffViewArticles = ({ profile }: any) => {
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+                    {error && (
+                        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+                            {error}
+                        </div>
+                    )}
                     <ArticlesListSubHeader profile={profile} />
 
                     {isLoading ? (

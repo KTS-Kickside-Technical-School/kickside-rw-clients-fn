@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { PiArticleNyTimes } from "react-icons/pi";
 import { Link } from "react-router-dom";
@@ -7,7 +6,6 @@ interface ArticlesListSubHeaderProps {
     profile: any
 }
 const ArticlesListSubHeader = ({ profile }: ArticlesListSubHeaderProps) => {
-    const [error, setError] = useState("");
 
     return (
         <div>
@@ -30,11 +28,6 @@ const ArticlesListSubHeader = ({ profile }: ArticlesListSubHeaderProps) => {
                     </Link>
                 </div>
 
-            )}
-            {error && (
-                <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
-                    {error}
-                </div>
             )}
         </div>
     )
