@@ -11,4 +11,5 @@ export interface ArticleType {
     updatedAt: string;
     status: string;
     isEditable: boolean;
+    views: number;
 }
