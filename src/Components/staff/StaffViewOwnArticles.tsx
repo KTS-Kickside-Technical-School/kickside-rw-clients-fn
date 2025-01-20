@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FiEdit, FiEye, FiPlus } from "react-icons/fi";
 import { FaSearch } from "react-icons/fa";
 import { ArticleType } from "../../utils/types/Article";
-import { getOwnArticles, getAllArticles, journalistRequestEditAccess } from "../../utils/requests/articlesRequest";
+import { getOwnArticles, journalistRequestEditAccess } from "../../utils/requests/articlesRequest";
 import { toast, ToastContainer } from "react-toastify";
 import ReactPaginate from "react-paginate";
 import { formatDateTime } from "../../utils/helpers/articleHelpers";
@@ -11,7 +11,7 @@ import SEO from "../../utils/SEO";
 import { BiEditAlt } from "react-icons/bi";
 import ArticlesListSubHeader from "./ArticlesListSubHeader";
 
-const StaffViewArticles = ({ profile }: any) => {
+const StaffViewOwnArticles = ({ profile }: any) => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("date");
@@ -24,10 +24,7 @@ const StaffViewArticles = ({ profile }: any) => {
     const fetchArticles = async () => {
         try {
             setIsLoading(true);
-            const response =
-                profile?.role === "Admin" || profile?.role === "Editor"
-                    ? await getAllArticles()
-                    : await getOwnArticles();
+            const response = await getOwnArticles();
 
             if (response.status !== 200) {
                 throw new Error(response.message || "Failed to fetch articles");
@@ -101,13 +98,12 @@ const StaffViewArticles = ({ profile }: any) => {
                         New Article
                     </Link>
                 </div>
-
+                {error && (
+                    <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+                        {error}
+                    </div>
+                )}
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
-                    {error && (
-                        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
-                            {error}
-                        </div>
-                    )}
                     <ArticlesListSubHeader profile={profile} />
 
                     {isLoading ? (
@@ -189,19 +185,17 @@ const StaffViewArticles = ({ profile }: any) => {
                                                             <Link to={`/staff/article/${article._id}`}>
                                                                 <FiEye className="text-indigo-600" />
                                                             </Link>
-                                                            {profile?.role === "Journalist" && (
-                                                                (article.isEditable === false ? (
-                                                                    <button onClick={() => {
-                                                                        sendEditRequest(article._id)
-                                                                    }} title="Request to edit file">
-                                                                        <BiEditAlt className="text-primary" />
-                                                                    </button>
-                                                                ) : (
-                                                                    <button title="Edit article">
-                                                                        <FiEdit className="text-green-600" />
-                                                                    </button>
-                                                                ))
-                                                            )}
+                                                            {(article.isEditable === false ? (
+                                                                <button onClick={() => {
+                                                                    sendEditRequest(article._id)
+                                                                }} title="Request to edit file">
+                                                                    <BiEditAlt className="text-primary" />
+                                                                </button>
+                                                            ) : (
+                                                                <button title="Edit article">
+                                                                    <FiEdit className="text-green-600" />
+                                                                </button>
+                                                            ))}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -235,4 +229,4 @@ const StaffViewArticles = ({ profile }: any) => {
     );
 };
 
-export default StaffViewArticles;
+export default StaffViewOwnArticles;
