@@ -9,7 +9,11 @@ import ButtonSpinner from '../../Components/ButtonSpinner';
 import SEO from '../../utils/SEO';
 import { Helmet } from 'react-helmet-async';
 
-const StaffLogin = () => {
+interface StaffLoginProps {
+    onLogin: () => void;
+}
+
+const StaffLogin = ({ onLogin }: StaffLoginProps) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -46,11 +50,13 @@ const StaffLogin = () => {
                 setEmail('');
                 setPassword('');
                 sessionStorage.setItem('token', response.session.content)
+                onLogin()
                 toast.success(response.message);
                 navigate('/staff/dashboard');
 
             }
         } catch (error) {
+            console.error('Error:', error);
             toast.error('Login failed. Please check your credentials.');
         }
         finally {

@@ -11,7 +11,7 @@ import SEO from "../../utils/SEO";
 import { BiEditAlt } from "react-icons/bi";
 import ArticlesListSubHeader from "./ArticlesListSubHeader";
 
-const StaffViewArticles = ({ profile }: any) => {
+const StaffViewOwnArticles = ({ profile }: any) => {
     const [articles, setArticles] = useState<ArticleType[]>([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("date");
@@ -24,10 +24,7 @@ const StaffViewArticles = ({ profile }: any) => {
     const fetchArticles = async () => {
         try {
             setIsLoading(true);
-            const response =
-                profile?.role === "Admin" || profile?.role === "Editor"
-                    ? await getAllArticles()
-                    : await getOwnArticles();
+            const response = await getOwnArticles();
 
             if (response.status !== 200) {
                 throw new Error(response.message || "Failed to fetch articles");
@@ -184,19 +181,17 @@ const StaffViewArticles = ({ profile }: any) => {
                                                             <Link to={`/staff/article/${article._id}`}>
                                                                 <FiEye className="text-indigo-600" />
                                                             </Link>
-                                                            {profile?.role === "Journalist" && (
-                                                                (article.isEditable === false ? (
-                                                                    <button onClick={() => {
-                                                                        sendEditRequest(article._id)
-                                                                    }} title="Request to edit file">
-                                                                        <BiEditAlt className="text-primary" />
-                                                                    </button>
-                                                                ) : (
-                                                                    <button title="Edit article">
-                                                                        <FiEdit className="text-green-600" />
-                                                                    </button>
-                                                                ))
-                                                            )}
+                                                            {(article.isEditable === false ? (
+                                                                <button onClick={() => {
+                                                                    sendEditRequest(article._id)
+                                                                }} title="Request to edit file">
+                                                                    <BiEditAlt className="text-primary" />
+                                                                </button>
+                                                            ) : (
+                                                                <button title="Edit article">
+                                                                    <FiEdit className="text-green-600" />
+                                                                </button>
+                                                            ))}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -230,4 +225,4 @@ const StaffViewArticles = ({ profile }: any) => {
     );
 };
 
-export default StaffViewArticles;
+export default StaffViewOwnArticles;

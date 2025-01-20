@@ -16,6 +16,8 @@ import { userLogout, userViewProfile } from "./utils/requests/authRequest";
 import Settings from "./pages/staff/Settings";
 import { useEffect, useState } from "react";
 import StaffLayout from "./pages/staff/StaffLayout";
+import StaffViewArticlesEditRequests from "./Components/staff/StaffViewArticlesEditRequests";
+import StaffViewOwnArticles from "./Components/staff/StaffViewOwnArticles";
 
 const AppRouter = () => {
     const isAuthenticated = Boolean(sessionStorage.getItem("token"));
@@ -43,7 +45,6 @@ const AppRouter = () => {
         try {
             const response = await userViewProfile();
             if (response.status !== 200) {
-                toast.error(response.message);
                 return;
             }
             setProfile(response?.data?.user);
@@ -62,7 +63,7 @@ const AppRouter = () => {
                 <Route path="/" element={<Homepage />} />
                 <Route path="news/:slug" element={<ArticleDetails />} />
                 <Route path="/staff">
-                    <Route path="login" element={<StaffLogin />} />
+                    <Route path="login" element={<StaffLogin onLogin={fetchUserProfile} />} />
                     <Route path="forgot-password" element={<ForgotPassword />} />
                     <Route path="reset-password" element={<ResetPassword />} />
                     <Route element={<AuthGuard isAuthenticated={isAuthenticated} />}>
@@ -71,6 +72,8 @@ const AppRouter = () => {
                             <Route path="articles" element={<StaffViewArticles profile={profile} />} />
                             <Route path="article/new" element={<StaffNewArticle />} />
                             <Route path="article/:id" element={<StaffViewArticleDetails />} />
+                            <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
+                            <Route path="/staff/articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
                             <Route
                                 path="settings"
                                 element={
