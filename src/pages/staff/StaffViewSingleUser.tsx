@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { disableUser, enableUser, getSingleUser, updateUser } from "../../utils/requests/usersRequest";
 import { Author } from "../../utils/types/User";
 import { BiCalendar, BiCategory } from "react-icons/bi";
 import { BsBan } from "react-icons/bs";
 import { MdTurnedInNot } from "react-icons/md";
+import { formatDateToCustomString } from "../../utils/helpers/articleHelpers";
 
 const AdminViewSingleUser = () => {
     const [user, setUser] = useState<Author | null>(null);
@@ -16,7 +17,6 @@ const AdminViewSingleUser = () => {
     const [editedUser, setEditedUser] = useState<Partial<Author>>({});
     const { id } = useParams<{ id: string }>();
     const [isFormLoading, setIsFormLoading] = useState(false)
-    const navigate = useNavigate();
 
     const fetchSingleUser = async () => {
         try {
@@ -114,8 +114,8 @@ const AdminViewSingleUser = () => {
 
     if (isLoading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <p>Loading...</p>
+            <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500"></div>
             </div>
         );
     }
@@ -255,8 +255,8 @@ const AdminViewSingleUser = () => {
                     <div className="space-y-4">
                         <div className="flex items-center">
                             <BiCalendar className="mr-2 text-lg text-gray-500" />
-                            <span className="font-medium">Joined:</span>{" "}
-                            {new Date(user.createdAt).toLocaleDateString()}
+                            <span className="font-medium">Joined:</span>
+                            &nbsp; {formatDateToCustomString(user.createdAt)}
                         </div>
                         <div>
                             <h3 className="font-semibold text-gray-800">Email:</h3>

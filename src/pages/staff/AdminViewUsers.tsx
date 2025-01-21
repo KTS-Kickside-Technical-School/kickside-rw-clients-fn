@@ -66,7 +66,7 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-3xl font-bold text-gray-900">Users List</h1>
                     <Link
-                        to="/staff/article/new"
+                        to="/staff/user/new"
                         className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm"
                     >
                         <FiPlus className="mr-2" />
@@ -103,7 +103,7 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
                                 <select
                                     value={sortOption}
                                     onChange={(e) => setSortOption(e.target.value)}
-                                    className="py-2.5 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50"
+                                    className="py-2.5 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 border-primary outline-0"
                                 >
                                     <option value="Date Joined">Sort by Date Joined</option>
                                     <option value="firstName">Sort by First Name</option>
@@ -121,7 +121,10 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
                                                     #
                                                 </th>
                                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                    Name
+                                                    Names
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Email
                                                 </th>
                                                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                     Role
@@ -145,6 +148,11 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         {user.firstName} {user.lastName}
+                                                    </td>
+                                                    <td className="px-6 py-4 whitespace-nowrap">
+                                                        <Link to={`mailto: ${user.email}`}>
+                                                            {user.email}
+                                                        </Link>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">{user.role}</td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">

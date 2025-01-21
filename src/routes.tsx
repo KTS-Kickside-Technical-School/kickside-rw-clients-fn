@@ -20,6 +20,7 @@ import StaffViewArticlesEditRequests from "./pages/staff/StaffViewArticlesEditRe
 import StaffViewOwnArticles from "./pages/staff/StaffViewOwnArticles";
 import AdminViewUsers from "./pages/staff/AdminViewUsers";
 import StaffViewSingleUser from "./pages/staff/StaffViewSingleUser";
+import AdminNewUser from "./pages/staff/AdminNewUser";
 
 const AppRouter = () => {
     const isAuthenticated = Boolean(sessionStorage.getItem("token"));
@@ -79,7 +80,8 @@ const AppRouter = () => {
                             <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
                             <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
                             <Route path="users" element={<AdminViewUsers profile={profile} />} />
-                            <Route path="user/:id" element={<StaffViewSingleUser profile={profile} />} />
+                            <Route path="user/:id" element={<StaffViewSingleUser />} />
+                            <Route path="user/new" element={<AdminNewUser />} />
                             <Route
                                 path="settings"
                                 element={

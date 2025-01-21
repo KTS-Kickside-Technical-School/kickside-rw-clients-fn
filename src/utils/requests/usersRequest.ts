@@ -59,3 +59,12 @@ export const enableUser = async (id: any) => {
         return handleError(error)
     }
 }
+
+export const createNewUser = async (data: any) => {
+    try {
+        const response = await axiosInstance.post(`/api/workers/create-user`, data);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
