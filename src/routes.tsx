@@ -4,9 +4,9 @@ import ArticleDetails from "./pages/ArticleDetails";
 import StaffLogin from "./pages/staff/StaffLogin";
 import JournalistDashboard from "./pages/staff/JournalistDashboard";
 import AuthGuard from "./Components/staff/AuthGuard";
-import StaffViewArticles from "./Components/staff/StaffViewArticles";
+import StaffViewArticles from "./pages/staff/StaffViewArticles";
 import StaffNotFound from "./pages/staff/StaffNotFound";
-import StaffViewArticleDetails from "./Components/staff/StaffViewArticleDetails";
+import StaffViewArticleDetails from "./pages/staff/StaffViewArticleDetails";
 import NotFound from "./pages/Notfound";
 import StaffNewArticle from "./pages/staff/StaffNewArticle";
 import ForgotPassword from "./pages/staff/ForgotPassword";
@@ -16,8 +16,10 @@ import { userLogout, userViewProfile } from "./utils/requests/authRequest";
 import Settings from "./pages/staff/Settings";
 import { useEffect, useState } from "react";
 import StaffLayout from "./pages/staff/StaffLayout";
-import StaffViewArticlesEditRequests from "./Components/staff/StaffViewArticlesEditRequests";
-import StaffViewOwnArticles from "./Components/staff/StaffViewOwnArticles";
+import StaffViewArticlesEditRequests from "./pages/staff/StaffViewArticlesEditRequests";
+import StaffViewOwnArticles from "./pages/staff/StaffViewOwnArticles";
+import AdminViewUsers from "./pages/staff/AdminViewUsers";
+import StaffViewSingleUser from "./pages/staff/StaffViewSingleUser";
 
 const AppRouter = () => {
     const isAuthenticated = Boolean(sessionStorage.getItem("token"));
@@ -73,7 +75,11 @@ const AppRouter = () => {
                             <Route path="article/new" element={<StaffNewArticle />} />
                             <Route path="article/:id" element={<StaffViewArticleDetails />} />
                             <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
-                            <Route path="/staff/articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
+                            <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
+                            <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
+                            <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
+                            <Route path="users" element={<AdminViewUsers profile={profile} />} />
+                            <Route path="user/:id" element={<StaffViewSingleUser profile={profile} />} />
                             <Route
                                 path="settings"
                                 element={

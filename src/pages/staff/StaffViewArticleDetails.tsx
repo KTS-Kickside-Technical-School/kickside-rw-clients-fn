@@ -8,19 +8,18 @@ import { formatDateTime } from "../../utils/helpers/articleHelpers";
 import { GrStatusInfo } from "react-icons/gr";
 import { ArticleType } from "../../utils/types/Article";
 
-const StaffViewArticleDetails = () => {
+const StaffViewArticleDetails = ({ profile }: any) => {
     const [article, setArticle] = useState<ArticleType | null>(null);
     const [comments, setComments] = useState<any[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const { id } = useParams<{ id: string }>();
-    const userRole = "Admin";
+    const userRole = profile.role;
     const navigate = useNavigate();
 
     const fetchSingleArticle = async () => {
         try {
             const response = await staffGetSingleArticle(id);
-            console.log("response we got", response);
 
             if (response?.data?.article) {
                 setArticle(response.data.article);
