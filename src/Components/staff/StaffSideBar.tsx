@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { MdDashboard, MdLogout, MdMenu } from "react-icons/md";
 import { PiArticleNyTimesBold } from "react-icons/pi";
+import { RxAvatar } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-const StaffSideBar = ({ onLogout }: any) => {
+const StaffSideBar = ({ onLogout, profile }: any) => {
     const [isOpen, setIsOpen] = useState(true);
 
     const toggleSidebar = () => {
@@ -62,6 +63,22 @@ const StaffSideBar = ({ onLogout }: any) => {
                             </span>
                         </Link>
                     </li>
+                    {(profile?.role === "Admin") && (
+                        <li>
+                            <Link
+                                to="/staff/users"
+                                className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
+                            >
+                                <RxAvatar size={20} />
+                                <span
+                                    className={`${isOpen ? "block" : "hidden"
+                                        } transition-all duration-300`}
+                                >
+                                    Users
+                                </span>
+                            </Link>
+                        </li>
+                    )}
                 </ul>
 
                 <div className="absolute bottom-6 w-full px-4">
