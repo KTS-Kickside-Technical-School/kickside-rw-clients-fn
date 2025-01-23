@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import ArticleDetails from './pages/ArticleDetails';
@@ -76,18 +76,45 @@ const AppRouter = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="news/:slug" element={<ArticleDetails />} />
         <Route path="/staff">
-          <Route path="login" element={<StaffLogin onLogin={fetchUserProfile} />} />
+          <Route
+            path="login"
+            element={<StaffLogin onLogin={fetchUserProfile} />}
+          />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
-          <Route element={<AuthGuard isAuthenticated={isAuthenticated} fetchUserProfile={fetchUserProfile} />}>
-            <Route element={<StaffLayout onLogout={logout} profile={profile} />}>
+          <Route
+            element={
+              <AuthGuard
+                isAuthenticated={isAuthenticated}
+                fetchUserProfile={fetchUserProfile}
+              />
+            }
+          >
+            <Route
+              element={<StaffLayout onLogout={logout} profile={profile} />}
+            >
               <Route path="dashboard" element={<JournalistDashboard />} />
-              <Route path="articles" element={<StaffViewArticles profile={profile} />} />
+              <Route
+                path="articles"
+                element={<StaffViewArticles profile={profile} />}
+              />
               <Route path="article/new" element={<StaffNewArticle />} />
-              <Route path="article/:id" element={<StaffViewArticleDetails profile={profile} />} />
-              <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
-              <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
-              <Route path="users" element={<AdminViewUsers profile={profile} />} />
+              <Route
+                path="article/:id"
+                element={<StaffViewArticleDetails profile={profile} />}
+              />
+              <Route
+                path="articles/edit-requests"
+                element={<StaffViewArticlesEditRequests profile={profile} />}
+              />
+              <Route
+                path="articles/admin-view-own-articles"
+                element={<StaffViewOwnArticles profile={profile} />}
+              />
+              <Route
+                path="users"
+                element={<AdminViewUsers profile={profile} />}
+              />
               <Route path="user/:id" element={<StaffViewSingleUser />} />
               <Route path="user/new" element={<AdminNewUser />} />
               <Route path="settings" element={<Settings />} />
