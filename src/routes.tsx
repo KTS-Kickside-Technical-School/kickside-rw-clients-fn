@@ -47,54 +47,44 @@ const AppRouter = () => {
     const fetchUserProfile = async () => {
         try {
             const response = await userViewProfile();
-            if (response.status !== 200) {
-                return;
+            if (response.status === 401) {
+                toast.error("Session expired. Please log in again.");
+                sessionStorage.removeItem("token");
+                navigate("/staff/login");
+            } else if (response.status === 200) {
+                setProfile(response.data.user);
             }
-            setProfile(response?.data?.user);
         } catch (error: any) {
-            toast.error(error?.message || "Profile not found. Please try again.");
+            toast.error(error?.message || "Unable to fetch profile.");
         }
     };
 
-    useEffect(() => {
-        fetchUserProfile();
-    }, []);
-
     return (
-        <>
-            <Routes>
-                <Route path="/" element={<Homepage />} />
-                <Route path="news/:slug" element={<ArticleDetails />} />
-                <Route path="/staff">
-                    <Route path="login" element={<StaffLogin onLogin={fetchUserProfile} />} />
-                    <Route path="forgot-password" element={<ForgotPassword />} />
-                    <Route path="reset-password" element={<ResetPassword />} />
-                    <Route element={<AuthGuard isAuthenticated={isAuthenticated} />}>
-                        <Route element={<StaffLayout onLogout={logout} profile={profile} />}>
-                            <Route path="dashboard" element={<JournalistDashboard />} />
-                            <Route path="articles" element={<StaffViewArticles profile={profile} />} />
-                            <Route path="article/new" element={<StaffNewArticle />} />
-                            <Route path="article/:id" element={<StaffViewArticleDetails />} />
-                            <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
-                            <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
-                            <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
-                            <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
-                            <Route path="users" element={<AdminViewUsers profile={profile} />} />
-                            <Route path="user/:id" element={<StaffViewSingleUser />} />
-                            <Route path="user/new" element={<AdminNewUser />} />
-                            <Route
-                                path="settings"
-                                element={
-                                    <Settings />
-                                }
-                            />
-                            <Route path="*" element={<StaffNotFound />} />
-                        </Route>
+        <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="news/:slug" element={<ArticleDetails />} />
+            <Route path="/staff">
+                <Route path="login" element={<StaffLogin onLogin={fetchUserProfile} />} />
+                <Route path="forgot-password" element={<ForgotPassword />} />
+                <Route path="reset-password" element={<ResetPassword />} />
+                <Route element={<AuthGuard isAuthenticated={isAuthenticated} fetchUserProfile={fetchUserProfile} />}>
+                    <Route element={<StaffLayout onLogout={logout} profile={profile} />}>
+                        <Route path="dashboard" element={<JournalistDashboard />} />
+                        <Route path="articles" element={<StaffViewArticles profile={profile} />} />
+                        <Route path="article/new" element={<StaffNewArticle />} />
+                        <Route path="article/:id" element={<StaffViewArticleDetails />} />
+                        <Route path="articles/edit-requests" element={<StaffViewArticlesEditRequests profile={profile} />} />
+                        <Route path="articles/admin-view-own-articles" element={<StaffViewOwnArticles profile={profile} />} />
+                        <Route path="users" element={<AdminViewUsers profile={profile} />} />
+                        <Route path="user/:id" element={<StaffViewSingleUser />} />
+                        <Route path="user/new" element={<AdminNewUser />} />
+                        <Route path="settings" element={<Settings />} />
+                        <Route path="*" element={<StaffNotFound />} />
                     </Route>
                 </Route>
-                <Route path="*" element={<NotFound backUrl={backUrl} />} />
-            </Routes>
-        </>
+            </Route>
+            <Route path="*" element={<NotFound backUrl={backUrl} />} />
+        </Routes>
     );
 };
 
