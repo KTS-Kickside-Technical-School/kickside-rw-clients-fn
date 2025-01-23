@@ -8,7 +8,7 @@ interface ArticlesListSubHeaderProps {
 const ArticlesListSubHeader = ({ profile }: ArticlesListSubHeaderProps) => {
 
     return (
-        <div>
+        <div className="m-2">
             {(profile?.role === "Admin" || profile?.role === "Editor") && (
                 <div className="flex flex-col sm:flex-row gap-4 px-5 py-4 mb-3 bg-gray-100 rounded-lg shadow-md">
                     <Link

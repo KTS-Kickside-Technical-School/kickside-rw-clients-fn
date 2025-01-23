@@ -40,7 +40,7 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
         if (profile) {
             fetchUsers();
         }
-    }, [profile]);
+    }, []);
 
     const filteredUsers = users.filter((user) =>
         user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
