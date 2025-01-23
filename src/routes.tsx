@@ -1,3 +1,4 @@
+import { useState, useEffect, createContext, useContext } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import ArticleDetails from './pages/ArticleDetails';
@@ -14,7 +15,6 @@ import ResetPassword from './pages/staff/ResetPassword';
 import { toast } from 'react-toastify';
 import { userLogout, userViewProfile } from './utils/requests/authRequest';
 import Settings from './pages/staff/Settings';
-import { useState } from 'react';
 import StaffLayout from './pages/staff/StaffLayout';
 import StaffViewArticlesEditRequests from './pages/staff/StaffViewArticlesEditRequests';
 import StaffViewOwnArticles from './pages/staff/StaffViewOwnArticles';
@@ -22,12 +22,17 @@ import AdminViewUsers from './pages/staff/AdminViewUsers';
 import StaffViewSingleUser from './pages/staff/StaffViewSingleUser';
 import AdminNewUser from './pages/staff/AdminNewUser';
 
+// Context for Authentication and Profile Management
+const AuthContext = createContext<any>(null);
+
 const AppRouter = () => {
   const isAuthenticated = Boolean(sessionStorage.getItem('token'));
   const location = useLocation();
   const token = sessionStorage.getItem('token');
   const navigate = useNavigate();
   const backUrl = location.state?.from || '/';
+
+  const [profile, setProfile] = useState<any>(null); // Initialize with null
 
   const logout = async () => {
     try {
@@ -42,8 +47,7 @@ const AppRouter = () => {
     }
   };
 
-  const [profile, setProfile] = useState<any>();
-
+  // Fetch User Profile only when necessary
   const fetchUserProfile = async () => {
     try {
       const response = await userViewProfile();
@@ -59,55 +63,71 @@ const AppRouter = () => {
     }
   };
 
+  // Fetch the profile on initial load if authenticated
+  useEffect(() => {
+    if (isAuthenticated && !profile) {
+      fetchUserProfile();
+    }
+  }, [isAuthenticated, profile]);
+
   return (
-    <Routes>
-      <Route path="/" element={<Homepage />} />
-      <Route path="news/:slug" element={<ArticleDetails />} />
-      <Route path="/staff">
-        <Route
-          path="login"
-          element={<StaffLogin onLogin={fetchUserProfile} />}
-        />
-        <Route path="forgot-password" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-        <Route
-          element={
-            <AuthGuard
-              isAuthenticated={isAuthenticated}
-              fetchUserProfile={fetchUserProfile}
-            />
-          }
-        >
-          <Route element={<StaffLayout onLogout={logout} profile={profile} />}>
-            <Route path="dashboard" element={<JournalistDashboard />} />
+    <AuthContext.Provider value={{ profile, setProfile }}>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="news/:slug" element={<ArticleDetails />} />
+        <Route path="/staff">
+          <Route
+            path="login"
+            element={<StaffLogin onLogin={fetchUserProfile} />}
+          />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
+          <Route
+            element={
+              <AuthGuard
+                isAuthenticated={isAuthenticated}
+                fetchUserProfile={fetchUserProfile}
+              />
+            }
+          >
             <Route
-              path="articles"
-              element={<StaffViewArticles profile={profile} />}
-            />
-            <Route path="article/new" element={<StaffNewArticle />} />
-            <Route path="article/:id" element={<StaffViewArticleDetails />} />
-            <Route
-              path="articles/edit-requests"
-              element={<StaffViewArticlesEditRequests profile={profile} />}
-            />
-            <Route
-              path="articles/admin-view-own-articles"
-              element={<StaffViewOwnArticles profile={profile} />}
-            />
-            <Route
-              path="users"
-              element={<AdminViewUsers profile={profile} />}
-            />
-            <Route path="user/:id" element={<StaffViewSingleUser />} />
-            <Route path="user/new" element={<AdminNewUser />} />
-            <Route path="settings" element={<Settings />} />
-            <Route path="*" element={<StaffNotFound />} />
+              element={<StaffLayout onLogout={logout} profile={profile} />}
+            >
+              <Route path="dashboard" element={<JournalistDashboard />} />
+              <Route
+                path="articles"
+                element={<StaffViewArticles profile={profile} />}
+              />
+              <Route path="article/new" element={<StaffNewArticle />} />
+              <Route
+                path="article/:id"
+                element={<StaffViewArticleDetails profile={profile} />}
+              />
+              <Route
+                path="articles/edit-requests"
+                element={<StaffViewArticlesEditRequests profile={profile} />}
+              />
+              <Route
+                path="articles/admin-view-own-articles"
+                element={<StaffViewOwnArticles profile={profile} />}
+              />
+              <Route
+                path="users"
+                element={<AdminViewUsers profile={profile} />}
+              />
+              <Route path="user/:id" element={<StaffViewSingleUser />} />
+              <Route path="user/new" element={<AdminNewUser />} />
+              <Route path="settings" element={<Settings />} />
+              <Route path="*" element={<StaffNotFound />} />
+            </Route>
           </Route>
         </Route>
-      </Route>
-      <Route path="*" element={<NotFound backUrl={backUrl} />} />
-    </Routes>
+        <Route path="*" element={<NotFound backUrl={backUrl} />} />
+      </Routes>
+    </AuthContext.Provider>
   );
 };
 
 export default AppRouter;
+
+export const useAuth = () => useContext(AuthContext);

@@ -87,8 +87,6 @@ const ArticleDetails: React.FC = () => {
         );
     }
 
-    console.log(article)
-
     const [comment, setComment] = useState("");
     const [isCommentsLoading, setIsCommentsLoading] = useState(false);
     const [commentMessage, setCommentMessage] = useState<any>({})
@@ -99,7 +97,6 @@ const ArticleDetails: React.FC = () => {
         setCommentMessage({})
         try {
             const response = await postComment({ article: article?._id, comment });
-            console.log(response);
             setComments((prev: any) => [...prev, response.comment]);
             setComment('');
             setCommentMessage({ success: 'Comment posted successfully!' });
@@ -109,7 +106,6 @@ const ArticleDetails: React.FC = () => {
             setIsCommentsLoading(false);
         }
     };
-    console.log(comments);
     return (
         <>
             <SEO

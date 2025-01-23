@@ -52,7 +52,6 @@ export const userViewProfile = async () => {
 
 export const userUpdateProfile = async (data: any) => {
     try {
-        console.log("Data to send", data)
         const response = await axiosInstance.put("/api/auth/update-profile", data)
         return response.data
     } catch (error) {
