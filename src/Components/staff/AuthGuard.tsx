@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useEffect } from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const AuthGuard = ({ isAuthenticated, fetchUserProfile }: any) => {
-    useEffect(() => {
-        if (isAuthenticated) {
-            fetchUserProfile()
-                .catch((error:any) => {
-                    toast.error("Failed to fetch user profile. Please log in again.");
-                });
-        }
-    }, [isAuthenticated, fetchUserProfile]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchUserProfile().catch((error: any) => {
+        console.error('Unknown error while fetchnig profile', error);
+        toast.error('Failed to fetch user profile. Please log in again.');
+      });
+    }
+  }, [isAuthenticated, fetchUserProfile]);
 
-    return isAuthenticated ? <Outlet /> : <Navigate to="/staff/login" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/staff/login" />;
 };
 
 export default AuthGuard;
