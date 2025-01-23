@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 const StaffHeader = ({ onLogout, profile }: any) => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-    console.log(profile)
-
     return (
         <header className="flex items-center justify-between bg-gray-800 px-6 py-4 shadow-md text-white">
             <div className="text-2xl font-bold text-indigo-500">Kickside</div>

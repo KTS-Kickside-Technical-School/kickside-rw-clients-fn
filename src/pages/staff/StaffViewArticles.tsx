@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { FiEdit, FiEye, FiPlus } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
@@ -23,6 +23,7 @@ const StaffViewArticles = ({ profile }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
+  console.log(profile);
   const articlesPerPage = 15;
 
   const fetchArticles = async () => {
@@ -45,10 +46,12 @@ const StaffViewArticles = ({ profile }: any) => {
       setIsLoading(false);
     }
   };
+  const didFetch = useRef(false);
 
   useEffect(() => {
     if (profile) {
       fetchArticles();
+      didFetch.current = true;
     }
   }, []);
 

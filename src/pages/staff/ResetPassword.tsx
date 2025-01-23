@@ -40,10 +40,7 @@ const ResetPassword = () => {
 
         try {
             setIsLoading(true);
-            console.log('Sending token and password to backend:', token, newPassword); // Debugging log
             const response = await userResetPassword(token, newPassword);
-
-            console.log('API response:', response);
 
             if (response.status !== 200) {
                 toast.error(response.message || 'Failed to reset password');

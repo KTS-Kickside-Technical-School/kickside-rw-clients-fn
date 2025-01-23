@@ -40,7 +40,6 @@ const ArticleEditRequests = () => {
     const handleApprove = async (id: string) => {
         try {
             const response = await approveEditRequest(id);
-            console.log("Response got", response)
             if (response.status !== 200) {
                 throw new Error(response?.message || "Failed to approve request");
             }
