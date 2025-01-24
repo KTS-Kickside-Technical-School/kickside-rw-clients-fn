@@ -21,6 +21,7 @@ import StaffViewOwnArticles from './pages/staff/StaffViewOwnArticles';
 import AdminViewUsers from './pages/staff/AdminViewUsers';
 import StaffViewSingleUser from './pages/staff/StaffViewSingleUser';
 import AdminNewUser from './pages/staff/AdminNewUser';
+import ContactUs from './pages/ContactUs';
 
 // Context for Authentication and Profile Management
 const AuthContext = createContext<any>(null);
@@ -74,6 +75,8 @@ const AppRouter = () => {
     <AuthContext.Provider value={{ profile, setProfile }}>
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/contactus" element={<ContactUs />} />
+
         <Route path="news/:slug" element={<ArticleDetails />} />
         <Route path="/staff">
           <Route
