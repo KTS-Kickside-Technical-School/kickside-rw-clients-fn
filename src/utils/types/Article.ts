@@ -13,3 +13,9 @@ export interface ArticleType {
     isEditable: boolean;
     views: number;
 }
+
+export interface MonthlyAnalytics {
+    month: string;
+    comments: number;
+    views: number;
+  }

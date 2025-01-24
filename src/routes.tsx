@@ -3,7 +3,6 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import ArticleDetails from './pages/ArticleDetails';
 import StaffLogin from './pages/staff/StaffLogin';
-import JournalistDashboard from './pages/staff/JournalistDashboard';
 import AuthGuard from './Components/staff/AuthGuard';
 import StaffViewArticles from './pages/staff/StaffViewArticles';
 import StaffNotFound from './pages/staff/StaffNotFound';
@@ -22,8 +21,8 @@ import AdminViewUsers from './pages/staff/AdminViewUsers';
 import StaffViewSingleUser from './pages/staff/StaffViewSingleUser';
 import AdminNewUser from './pages/staff/AdminNewUser';
 import ContactUs from './pages/ContactUs';
+import Dashboard from './pages/staff/Dashboard';
 
-// Context for Authentication and Profile Management
 const AuthContext = createContext<any>(null);
 
 const AppRouter = () => {
@@ -33,7 +32,7 @@ const AppRouter = () => {
   const navigate = useNavigate();
   const backUrl = location.state?.from || '/';
 
-  const [profile, setProfile] = useState<any>(null); // Initialize with null
+  const [profile, setProfile] = useState<any>(null);
 
   const logout = async () => {
     try {
@@ -96,7 +95,10 @@ const AppRouter = () => {
             <Route
               element={<StaffLayout onLogout={logout} profile={profile} />}
             >
-              <Route path="dashboard" element={<JournalistDashboard />} />
+              <Route
+                path="dashboard"
+                element={<Dashboard profile={profile} />}
+              />
               <Route
                 path="articles"
                 element={<StaffViewArticles profile={profile} />}

@@ -32,7 +32,6 @@ const ArticleDetails: React.FC = () => {
     const [comments, setComments] = useState<any>([])
     const [isRelatedArticlesLoading, setIsRelatedArticlesLoading] = useState(false);
 
-
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
