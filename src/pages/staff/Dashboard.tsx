@@ -1,4 +1,4 @@
-import { Line } from 'react-chartjs-2';
+import { Chart } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,13 +9,12 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
 } from 'chart.js';
-import JSZip from 'jszip';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
-import docxtemplater from 'docxtemplater';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { journalistFindAnalysis } from '../../utils/requests/articlesRequest';
@@ -73,7 +72,7 @@ const Dashboard = ({ profile }: any) => {
     );
   }
 
-  const data = {
+  const data: ChartData<'bar' | 'line'> = {
     labels: journalistAnalysis.monthlyAnalytics.map(
       (item: MonthlyAnalytics) => item.month
     ),
@@ -97,7 +96,6 @@ const Dashboard = ({ profile }: any) => {
         borderColor: '#ACACAC',
         borderWidth: 1,
         type: 'bar',
-        fill: true,
       },
     ],
   };
@@ -115,7 +113,7 @@ const Dashboard = ({ profile }: any) => {
         text: 'Views and Comments Trends',
       },
       tooltip: {
-        mode: 'index',
+        mode: 'index' as const,
         intersect: false,
       },
     },
@@ -159,7 +157,7 @@ const Dashboard = ({ profile }: any) => {
           const doc = new jsPDF();
           doc.addImage(imgData, 'PNG', 10, 10, 180, 160);
           doc.text('Monthly Analytics Report', 10, 10);
-          dynamicData.forEach((data, index) => {
+          dynamicData.forEach((data: any, index: any) => {
             doc.text(
               `${index + 1}. ${data.month} - Views: ${data.views}, Comments: ${
                 data.comments
@@ -185,27 +183,6 @@ const Dashboard = ({ profile }: any) => {
           saveAs(blob, 'chart_data.csv');
         }
         break;
-
-      case 'word':
-        const JSZip = window.JSZip; // Ensure JSZip is globally available
-        const Docxtemplater = window.docxtemplater; // Ensure Docxtemplater is globally available
-
-        const zip = new JSZip();
-        const doc = new Docxtemplater();
-        zip
-          .loadAsync(dynamicTemplate)
-          .then((templateContent) => {
-            doc.loadZip(templateContent);
-            doc.setData({ monthData: dynamicData });
-            doc.render();
-            const docx = doc.getZip().generate({ type: 'blob' });
-            saveAs(docx, 'chart_data.docx');
-          })
-          .catch((err) => {
-            console.error('Error loading Word template:', err);
-          });
-        break;
-
       default:
         console.log('Invalid format');
     }
@@ -277,7 +254,6 @@ const Dashboard = ({ profile }: any) => {
                   <option value="pdf">PDF</option>
                   <option value="excel">Excel</option>
                   <option value="csv">CSV</option>
-                  <option value="word">Word</option>
                 </select>
               </div>
 
@@ -303,7 +279,9 @@ const Dashboard = ({ profile }: any) => {
           </div>
 
           <div id="myChart">
-            {journalistAnalysis && <Line data={data} options={options} />}
+            {journalistAnalysis && (
+              <Chart type="bar" data={data} options={options} />
+            )}
           </div>
         </div>
       </main>
