@@ -203,28 +203,7 @@ const ArticleDetails: React.FC = () => {
                     </div>
                     <aside className="w-full lg:w-1/3">
                         <AdvertisementSection />
-                        {/* <div className="bg-gray-200 p-4 rounded-lg shadow-lg mt-6">
-                            <div className="flex items-center mb-4">
-                                <GoGraph className="text-primary text-2xl mr-2" />
-                                <h3 className="text-xl font-semibold text-gray-800">Most Popular</h3>
-                            </div>
-                            <ul>
-                                {Array.from({ length: 5 }).map((_, idx) =>
-                                    isLoading ? (
-                                        <li key={idx} className="mb-4">
-                                            <Skeleton />
-                                        </li>
-                                    ) : (
-                                        <li
-                                            key={idx}
-                                            className="line-clamp-2 text-gray-700 font-medium mb-3 hover:text-primary transition duration-200 cursor-pointer"
-                                        >
-                                            Example popular article #{idx + 1}
-                                        </li>
-                                    )
-                                )}
-                            </ul>
-                        </div> */}
+                        
                     </aside>
                 </div>
                 <div className="flex flex-col lg:flex-col w-[90%] lg:w-[80%] mx-auto gap-8">
