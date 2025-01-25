@@ -63,7 +63,6 @@ const AppRouter = () => {
     }
   };
 
-  // Fetch the profile on initial load if authenticated
   useEffect(() => {
     if (isAuthenticated && !profile) {
       fetchUserProfile();

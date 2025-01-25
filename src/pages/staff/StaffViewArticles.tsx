@@ -158,31 +158,31 @@ const StaffViewArticles = ({ profile }: any) => {
               </div>
               {displayedArticles.length > 0 ? (
                 <div className="overflow-x-auto max-w-full">
-                  <table className="w-full">
+                  <table className="w-full table-fixed">
                     <thead>
                       <tr>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-10">
                           #
                         </th>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
                           Image
                         </th>
                         <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider truncate max-w-[200px]">
                           Title
                         </th>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider max-w-[150px] truncate">
                           Category
                         </th>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider max-w-[200px] truncate">
                           Author
                         </th>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-40">
                           Date
                         </th>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-28">
                           Status
                         </th>
-                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <th className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider w-40">
                           Actions
                         </th>
                       </tr>
@@ -193,36 +193,43 @@ const StaffViewArticles = ({ profile }: any) => {
                           key={article._id}
                           className="hover:bg-gray-50 transition-colors"
                         >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {/* Index Column */}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-10">
                             {offset + index + 1}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          {/* Image Column */}
+                          <td className="px-6 py-4 whitespace-nowrap w-32">
                             <img
                               src={article.coverImage}
                               alt={article.title}
                               className="w-24 object-cover rounded-lg shadow-sm"
                             />
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          {/* Title Column */}
+                          <td className="px-6 py-4 whitespace-nowrap max-w-[200px] truncate">
                             <div className="text-sm font-medium text-gray-900">
                               {article.title}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          {/* Category Column */}
+                          <td className="px-6 py-4 whitespace-nowrap max-w-[150px] truncate">
                             <div className="text-sm text-gray-900">
                               {article.category}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          {/* Author Column */}
+                          <td className="px-6 py-4 whitespace-nowrap max-w-[200px] truncate">
                             <div className="text-sm text-gray-900">
                               {article.author.firstName}{' '}
                               {article.author.lastName}
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {/* Date Column */}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-40">
                             {formatDateTime(article.createdAt)}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                          {/* Status Column */}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm w-28">
                             <span
                               className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
                                 article.status
@@ -231,7 +238,8 @@ const StaffViewArticles = ({ profile }: any) => {
                               {article.status}
                             </span>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          {/* Actions Column */}
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium w-40">
                             <div className="flex space-x-2">
                               <Link to={`/staff/article/${article._id}`}>
                                 <FiEye className="text-indigo-600" />
