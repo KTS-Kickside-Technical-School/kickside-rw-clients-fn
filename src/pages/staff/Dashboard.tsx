@@ -75,21 +75,11 @@ const Dashboard = ({ profile }: any) => {
     );
   }
 
-  const data: ChartData<'bar' | 'line'> = {
+  const data: ChartData = {
     labels: journalistAnalysis.monthlyAnalytics.map(
       (item: MonthlyAnalytics) => item.month
     ),
     datasets: [
-      {
-        label: 'Total Comments',
-        data: journalistAnalysis.monthlyAnalytics.map(
-          (item: MonthlyAnalytics) => item.comments
-        ),
-        fill: false,
-        borderColor: 'rgb(255, 99, 132)',
-        tension: 0.1,
-        type: 'line',
-      },
       {
         label: 'Total Views',
         data: journalistAnalysis.monthlyAnalytics.map(
