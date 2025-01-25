@@ -1,16 +1,3 @@
-import { Chart } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartData,
-} from 'chart.js';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import * as XLSX from 'xlsx';
@@ -25,12 +12,21 @@ import SEO from '../../utils/SEO';
 import DigitalClock from '../../Components/DigitalClock';
 import { BiComment, BiEdit } from 'react-icons/bi';
 
+import { Bar } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  LineElement,
-  PointElement,
   Title,
   Tooltip,
   Legend
@@ -75,7 +71,7 @@ const Dashboard = ({ profile }: any) => {
     );
   }
 
-  const data: ChartData = {
+  const data: any = {
     labels: journalistAnalysis.monthlyAnalytics.map(
       (item: MonthlyAnalytics) => item.month
     ),
@@ -95,19 +91,14 @@ const Dashboard = ({ profile }: any) => {
 
   const options = {
     responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
+    maintainAspectRatio: false,
     plugins: {
+      legend: {
+        position: 'top' as const,
+      },
       title: {
         display: true,
         text: 'Views and Comments Trends',
-      },
-      tooltip: {
-        mode: 'index' as const,
-        intersect: false,
       },
     },
   };
@@ -222,7 +213,7 @@ const Dashboard = ({ profile }: any) => {
           </div>
           <div className="bg-white p-6 rounded shadow-md flex items-center">
             <div className="text-yellow-500 text-3xl mr-4">
-              <BiEdit  className='text-primary'/>
+              <BiEdit className="text-primary" />
             </div>
             <div>
               <p className="text-gray-600">Total Articles</p>
@@ -280,9 +271,7 @@ const Dashboard = ({ profile }: any) => {
           </div>
 
           <div id="myChart">
-            {journalistAnalysis && (
-              <Chart type="bar" data={data} options={options} />
-            )}
+            {journalistAnalysis && <Bar data={data} options={options} />}
           </div>
         </div>
       </main>
