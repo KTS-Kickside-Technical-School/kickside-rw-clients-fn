@@ -35,6 +35,17 @@ export const formatDateToCustomString = (dateInput: any) => {
         }
     };
 
-    // Return the formatted string
     return `${getDaySuffix(day)} ${month} ${year} at ${formattedHour}:${formattedMinute} ${period}`;
 }
+
+export const getGreeting = (name:any) => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+        return `Good morning, ${name}!`;
+    } else if (currentHour < 18) {
+        return `Good afternoon, ${name}!`;
+    } else {
+        return `Good evening, ${name}!`;
+    }
+};

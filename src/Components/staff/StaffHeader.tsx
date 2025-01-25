@@ -29,12 +29,12 @@ const StaffHeader = ({ onLogout, profile }: any) => {
                     />
                 </button>
                 {isProfileOpen && (
-                    <div className="absolute right-0 mt-2 bg-white text-gray-800 rounded-lg shadow-lg w-40">
+                    <div className="absolute right-0 mt-2 bg-gray-100 text-gray-800 rounded-lg shadow-lg w-40 z-[100]">
                         <ul className="py-2">
                             <li>
                                 <Link
                                     to={"settings"}
-                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition cursor-pointer block bg-gray-100 rounded-md text-gray-800"
+                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition cursor-pointer block text-gray-800"
                                     onClick={() => setIsProfileOpen((prev) => !prev)}
                                 >
                                     Settings
@@ -42,7 +42,7 @@ const StaffHeader = ({ onLogout, profile }: any) => {
                             </li>
                             <li>
                                 <button
-                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition bg-gray-100 rounded-md text-gray-800"
+                                    className="w-full text-left px-4 py-2 hover:bg-gray-200 transition text-gray-800"
                                     onClick={onLogout}
                                 >
                                     Logout

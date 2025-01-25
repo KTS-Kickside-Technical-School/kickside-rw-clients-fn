@@ -122,3 +122,12 @@ export const journalistRequestEditAccess = async (id: any) => {
         return handleError(error)
     }
 }
+
+export const journalistFindAnalysis = async (year: any) => {
+    try {
+        const response = await axiosInstance.get(`/api/articles/get-journalists-analytics/${year}`)
+        return response.data
+    } catch (error) {
+        return handleError(error);
+    }
+}
