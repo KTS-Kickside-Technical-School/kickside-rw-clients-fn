@@ -40,7 +40,6 @@ const Dashboard = ({ profile }: any) => {
     try {
       const response = await journalistFindAnalysis(year);
       if (response.status === 200) {
-        console.log(response);
         setJournalistAnalysis(response.data);
       } else {
         toast.error(response.message);
@@ -107,12 +106,12 @@ const Dashboard = ({ profile }: any) => {
     const chartElement = document.getElementById('myChart');
 
     if (!chartElement) {
-      console.log('Chart element not found');
+      console.error('Chart element not found');
       return;
     }
 
     if (!journalistAnalysis || !journalistAnalysis.monthlyAnalytics) {
-      console.log('No data available for export');
+      console.error('No data available for export');
       return;
     }
 
@@ -168,7 +167,7 @@ const Dashboard = ({ profile }: any) => {
         }
         break;
       default:
-        console.log('Invalid format');
+        console.error('Invalid format');
     }
   };
 
@@ -176,17 +175,22 @@ const Dashboard = ({ profile }: any) => {
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <SEO title="Dashboard: Jounalists nalytics" />
       <header className="bg-white shadow-md p-4">
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Dashboard Title */}
-          <h1 className="text-xl font-bold text-gray-800">Dashboard</h1>
+        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-800 text-center sm:text-left">
+            Dashboard
+          </h1>
 
-          {/* Digital Clock */}
-          <div className="flex items-center space-x-4 ml-auto">
+          <div className="flex items-center justify-center sm:justify-end space-x-4 w-full sm:w-auto">
             <DigitalClock />
           </div>
         </div>
-        <span className="text-gray-600">{getGreeting(profile.firstName)}</span>
+        <div className="text-center sm:text-left mt-2 sm:mt-0">
+          <span className="text-gray-600 text-sm sm:text-base">
+            {getGreeting(profile.firstName)}
+          </span>
+        </div>
       </header>
+
       <main className="container mx-auto mt-6 p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white p-6 rounded shadow-md flex items-center">

@@ -22,6 +22,8 @@ import StaffViewSingleUser from './pages/staff/StaffViewSingleUser';
 import AdminNewUser from './pages/staff/AdminNewUser';
 import ContactUs from './pages/ContactUs';
 import Dashboard from './pages/staff/Dashboard';
+import AdminViewInquiries from './pages/staff/AdminViewInquiries';
+import AdminVIewSingleInquiry from './pages/staff/AdminVIewSingleInquiry';
 
 const AuthContext = createContext<any>(null);
 
@@ -122,6 +124,11 @@ const AppRouter = () => {
               <Route path="user/:id" element={<StaffViewSingleUser />} />
               <Route path="user/new" element={<AdminNewUser />} />
               <Route path="settings" element={<Settings />} />
+              <Route
+                path="inquiries"
+                element={<AdminViewInquiries profile={profile} />}
+              />
+              <Route path="inquiry/:id" element={<AdminVIewSingleInquiry />} />
               <Route path="*" element={<StaffNotFound />} />
             </Route>
           </Route>

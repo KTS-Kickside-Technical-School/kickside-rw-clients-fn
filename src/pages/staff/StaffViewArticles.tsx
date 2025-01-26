@@ -23,7 +23,6 @@ const StaffViewArticles = ({ profile }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  console.log(profile);
   const articlesPerPage = 15;
 
   const fetchArticles = async () => {
