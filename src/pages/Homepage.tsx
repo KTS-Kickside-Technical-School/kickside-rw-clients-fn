@@ -8,7 +8,6 @@ import SEO from '../utils/SEO';
 import Footer from '../Components/Footer';
 
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
-import LoadingSpinner from '../Components/LoadingSpinner';
 
 const Homepage = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -29,11 +28,8 @@ const Homepage = () => {
   }, []);
 
   const renderArticle = (article: any) => (
-    <Link to={`/news/${article?.slug}`}>
-      <div
-        className="relative h-[450px] sm:h-[300px] md:h-[400px] lg:h-[200px] overflow-hidden"
-        key={article?._id}
-      >
+    <Link to={`/news/${article?.slug}`} key={article?._id}>
+      <div className="relative h-[450px] sm:h-[300px] md:h-[400px] lg:h-[200px] overflow-hidden">
         <img
           src={article?.coverImage || ''}
           alt={article?.title || ''}
@@ -79,6 +75,32 @@ const Homepage = () => {
     </ol>
   );
 
+  const renderSkeleton = () => (
+    <div className="w-full flex flex-col lg:flex-row gap-4 animate-pulse">
+      <div className="flex-1 lg:flex-grow sm:h-[500px] md:h-[600px] lg:h-auto min-h-[500px] bg-gray-700 rounded-lg"></div>
+
+      <div className="flex-1 lg:flex-grow space-y-4">
+        {Array(3)
+          .fill(null)
+          .map((_, index) => (
+            <div
+              key={index}
+              className="h-[450px] sm:h-[300px] md:h-[400px] lg:h-[200px] bg-gray-700 rounded-lg"
+            ></div>
+          ))}
+      </div>
+
+      <div className="flex-1 lg:flex-grow px-4 space-y-3">
+        <div className="h-6 bg-gray-700 w-1/2 rounded"></div>
+        {Array(4)
+          .fill(null)
+          .map((_, index) => (
+            <div key={index} className="h-5 bg-gray-700 rounded"></div>
+          ))}
+      </div>
+    </div>
+  );
+
   return (
     <>
       <SEO title="Home: Kickside Rw - Best of Tech, Sports and Showbizz. All Trending news in one place" />
@@ -86,11 +108,7 @@ const Homepage = () => {
         <div className="m-auto">
           <Header />
           <div className="w-[90%] lg:w-[80%] mx-auto flex flex-col sm:flex-col lg:flex-row min-h-[60vh] gap-4">
-            {loading ? (
-              <div className="w-full flex justify-center items-center">
-                <LoadingSpinner />
-              </div>
-            ) : (
+            {loading ? renderSkeleton() : (
               <>
                 <Link
                   to={`/news/${articles[0]?.slug}`}
@@ -137,9 +155,7 @@ const Homepage = () => {
                 </Link>
 
                 <div className="flex-1 lg:flex-grow space-y-4">
-                  {articles
-                    .slice(1, 4)
-                    .map((article: any) => renderArticle(article))}
+                  {articles.slice(1, 4).map((article: any) => renderArticle(article))}
                 </div>
 
                 <div className="flex-1 lg:flex-grow px-4">
