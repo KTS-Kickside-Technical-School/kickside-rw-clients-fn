@@ -41,7 +41,7 @@ const AdminViewSingleInquiry = () => {
     try {
       await markInquiryAsRead(id);
       toast.success('Inquiry marked as read successfully!');
-      fetchSingleInquiry(); // Refresh inquiry details
+      fetchSingleInquiry();
     } catch (error) {
       console.error('Error marking inquiry as read:', error);
       toast.error('Failed to mark inquiry as read');
@@ -69,7 +69,7 @@ const AdminViewSingleInquiry = () => {
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">
               <strong>Status:</strong>{' '}
-              {inquiry?.isRead ? (
+              {inquiry?.status === 'solved' ? (
                 <span className="text-green-600 flex items-center gap-2">
                   <MdOutlineMarkEmailRead /> Solved
                 </span>
@@ -86,9 +86,6 @@ const AdminViewSingleInquiry = () => {
           <p className="mb-2">
             <strong>Email:</strong> {inquiry?.email}
           </p>
-          <p className="mb-2">
-            <strong>Phone:</strong> {inquiry?.phone}
-          </p>
           <p className="mb-4">
             <strong>Message:</strong> {inquiry?.message}
           </p>
@@ -99,21 +96,25 @@ const AdminViewSingleInquiry = () => {
             >
               <AiOutlinePrinter /> Print Inquiry
             </button>
-            <button
-              onClick={handleMarkAsRead}
-              disabled={markingRead}
-              className={`flex items-center gap-2 px-4 py-2 rounded transition ${
-                markingRead ? 'bg-gray-400' : 'bg-green-500 hover:bg-green-600'
-              } text-white`}
-            >
-              {markingRead ? (
-                'Marking...'
-              ) : (
-                <>
-                  <MdOutlineMarkEmailRead /> Mark as Read
-                </>
-              )}
-            </button>
+            {inquiry.status !== 'solved' && (
+              <button
+                onClick={handleMarkAsRead}
+                disabled={markingRead}
+                className={`flex items-center gap-2 px-4 py-2 rounded transition ${
+                  markingRead
+                    ? 'bg-gray-400'
+                    : 'bg-green-500 hover:bg-green-600'
+                } text-white`}
+              >
+                {markingRead ? (
+                  'Marking...'
+                ) : (
+                  <>
+                    <MdOutlineMarkEmailRead /> Mark as Read
+                  </>
+                )}
+              </button>
+            )}
           </div>
         </div>
       )}
