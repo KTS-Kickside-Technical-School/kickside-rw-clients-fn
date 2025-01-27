@@ -16,4 +16,5 @@ export interface Author {
     isDisabled: boolean;
     role: string;
     disableReason: string;
+    username: string;
 }

@@ -183,7 +183,10 @@ const ArticleDetails: React.FC = () => {
               </>
             )}
             <div className="p-2 pb-4 mt-3 border-t-2 border-l-2 border-secondary bg-white shadow-lg">
-              <Link to="" className="flex-row flex items-center">
+              <Link
+                to={`/author/${article?.author?.username}`}
+                className="flex-row flex items-center"
+              >
                 <img
                   src={article?.author?.profile || Avatar}
                   alt="Avatar"
