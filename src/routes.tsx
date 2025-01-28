@@ -24,6 +24,7 @@ import ContactUs from './pages/ContactUs';
 import Dashboard from './pages/staff/Dashboard';
 import AdminViewInquiries from './pages/staff/AdminViewInquiries';
 import AdminVIewSingleInquiry from './pages/staff/AdminVIewSingleInquiry';
+import AuthorProfile from './pages/AuthorsProfile';
 
 const AuthContext = createContext<any>(null);
 
@@ -78,6 +79,7 @@ const AppRouter = () => {
         <Route path="/contactus" element={<ContactUs />} />
 
         <Route path="news/:slug" element={<ArticleDetails />} />
+        <Route path="author/:username" element={<AuthorProfile />} />
         <Route path="/staff">
           <Route
             path="login"

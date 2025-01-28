@@ -131,3 +131,12 @@ export const journalistFindAnalysis = async (year: any) => {
         return handleError(error);
     }
 }
+
+export const getAuthorsProfile = async (username: any) => {
+    try {
+        const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}`);
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}
