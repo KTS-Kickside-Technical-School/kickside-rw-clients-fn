@@ -25,6 +25,7 @@ import Dashboard from './pages/staff/Dashboard';
 import AdminViewInquiries from './pages/staff/AdminViewInquiries';
 import AdminVIewSingleInquiry from './pages/staff/AdminVIewSingleInquiry';
 import AuthorProfile from './pages/AuthorsProfile';
+import CategoryPage from './pages/CategoryPage';
 
 const AuthContext = createContext<any>(null);
 
@@ -76,6 +77,7 @@ const AppRouter = () => {
     <AuthContext.Provider value={{ profile, setProfile }}>
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/category/:categoryName" element={<CategoryPage />} />
         <Route path="/contactus" element={<ContactUs />} />
 
         <Route path="news/:slug" element={<ArticleDetails />} />
