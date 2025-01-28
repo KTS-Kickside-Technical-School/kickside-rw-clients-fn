@@ -28,7 +28,6 @@ const AuthorProfile: React.FC = () => {
   const fetchAuthorProfile = async () => {
     try {
       const response = await getAuthorsProfile(username);
-      console.log(response);
       if (response.status === 200) {
         setAuthor(response.data.author);
         setArticles(response.data.articles);
@@ -68,23 +67,23 @@ const AuthorProfile: React.FC = () => {
     <>
       <SEO
         title={
-          `${author?.firstName} ${author.lastName} - Kickside Rwanda` ||
+          `${author?.firstName} ${author?.lastName} - Kickside Rwanda` ||
           'Journalist - Kickside Rwanda'
         }
         description={
           author?.bio ||
-          `Discover more about ${author.firstName} ${author.lastName} on Kickside.`
+          `Discover more about ${author?.firstName} ${author?.lastName} on Kickside.`
         }
         author={
-          `${author?.firstName} ${author.lastName}` || 'Ndahimana Bonheur'
+          `${author?.firstName} ${author?.lastName}` || 'Ndahimana Bonheur'
         }
         ogTitle={
-          `${author?.firstName} ${author.lastName} - Kickside Rwanda` ||
+          `${author?.firstName} ${author?.lastName} - Kickside Rwanda` ||
           'Author Profile - Kickside Rwanda'
         }
         ogDescription={
           author?.bio ||
-          `Discover more about ${author.firstName} ${author.lastName} on Kickside.`
+          `Discover more about ${author?.firstName} ${author?.lastName} on Kickside.`
         }
         ogImage={author?.profile || Avatar}
         ogUrl={window.location.href}
@@ -128,10 +127,13 @@ const AuthorProfile: React.FC = () => {
                   {loading ? (
                     <Skeleton height={20} width={150} className="mb-2" />
                   ) : (
-                    <p className="text-gray-600 mb-2 flex items-center">
+                    <Link
+                      to={`mailto:${author?.email}`}
+                      className="text-gray-600 mb-2 flex items-center"
+                    >
                       <MdEmail className="mr-2" />
                       {author?.email}
-                    </p>
+                    </Link>
                   )}
 
                   {loading ? (
@@ -155,7 +157,7 @@ const AuthorProfile: React.FC = () => {
                     <Skeleton height={20} width={300} />
                   ) : (
                     <div className="text-gray-700 italic flex items-center">
-                      <PiArticleNyTimes />
+                      <PiArticleNyTimes className="mr-2" />
                       {articles.length || 0} articles published
                     </div>
                   )}
@@ -257,7 +259,7 @@ const AuthorProfile: React.FC = () => {
                                 />
                               </div>
                               <p className="text-sm sm:text-base font-semibold text-gray-800 group-hover:text-primary">
-                                {journalist.firstName} {journalist.lastName}
+                                {journalist.firstName} {journalist?.lastName}
                               </p>
                             </Link>
                           ))}
