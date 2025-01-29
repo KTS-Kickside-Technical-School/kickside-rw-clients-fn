@@ -16,6 +16,7 @@ import RelatedArticles from '../Components/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
 import { BsEye } from 'react-icons/bs';
+import NewsLetter from '../Components/Newsletter';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -112,7 +113,7 @@ const ArticleDetails: React.FC = () => {
   return (
     <>
       <SEO
-        title={`${article?.title} - Kickside Rwanda`}
+        title={`${isLoading ? 'Loading' : article?.title} - Kickside Rwanda`}
         description={article?.content}
         author={`${article?.author.firstName} ${article?.author.lastName}`}
         ogTitle={`${article?.title}`}
@@ -140,9 +141,12 @@ const ArticleDetails: React.FC = () => {
               <Skeleton className="w-3/4 h-8 mx-auto lg:mx-0 mb-4" />
             ) : (
               <>
-                <span className="border-t-2 border-dark pb-4">
+                <Link
+                  to={`/category/${article?.category}`}
+                  className="border-t-2 border-dark pb-4 hover:underline hover:text-primary"
+                >
                   {article?.category}
-                </span>
+                </Link>
                 <h1 className="text-2xl lg:text-4xl font-bold text-gray-800">
                   {article?.title}
                 </h1>
@@ -202,7 +206,10 @@ const ArticleDetails: React.FC = () => {
               <div className="font-bold pt-3">
                 {article?.author?.bio || 'Passionate journalist'}
               </div>
-              <Link to={''} className="font-bold text-grayac text-sm">
+              <Link
+                to={`/author/${article?.author?.username}`}
+                className="font-bold text-grayac text-sm"
+              >
                 View profile
               </Link>
             </div>
@@ -291,6 +298,7 @@ const ArticleDetails: React.FC = () => {
           </div>
         </div>
       </div>
+      <NewsLetter />
       <Footer />
     </>
   );
