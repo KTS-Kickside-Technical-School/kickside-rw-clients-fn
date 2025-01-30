@@ -3,7 +3,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
   return (
-    <div className="pb-3">
+    <div className="pb-3 mb-3 ">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
         {seeMore !== false && (
@@ -20,7 +20,7 @@ const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
           articles.slice(0, 3).map((article: any) => (
             <Link
               to={`/news/${article.slug}`}
-              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform transform hover:scale-105"
+              className="bg-white shadow-md overflow-hidden transition-transform transform hover:scale-105"
             >
               <img
                 className="w-full h-56 object-cover"
@@ -40,8 +40,11 @@ const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
                 >
                   {article.title}
                 </Link>
-                <p className="text-sm text-gray-600">
-                  <Link to="#" className="text-blue-600 hover:underline">
+                <p className="text-sm text-gray-400">
+                  <Link
+                    to={`/author/${article.author.username}`}
+                    className=" hover:underline"
+                  >
                     {article.author.firstName} {article.author.lastName}
                   </Link>{' '}
                   -{' '}

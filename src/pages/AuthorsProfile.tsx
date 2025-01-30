@@ -169,7 +169,7 @@ const AuthorProfile: React.FC = () => {
                   {currentArticles && currentArticles.length > 0 && (
                     <div>
                       <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        Articles by {author?.username || 'this author'}
+                        My Articles
                       </h2>
                       <div className="space-y-4">
                         {loading

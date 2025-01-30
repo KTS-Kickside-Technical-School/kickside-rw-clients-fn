@@ -52,11 +52,31 @@ const Header = () => {
                                         </button>
                                         <nav>
                                             <ul className="flex flex-col gap-4">
-                                                <li><a href="#" className="hover:underline">Tech</a></li>
-                                                <li><a href="#" className="hover:underline">Sports</a></li>
-                                                <li><a href="#" className="hover:underline">Showbizz</a></li>
-                                                <li><a href="#" className="hover:underline">Podcasts</a></li>
-                                                <li><a href="#" className="hover:underline">Newsletter</a></li>
+                                                <li>
+                                                    <Link to="/category/Technology" className="hover:underline">
+                                                        Technology
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link to="/category/Sports" className="hover:underline">
+                                                        Sports
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link to="/category/Entertainment" className="hover:underline">
+                                                        Entertainment
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <a href="#" className="hover:underline">
+                                                        Podcasts
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" className="hover:underline">
+                                                        Newsletter
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </nav>
                                     </div>
@@ -65,11 +85,29 @@ const Header = () => {
 
                             <nav className="hidden lg:flex flex-row justify-center gap-4">
                                 <ul className="flex gap-4">
-                                    <li><a href="#" className="hover:underline">Tech</a></li>
-                                    <li><a href="#" className="hover:underline">Sports</a></li>
-                                    <li><a href="#" className="hover:underline">Showbizz</a></li>
-                                    <li><a href="#" className="hover:underline">Podcasts</a></li>
-                                    <li><a href="#" className="hover:underline">Newsletter</a></li>
+                                    <li>
+                                        <Link to="/category/Technology" className="hover:underline">
+                                            Technology
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/category/Sports" className="hover:underline">
+                                            Sports
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link to="/category/Entertainment" className="hover:underline">
+                                            Entertainment
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="hover:underline">  Podcasts </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" className="hover:underline">
+                                            Newsletter
+                                        </a>
+                                    </li>
                                 </ul>
                             </nav>
 

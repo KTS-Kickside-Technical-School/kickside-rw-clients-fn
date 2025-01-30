@@ -12,6 +12,7 @@ export interface ArticleType {
     status: string;
     isEditable: boolean;
     views: number;
+    slug: string;
 }
 
 export interface MonthlyAnalytics {
