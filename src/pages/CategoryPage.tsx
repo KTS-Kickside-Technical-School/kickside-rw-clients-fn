@@ -28,7 +28,7 @@ const CategoryPage: React.FC = () => {
       } catch (error) {
         console.error('Error fetching articles:', error);
       } finally {
-        setLoading(false);
+        setLoading(!loading);
       }
     };
 
@@ -53,29 +53,26 @@ const CategoryPage: React.FC = () => {
       <Header />
       <div className="w-full md:w-[80%] m-auto  text-white">
         <div className="container mx-auto px-4">
-          {articles.length > 0 ? (
-            <>
-              <MainArticles
-                loading={loading}
-                articles={articles.slice(0, 2)}
-                title={`Trending in ${categoryName}`}
-              />
-              {articles.length > 4 && (
-                <SubMainArticles
-                  title={''}
-                  loading={loading}
-                  articles={articles.slice(2, 5)}
-                />
-              )}
-              {articles.length > 12 && (
-                <LatestNews
-                  title={`Latest in ${categoryName}`}
-                  articles={articles.slice(6, 13)}
-                  loading={loading}
-                />
-              )}
-            </>
-          ) : (
+          <MainArticles
+            loading={loading}
+            articles={articles.slice(0, 2)}
+            title={`Trending in ${categoryName}`}
+          />
+          {articles.length > 4 && (
+            <SubMainArticles
+              title={''}
+              loading={loading}
+              articles={articles.slice(2, 5)}
+            />
+          )}
+          {articles.length > 12 && (
+            <LatestNews
+              title={`Latest in ${categoryName}`}
+              articles={articles.slice(6, 13)}
+              loading={loading}
+            />
+          )}
+          {articles.length < 0 && !loading && (
             <LatestNews
               title={`Latest articles`}
               articles={publishedArticles.slice(0, 20)}
