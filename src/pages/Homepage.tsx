@@ -29,11 +29,9 @@ const Homepage = () => {
     fetchArticles();
   }, []);
 
-  // Helper function to filter articles by category
   const filterArticlesByCategory = (category: string) =>
     articles.filter((article) => article.category === category);
 
-  // Ensure no repeated articles across sections
   const uniqueArticles = (articles: any[], excludeIds: string[]) =>
     articles.filter((article) => !excludeIds.includes(article._id));
 
@@ -120,7 +118,6 @@ const Homepage = () => {
               renderSkeleton()
             ) : (
               <>
-                {/* Main Featured Article */}
                 <Link
                   to={`/news/${articles[0]?.slug}`}
                   className="relative flex-1 lg:flex-grow sm:h-[500px] md:h-[600px] lg:h-auto min-h-[500px] flex flex-col justify-end"
@@ -165,14 +162,12 @@ const Homepage = () => {
                   </div>
                 </Link>
 
-                {/* Secondary Articles */}
                 <div className="flex-1 lg:flex-grow space-y-4">
                   {articles
                     .slice(1, 4)
                     .map((article) => renderArticle(article))}
                 </div>
 
-                {/* Top Headlines */}
                 <div className="flex-1 lg:flex-grow px-4">
                   <h1 className="font-bold text-white text-lg md:text-2xl mb-4">
                     Top Headlines
@@ -188,19 +183,17 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* Latest News Section */}
       <div className="w-[99%] m-auto">
         <LatestNews title="Latest news" loading={loading} articles={articles} />
       </div>
 
-      {/* Category Sections */}
       {['Technology', 'Sports', 'Entertainment'].map((category, index) => {
         const filteredArticles = filterArticlesByCategory(category);
-        const mainArticles = filteredArticles.slice(0, 2); // Limit to 2 articles for main section
+        const mainArticles = filteredArticles.slice(0, 2);
         const subMainArticles = uniqueArticles(
           filteredArticles,
           mainArticles.map((a) => a._id)
-        ).slice(0, 3); // Limit to 3 articles for submain section
+        ).slice(0, 3);
 
         return (
           <React.Fragment key={category}>
