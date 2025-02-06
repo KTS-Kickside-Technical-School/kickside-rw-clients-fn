@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link } from 'react-router-dom';
-
 import AdvertisementSection from '../Components/AdvertisementSection';
 import Header from '../Components/Header';
 import SEO from '../utils/SEO';
 import Footer from '../Components/Footer';
-
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
+import LatestNews from '../Components/LatestByCategory';
+import MainArticles from '../Components/MainArticles';
+import SubMainArticles from '../Components/SubMainArticles';
+import NewsLetter from '../Components/Newsletter';
 
 const Homepage = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -26,6 +28,14 @@ const Homepage = () => {
     };
     fetchArticles();
   }, []);
+
+  // Helper function to filter articles by category
+  const filterArticlesByCategory = (category: string) =>
+    articles.filter((article) => article.category === category);
+
+  // Ensure no repeated articles across sections
+  const uniqueArticles = (articles: any[], excludeIds: string[]) =>
+    articles.filter((article) => !excludeIds.includes(article._id));
 
   const renderArticle = (article: any) => (
     <Link to={`/news/${article?.slug}`} key={article?._id}>
@@ -78,7 +88,6 @@ const Homepage = () => {
   const renderSkeleton = () => (
     <div className="w-full flex flex-col lg:flex-row gap-4 animate-pulse">
       <div className="flex-1 lg:flex-grow sm:h-[500px] md:h-[600px] lg:h-auto min-h-[500px] bg-gray-700 rounded-lg"></div>
-
       <div className="flex-1 lg:flex-grow space-y-4">
         {Array(3)
           .fill(null)
@@ -89,7 +98,6 @@ const Homepage = () => {
             ></div>
           ))}
       </div>
-
       <div className="flex-1 lg:flex-grow px-4 space-y-3">
         <div className="h-6 bg-gray-700 w-1/2 rounded"></div>
         {Array(4)
@@ -108,8 +116,11 @@ const Homepage = () => {
         <div className="m-auto">
           <Header />
           <div className="w-[90%] lg:w-[80%] mx-auto flex flex-col sm:flex-col lg:flex-row min-h-[60vh] gap-4">
-            {loading ? renderSkeleton() : (
+            {loading ? (
+              renderSkeleton()
+            ) : (
               <>
+                {/* Main Featured Article */}
                 <Link
                   to={`/news/${articles[0]?.slug}`}
                   className="relative flex-1 lg:flex-grow sm:h-[500px] md:h-[600px] lg:h-auto min-h-[500px] flex flex-col justify-end"
@@ -154,10 +165,14 @@ const Homepage = () => {
                   </div>
                 </Link>
 
+                {/* Secondary Articles */}
                 <div className="flex-1 lg:flex-grow space-y-4">
-                  {articles.slice(1, 4).map((article: any) => renderArticle(article))}
+                  {articles
+                    .slice(1, 4)
+                    .map((article) => renderArticle(article))}
                 </div>
 
+                {/* Top Headlines */}
                 <div className="flex-1 lg:flex-grow px-4">
                   <h1 className="font-bold text-white text-lg md:text-2xl mb-4">
                     Top Headlines
@@ -172,6 +187,42 @@ const Homepage = () => {
           </div>
         </div>
       </div>
+
+      {/* Latest News Section */}
+      <div className="w-[99%] m-auto">
+        <LatestNews title="Latest news" loading={loading} articles={articles} />
+      </div>
+
+      {/* Category Sections */}
+      {['Technology', 'Sports', 'Entertainment'].map((category, index) => {
+        const filteredArticles = filterArticlesByCategory(category);
+        const mainArticles = filteredArticles.slice(0, 2); // Limit to 2 articles for main section
+        const subMainArticles = uniqueArticles(
+          filteredArticles,
+          mainArticles.map((a) => a._id)
+        ).slice(0, 3); // Limit to 3 articles for submain section
+
+        return (
+          <React.Fragment key={category}>
+            <div>
+              <MainArticles
+                title={category}
+                articles={mainArticles}
+                loading={loading}
+              />
+              <div className="w-[88%] mx-auto">
+                <SubMainArticles
+                  title=""
+                  articles={subMainArticles}
+                  loading={loading}
+                />
+              </div>
+            </div>
+            {index < 1 && <NewsLetter />}
+          </React.Fragment>
+        );
+      })}
+      <div className="mt-5"></div>
       <Footer />
     </>
   );
