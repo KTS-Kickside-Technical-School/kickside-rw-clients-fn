@@ -26,6 +26,7 @@ import AdminViewInquiries from './pages/staff/AdminViewInquiries';
 import AdminVIewSingleInquiry from './pages/staff/AdminVIewSingleInquiry';
 import AuthorProfile from './pages/AuthorsProfile';
 import CategoryPage from './pages/CategoryPage';
+import Unsubscribe from './pages/Unsubscribe';
 
 const AuthContext = createContext<any>(null);
 
@@ -82,6 +83,7 @@ const AppRouter = () => {
 
         <Route path="news/:slug" element={<ArticleDetails />} />
         <Route path="author/:username" element={<AuthorProfile />} />
+        <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} />
         <Route path="/staff">
           <Route
             path="login"
