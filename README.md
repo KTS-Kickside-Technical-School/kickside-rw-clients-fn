@@ -9,3 +9,4 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/207c1f8d-1792-4ce6-80a8-551175b49ddd/deploy-status)](https://app.netlify.com/sites/kicksiderw-clients/deploys)
 
 **Deploy link:** https://kickside.rw/
+
