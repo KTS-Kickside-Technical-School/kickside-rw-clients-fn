@@ -33,6 +33,7 @@ const StaffViewArticles = ({ profile }: any) => {
           ? await getAllArticles()
           : await getOwnArticles();
 
+      console.log(response);
       if (response.status !== 200) {
         throw new Error(response.message || 'Failed to fetch articles');
       }
@@ -216,38 +217,34 @@ const StaffViewArticles = ({ profile }: any) => {
                               {article.category}
                             </div>
                           </td>
-                          {/* Author Column */}
                           <td className="px-6 py-4 whitespace-nowrap max-w-[200px] truncate">
                             <div className="text-sm text-gray-900">
-                              {article.author.firstName}{' '}
-                              {article.author.lastName}
+                              {article?.author?.firstName}{' '}
+                              {article?.author?.lastName}
                             </div>
                           </td>
-                          {/* Date Column */}
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-40">
-                            {formatDateTime(article.createdAt)}
+                            {formatDateTime(article?.createdAt)}
                           </td>
-                          {/* Status Column */}
                           <td className="px-6 py-4 whitespace-nowrap text-sm w-28">
                             <span
                               className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(
-                                article.status
+                                article?.status
                               )}`}
                             >
-                              {article.status}
+                              {article?.status || ''}
                             </span>
                           </td>
-                          {/* Actions Column */}
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium w-40">
                             <div className="flex space-x-2">
-                              <Link to={`/staff/article/${article._id}`}>
+                              <Link to={`/staff/article/${article?._id}`}>
                                 <FiEye className="text-indigo-600" />
                               </Link>
                               {profile?.role === 'Journalist' &&
-                                (article.isEditable === false ? (
+                                (article?.isEditable === false ? (
                                   <button
                                     onClick={() => {
-                                      sendEditRequest(article._id);
+                                      sendEditRequest(article?._id);
                                     }}
                                     title="Request to edit file"
                                   >
