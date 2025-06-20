@@ -52,7 +52,6 @@ const AppRouter = () => {
     }
   };
 
-  // Fetch User Profile only when necessary
   const fetchUserProfile = async () => {
     try {
       const response = await userViewProfile();

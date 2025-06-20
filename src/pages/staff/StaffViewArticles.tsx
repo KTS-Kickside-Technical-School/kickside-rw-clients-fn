@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FiEdit, FiEye, FiPlus } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
@@ -33,10 +33,9 @@ const StaffViewArticles = ({ profile }: any) => {
           ? await getAllArticles()
           : await getOwnArticles();
 
-      console.log(response);
-      if (response.status !== 200) {
-        throw new Error(response.message || 'Failed to fetch articles');
-      }
+      const message = response?.message || 'Failed to fetch articles';
+      if (!response || response.status !== 200) throw new Error(message);
+
       setArticles(response.articles || response.data?.articles || []);
       setError('');
     } catch (err: any) {
@@ -46,28 +45,24 @@ const StaffViewArticles = ({ profile }: any) => {
       setIsLoading(false);
     }
   };
-  const didFetch = useRef(false);
 
   useEffect(() => {
-    if (profile) {
-      fetchArticles();
-      didFetch.current = true;
-    }
+    fetchArticles();
   }, []);
 
   const filteredArticles = articles.filter((article: ArticleType) =>
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedArticles = [...filteredArticles].sort(
-    (a: ArticleType, b: ArticleType) => {
+  const sortedArticles = useMemo(() => {
+    return [...filteredArticles].sort((a: ArticleType, b: ArticleType) => {
       if (sortOption === 'date') return b.createdAt.localeCompare(a.createdAt);
       if (sortOption === 'status') return a.status.localeCompare(b.status);
       if (sortOption === 'category')
         return a.category.localeCompare(b.category);
       return 0;
-    }
-  );
+    });
+  }, [filteredArticles, sortOption]);
 
   const pageCount = Math.ceil(sortedArticles.length / articlesPerPage);
   const offset = currentPage * articlesPerPage;
@@ -190,37 +185,34 @@ const StaffViewArticles = ({ profile }: any) => {
                     <tbody className="divide-y divide-gray-200">
                       {displayedArticles.map((article: ArticleType, index) => (
                         <tr
-                          key={article._id}
+                          key={article?._id}
                           className="hover:bg-gray-50 transition-colors"
                         >
-                          {/* Index Column */}
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-10">
                             {offset + index + 1}
                           </td>
-                          {/* Image Column */}
                           <td className="px-6 py-4 whitespace-nowrap w-32">
                             <img
-                              src={article.coverImage}
-                              alt={article.title}
+                              src={article?.coverImage}
+                              alt={article?.title}
                               className="w-24 object-cover rounded-lg shadow-sm"
                             />
                           </td>
-                          {/* Title Column */}
                           <td className="px-6 py-4 whitespace-nowrap max-w-[200px] truncate">
                             <div className="text-sm font-medium text-gray-900">
-                              {article.title}
+                              {article?.title}
                             </div>
                           </td>
-                          {/* Category Column */}
                           <td className="px-6 py-4 whitespace-nowrap max-w-[150px] truncate">
                             <div className="text-sm text-gray-900">
-                              {article.category}
+                              {article?.category}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap max-w-[200px] truncate">
                             <div className="text-sm text-gray-900">
-                              {article?.author?.firstName}{' '}
-                              {article?.author?.lastName}
+                              {article?.author
+                                ? `${article.author.firstName} ${article.author.lastName}`
+                                : 'Unknown'}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 w-40">
@@ -266,6 +258,7 @@ const StaffViewArticles = ({ profile }: any) => {
                     <ReactPaginate
                       previousLabel="← Previous"
                       nextLabel="Next →"
+                      forcePage={currentPage}
                       pageCount={pageCount}
                       onPageChange={(event) => setCurrentPage(event.selected)}
                       containerClassName="flex justify-center items-center gap-2"

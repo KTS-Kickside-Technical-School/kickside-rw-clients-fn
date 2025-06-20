@@ -152,42 +152,42 @@ const StaffViewOwnArticles = ({ profile }: any) => {
                                         </thead>
                                         <tbody className="divide-y divide-gray-200">
                                             {displayedArticles.map((article: ArticleType, index) => (
-                                                <tr key={article._id} className="hover:bg-gray-50 transition-colors">
+                                                <tr key={article?._id} className="hover:bg-gray-50 transition-colors">
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                         {offset + index + 1}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <img
-                                                            src={article.coverImage}
-                                                            alt={article.title}
+                                                            src={article?.coverImage}
+                                                            alt={article?.title}
                                                             className="w-24 object-cover rounded-lg shadow-sm"
                                                         />
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm font-medium text-gray-900">{article.title}</div>
+                                                        <div className="text-sm font-medium text-gray-900">{article?.title}</div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{article.category}</div>
+                                                        <div className="text-sm text-gray-900">{article?.category}</div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
-                                                        <div className="text-sm text-gray-900">{article.author.firstName}{" "}{article.author.lastName}</div>
+                                                        <div className="text-sm text-gray-900">{article?.author?.firstName}{" "}{article.author.lastName}</div>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        {formatDateTime(article.createdAt)}
+                                                        {formatDateTime(article?.createdAt)}
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm">
                                                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(article.status)}`}>
-                                                            {article.status}
+                                                            {article?.status}
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                         <div className="flex space-x-2">
-                                                            <Link to={`/staff/article/${article._id}`}>
+                                                            <Link to={`/staff/article/${article?._id}`}>
                                                                 <FiEye className="text-indigo-600" />
                                                             </Link>
-                                                            {(article.isEditable === false ? (
+                                                            {(article?.isEditable === false ? (
                                                                 <button onClick={() => {
-                                                                    sendEditRequest(article._id)
+                                                                    sendEditRequest(article?._id)
                                                                 }} title="Request to edit file">
                                                                     <BiEditAlt className="text-primary" />
                                                                 </button>
