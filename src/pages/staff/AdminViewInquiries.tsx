@@ -42,11 +42,11 @@ const AdminViewInquiries = ({ profile }: { profile: any }) => {
     }
   }, []);
 
-  const filteredInquiries = inquiries.filter((inquiry) =>
+  const filteredInquiries = inquiries.filter((inquiry: any) =>
     inquiry.firstName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedUsers = [...filteredInquiries].sort((a, b) => {
+  const sortedUsers = [...filteredInquiries].sort((a: any, b: any) => {
     if (sortOption === 'Inquiry Date')
       return b.createdAt.localeCompare(a.createdAt);
     if (sortOption === 'firstName')
