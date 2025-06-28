@@ -118,10 +118,10 @@ const ArticleDetails: React.FC = () => {
         author={`${article?.author.firstName} ${article?.author.lastName}`}
         ogTitle={`${article?.title}`}
         ogDescription={article?.content}
-        ogImage={article?.coverImage || '/logo.svg'}
+        ogImage={article?.coverImage}
         ogUrl={window.location.href}
         ogType="article"
-        twitterCard="summary_large_image"
+        twitterCard={article?.coverImage}
         twitterCreator="@kickside_rw"
       />
       <div className="bg-gray-100 min-h-screen">

@@ -27,6 +27,7 @@ import AdminVIewSingleInquiry from './pages/staff/AdminVIewSingleInquiry';
 import AuthorProfile from './pages/AuthorsProfile';
 import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
+import AdminMailingList from './pages/staff/AdminMailingList';
 
 const AuthContext = createContext<any>(null);
 
@@ -134,6 +135,7 @@ const AppRouter = () => {
                 element={<AdminViewInquiries profile={profile} />}
               />
               <Route path="inquiry/:id" element={<AdminVIewSingleInquiry />} />
+              <Route path="mailing-list" element={<AdminMailingList />} />
               <Route path="*" element={<StaffNotFound />} />
             </Route>
           </Route>

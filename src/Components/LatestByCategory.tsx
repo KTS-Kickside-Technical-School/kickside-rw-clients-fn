@@ -15,7 +15,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
   loading,
 }) => {
   return (
-    <div className="container mx-auto mt-5">
+    <div className="mx-auto mt-5">
       <h1 className="text-4xl font-bold text-blue-600 mb-6">{title}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -75,7 +75,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
         lg:w-full"
         >
           <div className="bg-[#D8D8D8] h-[200px] sm:h-[300px] lg:h-[400px] w-full sm:w-[300px] p-3 border-solid border-2 border-secondary text-center text-[#B1B1B1] flex items-center justify-center">
-            <span>Advertisement</span>  
+            <span>Advertisement</span>
           </div>
           <div className="bg-[#D8D8D8] h-[200px] sm:h-[300px] lg:h-[400px] w-full sm:w-[300px] p-3 border-solid border-2 border-secondary text-center text-[#B1B1B1] flex items-center justify-center">
             <span>Advertisement</span>

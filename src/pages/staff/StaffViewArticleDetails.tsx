@@ -18,7 +18,7 @@ const StaffViewArticleDetails = ({ profile }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { id } = useParams<{ id: string }>();
-  const userRole = profile.role;
+  const userRole = profile?.role;
   const navigate = useNavigate();
 
   const fetchSingleArticle = async () => {

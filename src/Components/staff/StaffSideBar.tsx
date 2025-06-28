@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BiSupport } from 'react-icons/bi';
+import { BsMailbox } from 'react-icons/bs';
 import { MdDashboard, MdLogout, MdMenu } from 'react-icons/md';
 import { PiArticleNyTimesBold } from 'react-icons/pi';
 import { RxAvatar } from 'react-icons/rx';
@@ -82,6 +83,21 @@ const StaffSideBar = ({ onLogout, profile }: any) => {
                     } transition-all duration-300`}
                   >
                     Users
+                  </span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/staff/mailing-list"
+                  className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
+                >
+                  <BsMailbox size={20} />
+                  <span
+                    className={`${
+                      isOpen ? 'block' : 'hidden'
+                    } transition-all duration-300`}
+                  >
+                    Mailing list
                   </span>
                 </Link>
               </li>

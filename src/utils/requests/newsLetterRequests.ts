@@ -18,3 +18,12 @@ export const unsubscribeFromNewsLetter = async (email: string, token: string) =>
         return handleError(error);
     }
 }
+
+export const getSubscribersList = async () => {
+    try {
+        const response = await axiosInstance.get('/api/subscribers/get-subscription-list');
+        return response.data;
+    } catch (error: any) {
+        return handleError(error);
+    }
+}

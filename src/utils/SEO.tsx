@@ -1,27 +1,40 @@
-import Logo from '/logo.svg';
 import { Helmet } from 'react-helmet-async';
 
+interface SEOProps {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  author?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogUrl?: string;
+  ogType?: string;
+  twitterCard?: string;
+  twitterCreator?: string;
+  canonicalUrl?: string;
+}
 const SEO = ({
-  title = 'Kickside Rw: Best of Tech, Sports and Showbizz. All trending news in Rwanda and East Africa in one place',
-  description = 'Default Description',
-  keywords = 'News, Rwanda, Tech, technologies, Sports, Talents, Startups, Kigali, Hub of Innovation',
+  title = 'Kickside Rw: Best of Technology, Sports and Showbizz. All trending news in Rwanda and East Africa in one place',
+  description = 'Kickside Rw is the best of Tech, Sports and Showbizz. All trending news in Rwanda and East Africa in one place . We provide the hottest news and all trends in Rwanda and East Africa',
+  keywords = 'News, Rwanda, Technology,Business, Technologies, Sports, Talents, Startups, Kigali, Hub of Innovation',
   author = 'Kickside Rwanda',
   ogTitle,
-  ogDescription,
-  ogImage,
+  ogDescription = description,
+  ogImage = 'https://www.kickside.rw/logo.svg',
   ogUrl,
   ogType = 'website',
-  twitterCard = Logo,
+  twitterCard = ogImage ? 'summary_large_image' : 'summary',
   twitterCreator = '@kickside_rw',
-  canonicalUrl,
-}: any) => {
+  canonicalUrl = window.location.href,
+}: SEOProps) => {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': ogType,
     headline: title,
     description: description,
     author: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: `${author}`,
     },
     publisher: {
@@ -29,11 +42,11 @@ const SEO = ({
       name: 'Kickside Rwanda',
       logo: {
         '@type': 'ImageObject',
-        url: '/logo.svg',
+        url: ogImage,
       },
     },
     mainEntityOfPage: window.location.href,
-    image: ogImage || '/logo.svg',
+    image: ogImage,
   };
 
   const isStaffRoute = location.pathname.startsWith('/staff');
