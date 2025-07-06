@@ -182,3 +182,12 @@ export const updateArticle = async (id: string, data: any) => {
     return handleError(error)
   }
 }
+
+export const getPopularArticles = async ()=> {
+  try {
+    const response = await axiosInstance.get("/api/articles/get-popular-articles");
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}

@@ -18,6 +18,7 @@ import Avatar from '/avatar.svg';
 import { BsEye } from 'react-icons/bs';
 import NewsLetter from '../Components/Newsletter';
 import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import MostPopular from '../Components/MostPopularArticle';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -219,6 +220,7 @@ const ArticleDetails: React.FC = () => {
 
           <aside className="w-full lg:w-1/3">
             <AdvertisementSection />
+            <MostPopular />
           </aside>
         </div>
         <div className="flex flex-col lg:flex-col w-[90%] lg:w-[80%] mx-auto gap-8">
