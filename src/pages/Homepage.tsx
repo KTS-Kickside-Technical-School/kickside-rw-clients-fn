@@ -10,6 +10,7 @@ import LatestNews from '../Components/LatestByCategory';
 import MainArticles from '../Components/MainArticles';
 import SubMainArticles from '../Components/SubMainArticles';
 import NewsLetter from '../Components/Newsletter';
+import MainTopKSAd from '../Components/ads/MainTopKSAd';
 
 const Homepage = () => {
   const [articles, setArticles] = useState<any[]>([]);
@@ -108,7 +109,20 @@ const Homepage = () => {
 
   return (
     <>
-      <SEO title="Home: Kickside Rw - Best of Tech, Sports and Showbizz. Kickside digital newspaper the best Rwandan Technology, Showbizz and Business. All Trending news in one place" />
+      <SEO
+        mainData={{
+          title: 'Kickside Rw – Rwanda’s Top Tech, Sports & Showbiz News',
+          description:
+            'Kickside is Rwanda’s leading digital newspaper covering tech, sports, entertainment, and business. Get all trending news from Rwanda and East Africa in one place.',
+          author: 'Kickside Rwanda',
+          image: 'https://www.kickside.rw/logo.svg',
+          publishedAt: '2023-12-01T10:00:00Z',
+          type: 'website',
+        }}
+        canonicalUrl="https://www.kickside.rw/"
+      />
+      <MainTopKSAd />
+
       <div className="bg-primary pb-5">
         <Header />
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">

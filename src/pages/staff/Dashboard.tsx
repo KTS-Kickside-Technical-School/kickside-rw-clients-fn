@@ -173,7 +173,18 @@ const Dashboard = ({ profile }: any) => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
-      <SEO title="Dashboard: Jounalists nalytics" />
+      <SEO
+        mainData={{
+          title: 'Journalist Dashboard – Analytics & Performance',
+          description:
+            'View journalist performance metrics, article stats, and engagement analytics from the Kickside newsroom dashboard.',
+          author: 'Kickside Rwanda',
+          type: 'website',
+          publishedAt: new Date().toISOString(),
+        }}
+        canonicalUrl="https://www.kickside.rw/staff/dashboard"
+      />
+
       <header className="bg-white shadow-md p-4">
         <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
           <h1 className="text-lg sm:text-xl font-bold text-gray-800 text-center sm:text-left">
@@ -274,7 +285,7 @@ const Dashboard = ({ profile }: any) => {
             </div>
           </div>
 
-          <div id="myChart">
+          <div id="myChart" className="w-full h-[400px]">
             {journalistAnalysis && <Bar data={data} options={options} />}
           </div>
         </div>

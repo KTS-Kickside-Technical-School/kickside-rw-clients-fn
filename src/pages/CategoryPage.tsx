@@ -11,6 +11,8 @@ import {
 import SubMainArticles from '../Components/SubMainArticles';
 import NewsLetter from '../Components/Newsletter';
 import { ArticleType } from '../utils/types/Article';
+import SEO from '../utils/SEO';
+import MainTopKSAd from '../Components/ads/MainTopKSAd';
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
@@ -50,6 +52,15 @@ const CategoryPage: React.FC = () => {
   }, [categoryName]);
   return (
     <>
+      <SEO
+        mainData={{
+          title: ` All Trending ${categoryName} - Kickside News`,
+          type: 'article',
+        }}
+        canonicalUrl={`https://www.kickside.rw/category/${categoryName}`}
+      />
+      <MainTopKSAd />
+
       <Header />
       <div className="w-full md:w-[80%] m-auto  text-white">
         <div className="container mx-auto px-4">

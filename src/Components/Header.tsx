@@ -85,11 +85,6 @@ const Header = () => {
                             Entertainment
                           </Link>
                         </li>
-                        <li>
-                          <a href="#" className="hover:underline">
-                            Podcasts
-                          </a>
-                        </li>
                       </ul>
                     </nav>
                   </div>
@@ -120,12 +115,6 @@ const Header = () => {
                     >
                       Entertainment
                     </Link>
-                  </li>
-                  <li>
-                    <a href="#" className="hover:underline">
-                      {' '}
-                      Podcasts{' '}
-                    </a>
                   </li>
                 </ul>
               </nav>

@@ -1,88 +1,106 @@
 import { Helmet } from 'react-helmet-async';
 
-interface SEOProps {
-  title?: string;
+interface MainSEOData {
+  title: string;
   description?: string;
-  keywords?: string;
+  image?: string;
   author?: string;
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  ogUrl?: string;
-  ogType?: string;
-  twitterCard?: string;
-  twitterCreator?: string;
-  canonicalUrl?: string;
+  publishedAt?: string;
+  type?: 'article' | 'website' | 'product';
 }
+
+interface SEOProps {
+  mainData: MainSEOData;
+  canonicalUrl?: string;
+  twitterCreator?: string;
+  iaMarkupUrl?: string;
+  iaMarkupUrlDev?: string;
+  iaRulesUrl?: string;
+  iaRulesUrlDev?: string;
+}
+
 const SEO = ({
-  title = 'Kickside Rw: Best of Technology, Sports and Showbizz. All trending news in Rwanda and East Africa in one place',
-  description = 'Kickside Rw is the best of Tech, Sports and Showbizz. All trending news in Rwanda and East Africa in one place . We provide the hottest news and all trends in Rwanda and East Africa',
-  keywords = 'News, Rwanda, Technology,Business, Technologies, Sports, Talents, Startups, Kigali, Hub of Innovation',
-  author = 'Kickside Rwanda',
-  ogTitle,
-  ogDescription = description,
-  ogImage = 'https://www.kickside.rw/logo.svg',
-  ogUrl,
-  ogType = 'website',
-  twitterCard = ogImage ? 'summary_large_image' : 'summary',
+  mainData,
+  canonicalUrl = typeof window !== 'undefined' ? window.location.href : '',
   twitterCreator = '@kickside_rw',
-  canonicalUrl = window.location.href,
+  iaMarkupUrl = canonicalUrl,
+  iaMarkupUrlDev,
+  iaRulesUrl = 'https://www.kickside.rw/ia-rules.json',
+  iaRulesUrlDev,
 }: SEOProps) => {
+  const {
+    title,
+    description = 'Kickside is Rwanda’s leading digital newspaper covering tech, sports, entertainment, and business. Get all trending news from Rwanda and East Africa in one place. ',
+    image = 'https://www.kickside.rw/images/logo.svg',
+    author = 'Kickside News',
+    publishedAt = '2023-12-01T10:00:00Z',
+    type = 'article',
+  } = mainData;
+
+  const currentUrl =
+    canonicalUrl || (typeof window !== 'undefined' ? window.location.href : '');
+
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': ogType,
+    '@type': type === 'article' ? 'NewsArticle' : 'WebPage',
     headline: title,
-    description: description,
+    description,
+    image: [image],
     author: {
       '@type': 'Organization',
-      name: `${author}`,
+      name: author,
     },
     publisher: {
       '@type': 'Organization',
       name: 'Kickside Rwanda',
       logo: {
         '@type': 'ImageObject',
-        url: ogImage,
+        url: 'https://www.kickside.rw/logo.svg',
       },
     },
-    mainEntityOfPage: window.location.href,
-    image: ogImage,
+    mainEntityOfPage: currentUrl,
+    datePublished: publishedAt,
   };
-
-  const isStaffRoute = location.pathname.startsWith('/staff');
 
   return (
     <Helmet>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
       <meta name="author" content={author} />
-
-      <meta property="og:title" content={ogTitle || title} />
-      <meta property="og:description" content={ogDescription || description} />
-      <meta property="og:image" content={ogImage || '/default-image.jpg'} />
-      <meta property="og:url" content={ogUrl || window.location.href} />
-      <meta property="og:type" content={ogType} />
-
-      <meta name="twitter:card" content={twitterCard} />
-      <meta name="twitter:title" content={ogTitle || title} />
-      <meta name="twitter:description" content={ogDescription || description} />
-      <meta name="twitter:image" content={ogImage || '/default-image.jpg'} />
-      <meta name="twitter:creator" content={twitterCreator} />
-
+      <meta
+        name="keywords"
+        content="Rwanda News, Kickside, Tech, Sports, Showbiz, Kigali, East Africa"
+      />
       {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
-      {structuredData && (
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:url" content={currentUrl} />
+      <meta
+        property="og:type"
+        content={type === 'article' ? 'article' : 'website'}
+      />
+      <meta property="og:site_name" content="Kickside Rwanda" />
+
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:creator" content={twitterCreator} />
+
+      {iaMarkupUrl && <meta property="ia:markup_url" content={iaMarkupUrl} />}
+      {iaMarkupUrlDev && (
+        <meta property="ia:markup_url_dev" content={iaMarkupUrlDev} />
+      )}
+      {iaRulesUrl && <meta property="ia:rules_url" content={iaRulesUrl} />}
+      {iaRulesUrlDev && (
+        <meta property="ia:rules_url_dev" content={iaRulesUrlDev} />
       )}
 
-      {isStaffRoute && (
-        <>
-          <meta name="robots" content="noindex, nofollow" />
-        </>
-      )}
+      <script type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </script>
     </Helmet>
   );
 };

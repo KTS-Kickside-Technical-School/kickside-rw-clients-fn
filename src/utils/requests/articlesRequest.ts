@@ -135,30 +135,30 @@ export const approveEditRequest = async (id: any) => {
 };
 
 export const journalistRequestEditAccess = async (id: any) => {
-    try {
-        const response = await axiosInstance.post(`/api/articles/request-edit-access/${id}`);
-        return response.data
-    } catch (error) {
-        return handleError(error)
-    }
+  try {
+    const response = await axiosInstance.post(`/api/articles/request-edit-access/${id}`);
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
 }
 
 export const journalistFindAnalysis = async (year: any) => {
-    try {
-        const response = await axiosInstance.get(`/api/articles/get-journalists-analytics/${year}`)
-        return response.data
-    } catch (error) {
-        return handleError(error);
-    }
+  try {
+    const response = await axiosInstance.get(`/api/articles/get-journalists-analytics/${year}`)
+    return response.data
+  } catch (error) {
+    return handleError(error);
+  }
 }
 
 export const getAuthorsProfile = async (username: any) => {
-    try {
-        const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}`);
-        return response.data
-    } catch (error) {
-        return handleError(error)
-    }
+  try {
+    const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}`);
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
 }
 
 export const getArticlesByCategory = async (category: string) => {
@@ -172,3 +172,22 @@ export const getArticlesByCategory = async (category: string) => {
     return handleError(error);
   }
 };
+
+
+export const updateArticle = async (id: string, data: any) => {
+  try {
+    const response = await axiosInstance.put(`/api/articles/journalist-edit-article/${id}`, data);
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}
+
+export const getPopularArticles = async ()=> {
+  try {
+    const response = await axiosInstance.get("/api/articles/get-popular-articles");
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}

@@ -14,6 +14,8 @@ import Avatar from '/avatar.svg';
 import { PiArticleNyTimes } from 'react-icons/pi';
 import { BiUser } from 'react-icons/bi';
 import { MdCheck, MdEmail } from 'react-icons/md';
+import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import { FiHome } from 'react-icons/fi';
 
 const AuthorProfile: React.FC = () => {
   const { username } = useParams<{ username: string }>();
@@ -25,77 +27,70 @@ const AuthorProfile: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 10;
 
-  const fetchAuthorProfile = async () => {
-    try {
-      const response = await getAuthorsProfile(username);
-      if (response.status === 200) {
-        setAuthor(response.data.author);
-        setArticles(response.data.articles);
-        setOtherJournalists(response.data.relatedJournalists);
-      } else {
-        throw new Error("Author's profile is not available at the moment");
-      }
-    } catch (err: any) {
-      console.error('Error fetching author profile:', err.message);
-      setError("Author's profile is not available.");
-      toast.error(
-        "Error: Unable to load author's profile. Please try again later."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchAuthorProfile = async () => {
+      try {
+        setLoading(true);
+        const response = await getAuthorsProfile(username);
+        if (response.status === 200) {
+          setAuthor(response.data.author);
+          setArticles(response.data.articles);
+          setOtherJournalists(response.data.relatedJournalists);
+        } else {
+          throw new Error("Author's profile not available");
+        }
+      } catch (err: any) {
+        setError("Author's profile is not available.");
+        toast.error("Error loading author's profile. Try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchAuthorProfile();
   }, [username]);
 
   const indexOfLastArticle = currentPage * articlesPerPage;
-  const indexOfFirstArticle = indexOfLastArticle - articlesPerPage;
   const currentArticles = articles.slice(
-    indexOfFirstArticle,
+    indexOfLastArticle - articlesPerPage,
     indexOfLastArticle
   );
-
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
 
   const totalPages = Math.ceil(articles.length / articlesPerPage);
 
   return (
     <>
       <SEO
-        title={
-          `${author?.firstName} ${author?.lastName} - Kickside Rwanda` ||
-          'Journalist - Kickside Rwanda'
-        }
-        description={
-          author?.bio ||
-          `Discover more about ${author?.firstName} ${author?.lastName} on Kickside.`
-        }
-        author={
-          `${author?.firstName} ${author?.lastName}` || 'Ndahimana Bonheur'
-        }
-        ogTitle={
-          `${author?.firstName} ${author?.lastName} - Kickside Rwanda` ||
-          'Author Profile - Kickside Rwanda'
-        }
-        ogDescription={
-          author?.bio ||
-          `Discover more about ${author?.firstName} ${author?.lastName} on Kickside.`
-        }
-        ogImage={author?.profile || Avatar}
-        ogUrl={window.location.href}
-        ogType="profile"
-        twitterCard="summary_large_image"
-        twitterCreator="@kickside_rw"
+        mainData={{
+          title: author
+            ? `${author.firstName} ${author.lastName} - Kickside Rwanda`
+            : 'Journalist - Kickside Rwanda',
+          description:
+            author?.bio || 'Discover more about this journalist on Kickside.',
+          image: author?.profile,
+        }}
       />
+      <MainTopKSAd />
       <div className="bg-gray-50 min-h-screen">
         <Header />
         <main className="container mx-auto px-4 py-8">
           {error ? (
-            <div className="text-center text-red-600">{error}</div>
+            <div className="flex flex-col items-center justify-center min-h-[700px] bg-gray-100">
+              <h1 className="text-6xl font-bold text-indigo-500 mb-4">404</h1>
+              <h2 className="text-2xl font-semibold text-gray-700 mb-4">
+                Oops! Missing profile
+              </h2>
+              <p className="text-gray-500 mb-6 text-center max-w-md">
+                The author you are looking is not found. Don't worry it's not
+                your fault, our bad.
+              </p>
+              <Link
+                to={'/'}
+                className="flex items-center px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition"
+              >
+                <FiHome className="mr-2" />
+                Go to Homepage
+              </Link>
+            </div>
           ) : (
             <>
               <div className="bg-white shadow-xl rounded-lg p-6 flex flex-col md:flex-row items-center md:items-start">
@@ -108,22 +103,19 @@ const AuthorProfile: React.FC = () => {
                   />
                 ) : (
                   <img
-                    src={author?.profile || '/avatar.svg'}
+                    src={author?.profile || Avatar}
                     alt={`${author?.firstName} ${author?.lastName}`}
                     className="w-36 h-36 rounded-full object-cover mb-6 md:mb-0 md:mr-6 border-4 border-gray-200"
                   />
                 )}
-
                 <div className="text-center md:text-left">
                   {loading ? (
                     <Skeleton height={30} width={200} className="mb-2" />
                   ) : (
-                    <h1 className="text-3xl font-bold text-primary mb-2 flex items-center">
-                      <BiUser />
-                      {author?.firstName} {author?.lastName}
+                    <h1 className="text-3xl font-bold text-primary mb-2 flex items-center gap-2">
+                      <BiUser /> {author?.firstName} {author?.lastName}
                     </h1>
                   )}
-
                   {loading ? (
                     <Skeleton height={20} width={150} className="mb-2" />
                   ) : (
@@ -131,42 +123,32 @@ const AuthorProfile: React.FC = () => {
                       to={`mailto:${author?.email}`}
                       className="text-gray-600 mb-2 flex items-center"
                     >
-                      <MdEmail className="mr-2" />
-                      {author?.email}
+                      <MdEmail className="mr-2" /> {author?.email}
                     </Link>
                   )}
-
-                  {loading ? (
-                    <Skeleton height={20} width={300} className="mb-4" />
-                  ) : (
-                    <p className="text-gray-700 italic mb-4">
-                      {author?.bio || 'No bio yet!'}
-                    </p>
-                  )}
-
+                  <p className="text-gray-700 italic mb-4">
+                    {loading ? (
+                      <Skeleton height={20} width={300} />
+                    ) : (
+                      author?.bio || 'No bio yet!'
+                    )}
+                  </p>
                   {loading ? (
                     <Skeleton height={20} width={100} />
                   ) : (
                     <span className="inline-flex items-center text-sm bg-green-200 text-green-800 py-1 px-3 rounded-full mb-4">
-                      <MdCheck />
-                      {author?.rank || 'Passionate Journalist'}
+                      <MdCheck /> {author?.rank || 'Passionate Journalist'}
                     </span>
                   )}
-
-                  {loading ? (
-                    <Skeleton height={20} width={300} />
-                  ) : (
-                    <div className="text-gray-700 italic flex items-center">
-                      <PiArticleNyTimes className="mr-2" />
-                      {articles.length || 0} articles published
-                    </div>
-                  )}
+                  <div className="text-gray-700 italic flex items-center">
+                    <PiArticleNyTimes className="mr-2" />
+                    {articles.length} articles published
+                  </div>
                 </div>
               </div>
-
               <section className="mt-8 flex flex-col md:flex-row gap-6">
                 <div className="flex-1">
-                  {currentArticles && currentArticles.length > 0 && (
+                  {currentArticles.length > 0 && (
                     <div>
                       <h2 className="text-2xl font-semibold mb-4 text-primary">
                         My Articles
@@ -210,12 +192,11 @@ const AuthorProfile: React.FC = () => {
                               </div>
                             ))}
                       </div>
-
                       <div className="flex justify-center mt-6">
                         {[...Array(totalPages)].map((_, i) => (
                           <button
                             key={i}
-                            onClick={() => handlePageChange(i + 1)}
+                            onClick={() => setCurrentPage(i + 1)}
                             className={`mx-1 px-3 py-1 border rounded ${
                               currentPage === i + 1
                                 ? 'bg-primary text-white'
@@ -228,7 +209,6 @@ const AuthorProfile: React.FC = () => {
                       </div>
                     </div>
                   )}
-
                   <section className="mt-12">
                     <h2 className="text-2xl font-semibold mb-6 text-primary">
                       Meet Other Journalists
@@ -266,7 +246,6 @@ const AuthorProfile: React.FC = () => {
                     </div>
                   </section>
                 </div>
-
                 <aside className="w-full md:w-1/3 space-y-6">
                   <AdvertisementSection />
                   <MostPopular />

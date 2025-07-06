@@ -1,7 +1,7 @@
 import { Author } from "./User";
 
 export interface ArticleType {
-    _id: string;
+    _id?: any;
     title: string;
     coverImage: string;
     content: string;
@@ -19,4 +19,4 @@ export interface MonthlyAnalytics {
     month: string;
     comments: number;
     views: number;
-  }
+}

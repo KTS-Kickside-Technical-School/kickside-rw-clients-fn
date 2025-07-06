@@ -63,7 +63,7 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <ToastContainer />
-      <SEO title="View Users - Kickside RW" />
+      <SEO mainData={{ title: 'View Users - Kickside News' }} />
       <div className="max-w-8xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Users List</h1>

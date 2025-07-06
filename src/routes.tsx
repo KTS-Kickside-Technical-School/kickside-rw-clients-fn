@@ -28,6 +28,7 @@ import AuthorProfile from './pages/AuthorsProfile';
 import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
 import AdminMailingList from './pages/staff/AdminMailingList';
+import StaffEditArticle from './pages/staff/StaffEditArticle';
 
 const AuthContext = createContext<any>(null);
 
@@ -111,6 +112,7 @@ const AppRouter = () => {
                 element={<StaffViewArticles profile={profile} />}
               />
               <Route path="article/new" element={<StaffNewArticle />} />
+              <Route path="article/edit/:slug" element={<StaffEditArticle />} />
               <Route
                 path="article/:id"
                 element={<StaffViewArticleDetails profile={profile} />}
