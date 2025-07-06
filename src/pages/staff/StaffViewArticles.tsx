@@ -101,7 +101,7 @@ const StaffViewArticles = ({ profile }: any) => {
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <ToastContainer />
-      <SEO title="View Articles - Kickside RW" />
+      <SEO mainData={{ title: 'Journalist View Articles - Kickside News' }} />
       <div className="max-w-8xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Articles list</h1>
@@ -228,25 +228,43 @@ const StaffViewArticles = ({ profile }: any) => {
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium w-40">
-                            <div className="flex space-x-2">
-                              <Link to={`/staff/article/${article?._id}`}>
-                                <FiEye className="text-indigo-600" />
+                            <div className="flex items-center gap-2">
+                              <Link
+                                to={`/staff/article/${article?._id}`}
+                                title="View article"
+                              >
+                                <FiEye className="text-indigo-600 hover:text-indigo-800 transition" />
                               </Link>
                               {profile?.role === 'Journalist' &&
                                 (article?.isEditable === false ? (
                                   <button
-                                    onClick={() => {
-                                      sendEditRequest(article?._id);
-                                    }}
-                                    title="Request to edit file"
+                                    onClick={() =>
+                                      sendEditRequest(article?._id)
+                                    }
+                                    title="Request to edit article"
+                                    className="text-primary hover:text-blue-700 transition"
                                   >
-                                    <BiEditAlt className="text-primary" />
+                                    <BiEditAlt />
                                   </button>
                                 ) : (
-                                  <button title="Edit article">
-                                    <FiEdit className="text-green-600" />
-                                  </button>
+                                  <Link
+                                    to={`/staff/article/edit/${article?.slug}`}
+                                    title="Edit article"
+                                    className="text-green-600 hover:text-green-800 transition"
+                                  >
+                                    <FiEdit />
+                                  </Link>
                                 ))}
+                              {(profile?.role === 'Editor' ||
+                                profile?.role === 'Admin') && (
+                                <Link
+                                  to={`/staff/article/edit/${article?.slug}`}
+                                  title="Edit article"
+                                  className="text-green-600 hover:text-green-800 transition"
+                                >
+                                  <FiEdit />
+                                </Link>
+                              )}
                             </div>
                           </td>
                         </tr>

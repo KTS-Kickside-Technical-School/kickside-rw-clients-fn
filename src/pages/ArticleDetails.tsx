@@ -17,6 +17,7 @@ import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
 import { BsEye } from 'react-icons/bs';
 import NewsLetter from '../Components/Newsletter';
+import MainTopKSAd from '../Components/ads/MainTopKSAd';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -113,17 +114,18 @@ const ArticleDetails: React.FC = () => {
   return (
     <>
       <SEO
-        title={`${isLoading ? 'Loading' : article?.title} - Kickside Rwanda`}
-        description={article?.content}
-        author={`${article?.author.firstName} ${article?.author.lastName}`}
-        ogTitle={`${article?.title}`}
-        ogDescription={article?.content}
-        ogImage={article?.coverImage}
-        ogUrl={window.location.href}
-        ogType="article"
-        twitterCard={article?.coverImage}
-        twitterCreator="@kickside_rw"
+        mainData={{
+          title: `${article?.title} - Kickside News`,
+          description: `${article?.content}`,
+          author: `${article?.author.firstName} ${article?.author.lastName}`,
+          image: article?.coverImage,
+          publishedAt: article?.createdAt,
+          type: 'article',
+        }}
+        canonicalUrl={`https://www.kickside.rw/news/${article?.slug}`}
       />
+      <MainTopKSAd />
+
       <div className="bg-gray-100 min-h-screen">
         <Header />
         <div className="p-6 flex flex-col lg:flex-row w-[90%] min-h-[40vh] lg:w-[80%] mx-auto items-center gap-8">

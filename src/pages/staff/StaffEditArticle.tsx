@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiSave } from 'react-icons/fi';
 import 'react-quill/dist/quill.snow.css';
 import { useDropzone } from 'react-dropzone';
@@ -6,11 +6,47 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RichTextEditor from '../../Components/staff/RichTextEditor';
 import { uploadImageToCloudinary } from '../../utils/helpers/cloudinary';
-import { publishArticle } from '../../utils/requests/articlesRequest';
+import {
+  getSingleArticle,
+  updateArticle,
+} from '../../utils/requests/articlesRequest';
 import SEO from '../../utils/SEO';
 import ButtonSpinner from '../../Components/ButtonSpinner';
+import { useParams } from 'react-router-dom';
+import { ArticleType } from '../../utils/types/Article';
 
-const StaffNewArticle = () => {
+const LoadingSkeleton = () => (
+  <div className="p-6 bg-gray-50 min-h-screen animate-pulse">
+    <div className="max-w-4xl mx-auto space-y-6">
+      <div className="h-8 bg-gray-300 rounded w-1/3"></div>
+      <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
+        <div className="h-48 bg-gray-300 rounded"></div>
+        <div className="h-10 bg-gray-300 rounded w-2/3"></div>
+        <div className="h-10 bg-gray-300 rounded w-1/2"></div>
+        <div className="h-40 bg-gray-300 rounded"></div>
+      </div>
+      <div className="h-10 bg-gray-300 rounded w-1/4 ml-auto"></div>
+    </div>
+  </div>
+);
+
+const ErrorDisplay = ({ message }: any) => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="bg-white p-6 rounded-lg shadow-md max-w-md w-full text-center">
+      <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
+      <p className="text-gray-700 mb-4">{message}</p>
+      <button
+        className="mt-2 px-4 py-2 bg-indigo-600 text-white rounded-md"
+        onClick={() => window.location.reload()}
+      >
+        Try Again
+      </button>
+    </div>
+  </div>
+);
+
+const StaffEditArticle = () => {
+  const { slug } = useParams();
   const [category, setCategory] = useState('');
   const [title, setTitle] = useState('');
   const [coverImage, setCoverImage] = useState(null);
@@ -18,6 +54,9 @@ const StaffNewArticle = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
+  const [article, setArticle] = useState<ArticleType | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<any>(null);
 
   const handleImageUpload = async (file: any) => {
     try {
@@ -42,7 +81,6 @@ const StaffNewArticle = () => {
         toast.error('File size exceeds 5MB.');
         return;
       }
-
       try {
         toast.info('Uploading image...');
         const url = await handleImageUpload(file);
@@ -61,12 +99,39 @@ const StaffNewArticle = () => {
     onDrop: handleDrop,
   });
 
+  useEffect(() => {
+    const fetchSingleArticle = async (slug: any) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await getSingleArticle(slug);
+        const articleData = response?.data?.article;
+        if (articleData) {
+          setArticle(articleData);
+          setCategory(articleData.category || '');
+          setTitle(articleData.title || '');
+          setCoverImage(articleData.coverImage || null);
+          setContent(articleData.content || '');
+        } else {
+          throw new Error('Invalid article data');
+        }
+      } catch (err) {
+        console.error('Error fetching the article:', err);
+        setError('Failed to load the article. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (slug) fetchSingleArticle(slug);
+  }, [slug]);
+
   const validateForm = () => {
     const newErrors: any = {};
-    if (!title) newErrors.title = 'Title is required.';
-    if (!category) newErrors.category = 'Category is required.';
+    if (!title.trim()) newErrors.title = 'Title is required.';
+    if (!category.trim()) newErrors.category = 'Category is required.';
     if (!coverImage) newErrors.coverImage = 'Cover image is required.';
-    if (!content) newErrors.content = 'Content is required.';
+    if (!content.trim()) newErrors.content = 'Content is required.';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -79,39 +144,34 @@ const StaffNewArticle = () => {
     }
     setLoading(true);
     try {
-      const response = await publishArticle({
+      const response = await updateArticle(article?._id, {
         coverImage,
         content,
         title,
         category,
       });
-      if (response.status !== 201) {
+      if (response.status !== 200) {
         toast.error(response.message);
-        setLoading(false);
         return;
       }
-      toast.success('Article saved successfully!');
-      setCoverImage(null);
-      setContent('');
-      setTitle('');
-      setCategory('');
-      setErrors({});
+      toast.success('Article updated successfully!');
     } catch (error: any) {
-      console.error('Error publishing article:', error);
-      toast.error(error.message);
+      console.error('Error updating article:', error);
+      toast.error(error.message || 'An error occurred.');
     } finally {
       setLoading(false);
     }
   };
 
+  if (isLoading) return <LoadingSkeleton />;
+  if (error) return <ErrorDisplay message={error} />;
+
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
       <ToastContainer />
-      <SEO mainData={{ title: 'New Article - Kickside News' }} />
+      <SEO mainData={{ title: 'Edit Article - Kickside News' }} />
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6">
-          Create New Article
-        </h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Edit Article</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="bg-white shadow-sm rounded-lg p-6 space-y-6">
             <div>
@@ -124,13 +184,11 @@ const StaffNewArticle = () => {
               >
                 <input {...getInputProps()} />
                 {coverImage ? (
-                  <div className="w-full text-center">
-                    <img
-                      src={coverImage}
-                      alt="Uploaded Cover"
-                      className="max-w-full h-auto mx-auto mb-2 rounded-md"
-                    />
-                  </div>
+                  <img
+                    src={coverImage}
+                    alt="Uploaded Cover"
+                    className="max-w-full h-auto mx-auto mb-2 rounded-md"
+                  />
                 ) : (
                   <p className="text-gray-500">
                     Drag & Drop or Click to Upload an Image
@@ -211,7 +269,7 @@ const StaffNewArticle = () => {
               <RichTextEditor
                 value={content}
                 onChange={setContent}
-                placeholder="Enter article contents"
+                placeholder="Enter article content"
               />
               {errors.content && (
                 <p className="text-red-500 text-sm mt-1">{errors.content}</p>
@@ -229,8 +287,7 @@ const StaffNewArticle = () => {
                 <ButtonSpinner />
               ) : (
                 <>
-                  <FiSave className="mr-2" />
-                  Save Article
+                  <FiSave className="mr-2" /> Save Article
                 </>
               )}
             </button>
@@ -241,4 +298,4 @@ const StaffNewArticle = () => {
   );
 };
 
-export default StaffNewArticle;
+export default StaffEditArticle;
