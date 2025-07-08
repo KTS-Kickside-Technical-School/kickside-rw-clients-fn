@@ -24,7 +24,6 @@ const CategoryPage: React.FC = () => {
       try {
         if (categoryName) {
           const response = await getArticlesByCategory(categoryName);
-          console.log(response);
           setArticles(response?.data?.articles || []);
         }
       } catch (error) {

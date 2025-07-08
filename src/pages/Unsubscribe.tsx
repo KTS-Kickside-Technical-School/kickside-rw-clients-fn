@@ -24,7 +24,6 @@ const Unsubscribe: React.FC = () => {
     setLoading(true);
     try {
       const response = await unsubscribeFromNewsLetter(email, token);
-      console.log(response);
       if (response.status !== 200) {
         toast.error(response.message);
       } else {
