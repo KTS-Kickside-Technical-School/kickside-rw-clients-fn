@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-  getPublishedArticles,
   getSingleArticle,
   postComment,
 } from '../utils/requests/articlesRequest';

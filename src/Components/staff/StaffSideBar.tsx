@@ -1,138 +1,135 @@
 import { useState } from 'react';
-import { BiSupport } from 'react-icons/bi';
+import { BiSupport, BiUser } from 'react-icons/bi';
 import { BsMailbox } from 'react-icons/bs';
 import { MdDashboard, MdLogout, MdMenu } from 'react-icons/md';
 import { PiArticleNyTimesBold } from 'react-icons/pi';
-import { RxAvatar } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+
+import { Link, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const menuItems = [
+  {
+    to: '/staff/dashboard',
+    label: 'Dashboard',
+    icon: <MdDashboard size={20} />,
+  },
+  {
+    to: '/staff/articles',
+    label: 'Articles',
+    icon: <PiArticleNyTimesBold size={20} />,
+  },
+];
+
+const adminItems = [
+  { to: '/staff/users', label: 'Users', icon: <BiUser size={20} /> },
+  {
+    to: '/staff/mailing-list',
+    label: 'Mailing List',
+    icon: <BsMailbox size={20} />,
+  },
+  {
+    to: '/staff/inquiries',
+    label: 'Customer Inquiries',
+    icon: <BiSupport size={20} />,
+  },
+];
+
+const journalistItems = [
+  {
+    to: '/staff/my-articles',
+    label: 'My Articles',
+    icon: <PiArticleNyTimesBold size={20} />,
+  },
+];
+
+const editorItems = [
+  {
+    to: '/staff/my-articles',
+    label: 'My Articles',
+    icon: <PiArticleNyTimesBold size={20} />,
+  },
+];
 
 const StaffSideBar = ({ onLogout, profile }: any) => {
   const [isOpen, setIsOpen] = useState(true);
+  const { pathname } = useLocation();
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+  const toggleSidebar = () => setIsOpen(!isOpen);
+
+  const renderMenuItem = ({ to, label, icon }: any) => {
+    const isActive = pathname === to;
+    return (
+      <li key={to}>
+        <Link
+          to={to}
+          className={`flex items-center gap-4 px-4 py-3 rounded-lg transition ${
+            isActive
+              ? 'bg-primary text-white font-semibold'
+              : 'hover:bg-gray-700 text-gray-300'
+          }`}
+        >
+          {icon}
+          {isOpen && <span>{label}</span>}
+        </Link>
+      </li>
+    );
+  };
+
+  const renderSection = (title: string, items: any[]) => {
+    return (
+      <>
+        <div
+          className={`text-xs uppercase tracking-wide mt-6 mb-2 px-4 ${
+            isOpen ? 'text-gray-400' : 'hidden'
+          }`}
+        >
+          {title}
+        </div>
+        <ul className="space-y-2 px-2">{items.map(renderMenuItem)}</ul>
+      </>
+    );
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-100">
       <ToastContainer />
       <aside
-        className={`bg-gray-800 text-white shadow-lg flex-shrink-0 ${
+        className={`relative bg-gray-900 text-white shadow-lg ${
           isOpen ? 'w-64' : 'w-20'
-        } transition-all duration-300`}
+        } transition-all duration-300 flex flex-col`}
       >
-        <div className="flex items-center justify-between py-4 px-4">
-          <h1
-            className={`text-lg font-bold ${
-              isOpen ? 'block' : 'hidden'
-            } transition-all duration-300`}
-          >
-            Staff Panel
-          </h1>
+        {/* Logo & Toggle */}
+        <div className="flex items-center justify-between px-4 py-5 border-b border-gray-800">
+          {isOpen && (
+            <h1 className="text-xl font-bold text-white">Kickside Staff</h1>
+          )}
           <button
             onClick={toggleSidebar}
-            className="text-white hover:bg-gray-700 p-2 rounded-full"
+            className="p-2 rounded-full text-gray-400 hover:text-white hover:bg-gray-700 transition"
+            title="Toggle Menu"
           >
-            <MdMenu size={24} />
+            <MdMenu size={22} />
           </button>
         </div>
 
-        <ul className="space-y-4 mt-6">
-          <li>
-            <Link
-              to="/staff/dashboard"
-              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
-            >
-              <MdDashboard size={20} />
-              <span
-                className={`${
-                  isOpen ? 'block' : 'hidden'
-                } transition-all duration-300`}
-              >
-                Dashboard
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/staff/articles"
-              className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
-            >
-              <PiArticleNyTimesBold size={20} />
-              <span
-                className={`${
-                  isOpen ? 'block' : 'hidden'
-                } transition-all duration-300`}
-              >
-                Articles
-              </span>
-            </Link>
-          </li>
-          {profile?.role === 'Admin' && (
-            <>
-              <li>
-                <Link
-                  to="/staff/users"
-                  className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
-                >
-                  <RxAvatar size={20} />
-                  <span
-                    className={`${
-                      isOpen ? 'block' : 'hidden'
-                    } transition-all duration-300`}
-                  >
-                    Users
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/staff/mailing-list"
-                  className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
-                >
-                  <BsMailbox size={20} />
-                  <span
-                    className={`${
-                      isOpen ? 'block' : 'hidden'
-                    } transition-all duration-300`}
-                  >
-                    Mailing list
-                  </span>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/staff/inquiries"
-                  className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-gray-700 transition"
-                >
-                  <BiSupport size={20} />
-                  <span
-                    className={`${
-                      isOpen ? 'block' : 'hidden'
-                    } transition-all duration-300`}
-                  >
-                    Customer inquiries
-                  </span>
-                </Link>
-              </li>
-            </>
-          )}
-        </ul>
+        <ul className="space-y-2 mt-6 px-2">{menuItems.map(renderMenuItem)}</ul>
 
-        <div className="absolute bottom-6 w-full px-4">
+        {profile?.role === 'Journalist' &&
+          renderSection('Journalist Panel', journalistItems)}
+
+        {profile?.role === 'Editor' &&
+          renderSection('Editor Panel', editorItems)}
+
+        {profile?.role === 'Admin' && renderSection('Admin Panel', adminItems)}
+
+        <div className="mt-auto px-2 py-4 border-t border-gray-800">
           <button
             onClick={onLogout}
-            className="flex items-center gap-4 px-4 py-3 rounded-lg hover:bg-red-600 transition text-left"
+            className="flex items-center gap-4 px-4 py-3 w-full text-left text-red-400 hover:bg-red-600 hover:text-white rounded-lg transition"
           >
             <MdLogout size={20} />
-            <span
-              className={`${
-                isOpen ? 'block' : 'hidden'
-              } transition-all duration-300`}
-            >
-              Logout
-            </span>
+            {isOpen && <span>Logout</span>}
           </button>
         </div>
       </aside>
