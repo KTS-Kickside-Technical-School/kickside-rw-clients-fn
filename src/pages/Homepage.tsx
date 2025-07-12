@@ -15,7 +15,6 @@ import NewsLetter from '../Components/Newsletter';
 import MainTopKSAd from '../Components/ads/MainTopKSAd';
 import { FaSpinner } from 'react-icons/fa';
 
-// Lazy load heavy components
 const AdvertisementSection = React.lazy(
   () => import('../Components/AdvertisementSection')
 );
@@ -25,7 +24,6 @@ const SubMainArticles = React.lazy(
   () => import('../Components/SubMainArticles')
 );
 
-// Optimized Skeleton Loader
 const SkeletonLoader = React.memo(() => (
   <div className="w-full flex flex-col lg:flex-row gap-4 animate-pulse">
     <div className="flex-1 h-[300px] sm:h-[400px] md:h-[500px] bg-gray-700 rounded-lg" />
@@ -43,7 +41,6 @@ const SkeletonLoader = React.memo(() => (
   </div>
 ));
 
-// Memoized Article Component
 const ArticleItem = React.memo(({ article }: { article: any }) => (
   <Link to={`/news/${article?.slug}`} className="block w-full">
     <div className="relative h-[300px] md:h-[350px] lg:h-[250px] xl:h-[200px] overflow-hidden rounded-md">
@@ -76,10 +73,9 @@ const ArticleItem = React.memo(({ article }: { article: any }) => (
   </Link>
 ));
 
-// Memoized Top Headlines Component
 const TopHeadlines = React.memo(({ articles }: { articles: any[] }) => (
   <ol className="space-y-3">
-    {articles.slice(4, 8).map((article, index) => (
+    {articles.map((article, index) => (
       <li
         className="text-white text-sm md:text-base font-medium flex"
         key={article?._id}
@@ -112,12 +108,10 @@ const Homepage = () => {
       }
     };
 
-    // Add delay to show skeleton only for slower connections
     const delay = setTimeout(fetchArticles, 300);
     return () => clearTimeout(delay);
   }, []);
 
-  // Memoize expensive computations
   const featuredArticle = useMemo(() => articles[0], [articles]);
   const firstThreeArticles = useMemo(() => articles.slice(1, 4), [articles]);
   const topHeadlinesArticles = useMemo(() => articles.slice(4, 8), [articles]);
@@ -134,7 +128,6 @@ const Homepage = () => {
     []
   );
 
-  // Memoize category sections
   const categorySections = useMemo(
     () =>
       ['Business', 'Technology'].map((category) => {
@@ -248,7 +241,13 @@ const Homepage = () => {
                 <h1 className="font-bold text-white text-lg md:text-xl mb-4">
                   Top Headlines
                 </h1>
-                <TopHeadlines articles={topHeadlinesArticles} />
+                {topHeadlinesArticles.length > 0 ? (
+                  <TopHeadlines articles={topHeadlinesArticles} />
+                ) : (
+                  !loading && (
+                    <p className="text-white">No headlines available</p>
+                  )
+                )}
               </div>
             </>
           )}
