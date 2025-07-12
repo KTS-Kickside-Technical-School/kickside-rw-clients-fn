@@ -75,7 +75,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
           className="lg:col-span-1 space-y-6 w-full sm:w-[300px]
         lg:w-full"
         >
-          <div className="bg-[#D8D8D8] h-[200px] sm:h-[300px] lg:h-[400px] w-full sm:w-[300px] p-3 border-solid border-2 border-secondary text-center text-[#B1B1B1] flex items-center justify-center">
+          <div className="bg-[#D8D8D8] h-[200px] sm:h-[300px] lg:h-[400px] w-full  p-3 border-solid border-2 border-secondary text-center text-[#B1B1B1] flex items-center justify-center">
             <span>Advertisement</span>
           </div>
           <MostPopular />

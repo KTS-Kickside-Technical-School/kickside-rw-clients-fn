@@ -61,8 +61,8 @@ const CategoryPage: React.FC = () => {
       <MainTopKSAd />
 
       <Header />
-      <div className="w-full max-w-7xl mx-auto m-auto  text-white">
-        <div className="container mx-auto">
+      <div className="w-full mx-auto m-auto  text-white">
+        <div className=" mx-auto">
           <MainArticles
             loading={loading}
             articles={articles.slice(0, 2)}
@@ -75,20 +75,22 @@ const CategoryPage: React.FC = () => {
               articles={articles.slice(2, 5)}
             />
           )}
-          {articles.length > 12 && (
-            <LatestNews
-              title={`Latest in ${categoryName}`}
-              articles={articles.slice(6, 13)}
-              loading={loading}
-            />
-          )}
-          {articles.length < 0 && !loading && (
-            <LatestNews
-              title={`Latest articles`}
-              articles={publishedArticles.slice(0, 20)}
-              loading={loading}
-            />
-          )}
+          <div className="px-4">
+            {articles.length > 12 && (
+              <LatestNews
+                title={`Latest in ${categoryName}`}
+                articles={articles.slice(6, 13)}
+                loading={loading}
+              />
+            )}
+            {articles.length < 0 && !loading && (
+              <LatestNews
+                title={`Latest articles`}
+                articles={publishedArticles.slice(0, 20)}
+                loading={loading}
+              />
+            )}
+          </div>
         </div>
       </div>
       <NewsLetter />

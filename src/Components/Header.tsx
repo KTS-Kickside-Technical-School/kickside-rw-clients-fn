@@ -23,18 +23,20 @@ const Header = () => {
     <header className="text-white py-4 bg-primary w-full">
       <div className="w-full px-4">
         <div className="text-center mb-4">
-          <button
-            onClick={() => {
-              if (window.location.pathname === '/') {
-                window.location.reload();
-              } else {
+          {window.location.pathname === '/' ? (
+            <button
+              onClick={() => {
                 window.location.href = '/';
-              }
-            }}
-            className="mx-auto block"
-          >
-            <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
-          </button>
+              }}
+              className="mx-auto block"
+            >
+              <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
+            </button>
+          ) : (
+            <Link to="/" className="mx-auto block">
+              <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
+            </Link>
+          )}
         </div>
 
         <div className="bg-dark w-full p-3 rounded-lg px-5">
@@ -128,6 +130,11 @@ const Header = () => {
                     to="/category/Entertainment"
                     className="hover:underline"
                   >
+                    Entertainment
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/a/" className="hover:underline">
                     Entertainment
                   </Link>
                 </li>

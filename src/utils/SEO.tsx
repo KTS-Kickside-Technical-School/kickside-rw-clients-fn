@@ -19,6 +19,10 @@ interface SEOProps {
   iaRulesUrlDev?: string;
 }
 
+// Force absolute URL for Facebook, Twitter, etc.
+const makeAbsoluteUrl = (url: string) =>
+  url?.startsWith('http') ? url : `https://www.kickside.rw${url}`;
+
 const SEO = ({
   mainData,
   canonicalUrl = typeof window !== 'undefined' ? window.location.href : '',
@@ -30,22 +34,22 @@ const SEO = ({
 }: SEOProps) => {
   const {
     title,
-    description = 'Kickside is Rwanda’s leading digital newspaper covering tech, sports, entertainment, and business. Get all trending news from Rwanda and East Africa in one place. ',
-    image = 'https://www.kickside.rw/images/logo.svg',
+    description = 'Kickside is Rwanda’s leading digital newspaper covering tech, sports, entertainment, and business. Get all trending news from Rwanda and East Africa in one place.',
+    image = '/images/logo.png',
     author = 'Kickside News',
     publishedAt = '2023-12-01T10:00:00Z',
     type = 'article',
   } = mainData;
 
-  const currentUrl =
-    canonicalUrl || (typeof window !== 'undefined' ? window.location.href : '');
+  const currentImage = makeAbsoluteUrl(image);
+  const currentUrl = makeAbsoluteUrl(canonicalUrl);
 
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': type === 'article' ? 'NewsArticle' : 'WebPage',
     headline: title,
     description,
-    image: [image],
+    image: [currentImage],
     author: {
       '@type': 'Organization',
       name: author,
@@ -55,7 +59,7 @@ const SEO = ({
       name: 'Kickside Rwanda',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://www.kickside.rw/logo.svg',
+        url: 'https://www.kickside.rw/logo.png',
       },
     },
     mainEntityOfPage: currentUrl,
@@ -64,18 +68,25 @@ const SEO = ({
 
   return (
     <Helmet>
+      {/* HTML Title and Description */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="author" content={author} />
       <meta
         name="keywords"
-        content="Rwanda News, Kickside, Tech, Sports, Showbiz, Kigali, East Africa"
+        content="Kickside, Rwanda News, Tech, Sports, Entertainment, Kigali"
       />
-      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
+      {/* Canonical */}
+      <link rel="canonical" href={currentUrl} />
+
+      {/* Open Graph (Facebook, LinkedIn, WhatsApp) */}
+      <meta property="og:locale" content="en_RW" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
+      <meta property="og:image" content={currentImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:url" content={currentUrl} />
       <meta
         property="og:type"
@@ -83,12 +94,14 @@ const SEO = ({
       />
       <meta property="og:site_name" content="Kickside Rwanda" />
 
+      {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
+      <meta name="twitter:image" content={currentImage} />
       <meta name="twitter:creator" content={twitterCreator} />
 
+      {/* Instant Articles (Facebook IA) */}
       {iaMarkupUrl && <meta property="ia:markup_url" content={iaMarkupUrl} />}
       {iaMarkupUrlDev && (
         <meta property="ia:markup_url_dev" content={iaMarkupUrlDev} />
@@ -98,6 +111,7 @@ const SEO = ({
         <meta property="ia:rules_url_dev" content={iaRulesUrlDev} />
       )}
 
+      {/* Structured JSON-LD */}
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
       </script>
