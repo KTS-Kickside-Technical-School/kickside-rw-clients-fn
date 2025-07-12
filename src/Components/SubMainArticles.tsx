@@ -65,7 +65,7 @@ const SubMainArticles: React.FC<SubMainArticlesProps> = ({
               ))}
         </div>
 
-        <div className="col-span-1 text-gray-400">
+        <div className="w-full px-4 col-span-1 text-gray-400">
           <AdvertisementSection />
         </div>
       </div>

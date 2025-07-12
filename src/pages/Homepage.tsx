@@ -125,7 +125,7 @@ const Homepage = () => {
 
       <div className="bg-primary pb-5">
         <Header />
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6">
+        <div className="w-full px-4 mx-auto flex flex-col lg:flex-row gap-6">
           {loading ? (
             renderSkeleton()
           ) : (
@@ -184,16 +184,16 @@ const Homepage = () => {
           )}
         </div>
 
-        <div className="w-[90%] max-w-[1300px] mx-auto">
+        <div className="w-full px-4 mx-auto">
           <AdvertisementSection />
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full px-4 mx-auto">
         <LatestNews title="Latest news" loading={loading} articles={articles} />
       </div>
 
-      <div className="max-w-7xl mx-auto">
+      <div className="w-full mx-auto">
         {['Business', 'Technology'].map((category) => {
           const filteredArticles = filterArticlesByCategory(category);
           const mainArticles = filteredArticles.slice(0, 2);

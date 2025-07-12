@@ -121,7 +121,7 @@ const MainArticles = ({ loading, articles, title }: MainArticlesProps) => {
 
   return (
     <section className="text-white py-16">
-      <div className="container mx-auto px-4">
+      <div className="w-full px-4 mx-auto px-4">
         <h1 className="text-4xl text-[#3E60F4] font-bold mb-8">{title}</h1>
         {loading ? renderSkeleton() : renderArticles()}
       </div>
