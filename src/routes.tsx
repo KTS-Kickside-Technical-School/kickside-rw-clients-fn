@@ -29,6 +29,10 @@ import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
 import AdminMailingList from './pages/staff/AdminMailingList';
 import StaffEditArticle from './pages/staff/StaffEditArticle';
+import AdminDashboard from './pages/staff/admin/AdminDashboard';
+import AdminLayout from './pages/staff/admin/AdminLayout';
+import JournalistMyArticles from './pages/staff/journalist/JournalistMyArticles';
+import EditorViewArticles from './pages/staff/editor/EditorViewArticles';
 
 const AuthContext = createContext<any>(null);
 
@@ -45,9 +49,10 @@ const AppRouter = () => {
     try {
       await userLogout(token);
       sessionStorage.removeItem('token');
+      sessionStorage.removeItem('profile');
       toast.success('Logged out successfully!');
       setTimeout(() => {
-        navigate('/staff/login');
+        navigate('/login');
       }, 3000);
     } catch (error: any) {
       toast.error(error?.message || 'Logout failed. Please try again.');
@@ -60,9 +65,10 @@ const AppRouter = () => {
       if (response.status === 401) {
         toast.error('Session expired. Please log in again.');
         sessionStorage.removeItem('token');
-        navigate('/staff/login');
+        navigate('/login');
       } else if (response.status === 200) {
         setProfile(response.data.user);
+        sessionStorage.setItem('profile', JSON.stringify(response.data.user));
       }
     } catch (error: any) {
       toast.error(error?.message || 'Unable to fetch profile.');
@@ -70,8 +76,13 @@ const AppRouter = () => {
   };
 
   useEffect(() => {
+    const cachedProfile = sessionStorage.getItem('profile');
     if (isAuthenticated && !profile) {
-      fetchUserProfile();
+      if (cachedProfile) {
+        setProfile(JSON.parse(cachedProfile));
+      } else {
+        fetchUserProfile();
+      }
     }
   }, [isAuthenticated, profile]);
 
@@ -85,11 +96,8 @@ const AppRouter = () => {
         <Route path="news/:slug" element={<ArticleDetails />} />
         <Route path="author/:username" element={<AuthorProfile />} />
         <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} />
+        <Route path="login" element={<StaffLogin />} />
         <Route path="/staff">
-          <Route
-            path="login"
-            element={<StaffLogin onLogin={fetchUserProfile} />}
-          />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
           <Route
@@ -103,10 +111,7 @@ const AppRouter = () => {
             <Route
               element={<StaffLayout onLogout={logout} profile={profile} />}
             >
-              <Route
-                path="dashboard"
-                element={<Dashboard profile={profile} />}
-              />
+              <Route path="dashboard" element={<Dashboard />} />
               <Route
                 path="articles"
                 element={<StaffViewArticles profile={profile} />}
@@ -140,6 +145,27 @@ const AppRouter = () => {
               <Route path="mailing-list" element={<AdminMailingList />} />
               <Route path="*" element={<StaffNotFound />} />
             </Route>
+          </Route>
+        </Route>
+
+        <Route path="/admin">
+          <Route element={<AdminLayout onLogout={logout} />}>
+            <Route path="dashboard" element={<AdminDashboard />} />
+            <Route path="profile" element={<Settings />} />
+          </Route>
+        </Route>
+        <Route path="/editor">
+          <Route element={<StaffLayout onLogout={logout} />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="articles" element={<EditorViewArticles />} />
+            <Route path="profile" element={<Settings />} />
+          </Route>
+        </Route>
+        <Route path="/journalist">
+          <Route element={<StaffLayout onLogout={logout} />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="my-articles" element={<JournalistMyArticles />} />
+            <Route path="profile" element={<Settings />} />
           </Route>
         </Route>
         <Route path="*" element={<NotFound backUrl={backUrl} />} />

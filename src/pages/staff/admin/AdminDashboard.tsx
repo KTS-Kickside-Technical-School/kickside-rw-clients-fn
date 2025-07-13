@@ -4,12 +4,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { journalistFindAnalysis } from '../../utils/requests/articlesRequest';
 import { BsEye } from 'react-icons/bs';
-import { getGreeting } from '../../utils/helpers/articleHelpers';
-import { MonthlyAnalytics } from '../../utils/types/Article';
-import SEO from '../../utils/SEO';
-import DigitalClock from '../../Components/DigitalClock';
 import { BiComment, BiEdit } from 'react-icons/bi';
 
 import { Bar } from 'react-chartjs-2';
@@ -22,6 +17,11 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { journalistFindAnalysis } from '../../../utils/requests/articlesRequest';
+import { MonthlyAnalytics } from '../../../utils/types/Article';
+import SEO from '../../../utils/SEO';
+import DigitalClock from '../../../Components/DigitalClock';
+import { getGreeting } from '../../../utils/helpers/articleHelpers';
 
 ChartJS.register(
   CategoryScale,
@@ -32,10 +32,10 @@ ChartJS.register(
   Legend
 );
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [journalistAnalysis, setJournalistAnalysis] = useState<any>(null);
-
+  
   const profileParsed = sessionStorage.getItem('profile');
   const profile = profileParsed ? JSON.parse(profileParsed) : {};
 
@@ -297,4 +297,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

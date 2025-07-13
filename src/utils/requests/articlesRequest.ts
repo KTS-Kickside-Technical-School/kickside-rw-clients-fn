@@ -166,7 +166,7 @@ export const getArticlesByCategory = async (category: string) => {
     const response = await axiosInstance.get(
       `api/articles/get-articles-by-category/${category}`
     );
-    console.log("Response to get", response);
+
     return response.data;
   } catch (error: any) {
     return handleError(error);

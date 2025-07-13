@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
-  getPublishedArticles,
   getSingleArticle,
   postComment,
 } from '../utils/requests/articlesRequest';
@@ -37,8 +36,6 @@ const ArticleDetails: React.FC = () => {
   const [articles, setArticles] = useState<any[]>([]);
 
   const [comments, setComments] = useState<any>([]);
-  const [isRelatedArticlesLoading, setIsRelatedArticlesLoading] =
-    useState(false);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +48,7 @@ const ArticleDetails: React.FC = () => {
         const response = await getSingleArticle(slug);
         setArticle(response.data.article);
         setComments(response.data.comments);
+        setArticles(response.data.related);
       } catch (err) {
         console.error('Error fetching the article:', err);
         setError('Failed to load the article. Please try again later.');
@@ -63,22 +61,6 @@ const ArticleDetails: React.FC = () => {
       fetchSingleArticle(slug);
     }
   }, [slug]);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      setIsRelatedArticlesLoading(true);
-      try {
-        const response = await getPublishedArticles();
-        setArticles(response?.articles || []);
-      } catch (error) {
-        console.error('Error fetching related articles:', error);
-      } finally {
-        setIsRelatedArticlesLoading(false);
-      }
-    };
-
-    fetchArticles();
-  }, []);
 
   const isHTMLContent = (content: string): boolean => {
     const htmlRegex = /<\/?[a-z][\s\S]*>/i;
@@ -127,9 +109,9 @@ const ArticleDetails: React.FC = () => {
       />
       <MainTopKSAd />
 
-      <div className="bg-gray-100 min-h-screen">
-        <Header />
-        <div className="p-6 flex flex-col lg:flex-row w-[90%] min-h-[40vh] lg:w-[80%] mx-auto items-center gap-8">
+      <Header />
+      <div className="bg-gray-100 min-h-screen w-full px-4">
+        <div className="py-6 flex flex-col lg:flex-row w-full min-h-[40vh] items-center gap-8 px-4">
           {isLoading ? (
             <Skeleton className="w-full lg:w-1/2 h-64 rounded-lg" />
           ) : (
@@ -173,7 +155,7 @@ const ArticleDetails: React.FC = () => {
             )}
           </div>
         </div>
-        <div className="pb-3 flex flex-col lg:flex-row w-[90%] lg:w-[80%] mx-auto gap-8">
+        <div className="pb-3 flex flex-col lg:flex-row w-full gap-8 px-4">
           <div className="flex-1 leading-relaxed">
             {isLoading ? (
               <Skeleton count={5} />
@@ -223,7 +205,7 @@ const ArticleDetails: React.FC = () => {
             <MostPopular />
           </aside>
         </div>
-        <div className="flex flex-col lg:flex-col w-[90%] lg:w-[80%] mx-auto gap-8">
+        <div className="flex flex-col w-full gap-8 px-4">
           <AdvertisementSection />
           <div className="bg-gray-100 rounded-lg mt-6">
             <h2 className="text-2xl font-semibold border-b-2 border-dark pb-2 mb-4">
@@ -294,7 +276,7 @@ const ArticleDetails: React.FC = () => {
             </form>
           </div>
           <div className="">
-            {isRelatedArticlesLoading ? (
+            {isLoading ? (
               <Skeleton count={3} className="h-6 mb-4" />
             ) : (
               <RelatedArticles title="Related Articles" articles={articles} />

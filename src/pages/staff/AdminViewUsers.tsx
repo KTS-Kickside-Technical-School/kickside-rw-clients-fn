@@ -160,7 +160,7 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
                             </Link>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            {user.role}
+                            {user.role}{' '}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             {formatDateTime(user?.createdAt)}

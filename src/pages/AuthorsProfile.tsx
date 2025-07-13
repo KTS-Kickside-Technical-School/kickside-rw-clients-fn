@@ -72,7 +72,7 @@ const AuthorProfile: React.FC = () => {
       <MainTopKSAd />
       <div className="bg-gray-50 min-h-screen">
         <Header />
-        <main className="container mx-auto px-4 py-8">
+        <main className="w-full px-4 py-8">
           {error ? (
             <div className="flex flex-col items-center justify-center min-h-[700px] bg-gray-100">
               <h1 className="text-6xl font-bold text-indigo-500 mb-4">404</h1>
@@ -146,8 +146,8 @@ const AuthorProfile: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <section className="mt-8 flex flex-col md:flex-row gap-6">
-                <div className="flex-1">
+              <section className="mt-8 flex flex-col lg:flex-row gap-6 w-full">
+                <div className="w-full lg:w-3/4">
                   {currentArticles.length > 0 && (
                     <div>
                       <h2 className="text-2xl font-semibold mb-4 text-primary">
@@ -213,7 +213,7 @@ const AuthorProfile: React.FC = () => {
                     <h2 className="text-2xl font-semibold mb-6 text-primary">
                       Meet Other Journalists
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
                       {loading
                         ? Array(4)
                             .fill(0)
@@ -246,7 +246,8 @@ const AuthorProfile: React.FC = () => {
                     </div>
                   </section>
                 </div>
-                <aside className="w-full md:w-1/3 space-y-6">
+                <aside className="w-full lg:w-1/4 space-y-6">
+                  {' '}
                   <AdvertisementSection />
                   <MostPopular />
                 </aside>

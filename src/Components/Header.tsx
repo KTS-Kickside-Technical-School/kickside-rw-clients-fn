@@ -3,7 +3,7 @@ import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
-  const articles: any = []; // Replace with actual articles data
+  const articles: any = [];
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [filteredArticles, setFilteredArticles] = useState([]);
@@ -20,15 +20,28 @@ const Header = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="text-white py-4 bg-primary">
-      <div className="text-center px-4">
-        <Link to="/" className="block mb-4">
-          <h1 className="font-bold text-2xl">KICKSIDE</h1>
-        </Link>
+    <header className="text-white py-4 bg-primary w-full">
+      <div className="w-full px-4">
+        <div className="text-center mb-4">
+          {window.location.pathname === '/' ? (
+            <button
+              onClick={() => {
+                window.location.href = '/';
+              }}
+              className="mx-auto block"
+            >
+              <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
+            </button>
+          ) : (
+            <Link to="/" className="mx-auto block">
+              <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
+            </Link>
+          )}
+        </div>
 
-        <div className="bg-dark w-full md:w-[80%] m-auto p-3 rounded-full px-5">
+        <div className="bg-dark w-full p-3 rounded-lg px-5">
           {!isSearchOpen ? (
-            <div className="flex flex-row md:flex-row justify-between items-center gap-4">
+            <div className="flex justify-between items-center gap-4">
               <button
                 className="text-white lg:hidden p-2 rounded-full hover:bg-gray-600"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -36,90 +49,21 @@ const Header = () => {
                 <FaBars />
               </button>
 
-              {isMenuOpen && (
-                <div
-                  className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-10 flex justify-center items-center z-[100]"
-                  onClick={closeMenu}
-                >
-                  <div
-                    className="bg-dark p-6 rounded-lg shadow-lg w-[80%] sm:w-[60%] md:w-[40%] lg:w-[30%]"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <button
-                      className="text-white p-2 rounded-full hover:bg-gray-600 mb-4"
-                      onClick={closeMenu}
-                    >
-                      <FaTimes />
-                    </button>
-                    <nav>
-                      <ul className="flex flex-col gap-4">
-                        <li>
-                          <a
-                            href="/category/Business"
-                            className="hover:underline"
-                          >
-                            Business
-                          </a>
-                        </li>
-                        <li>
-                          <Link
-                            to="/category/Technology"
-                            className="hover:underline"
-                          >
-                            Technology
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/category/Sports"
-                            className="hover:underline"
-                          >
-                            Sports
-                          </Link>
-                        </li>
-                        <li>
-                          <Link
-                            to="/category/Entertainment"
-                            className="hover:underline"
-                          >
-                            Entertainment
-                          </Link>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
-              )}
-
-              <nav className="hidden lg:flex flex-row justify-center gap-4">
-                <ul className="flex gap-4">
-                  <li>
-                    <a href="/category/Business" className="hover:underline">
-                      Business
-                    </a>
-                  </li> 
-                  <li>
-                    <Link to="/category/Technology" className="hover:underline">
-                      Technology
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/category/Sports" className="hover:underline">
-                      Sports
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/category/Entertainment"
-                      className="hover:underline"
-                    >
-                      Entertainment
-                    </Link>
-                  </li>
-                </ul>
+              <nav className="hidden lg:flex gap-6">
+                <Link to="/category/Business" className="hover:underline">
+                  Business
+                </Link>
+                <Link to="/category/Technology" className="hover:underline">
+                  Technology
+                </Link>
+                <Link to="/category/Sports" className="hover:underline">
+                  Sports
+                </Link>
+                <Link to="/category/Entertainment" className="hover:underline">
+                  Entertainment
+                </Link>
               </nav>
 
-              {/* Search Button */}
               <button
                 className="text-white p-2 rounded-full hover:bg-gray-600"
                 onClick={() => setIsSearchOpen(true)}
@@ -129,10 +73,10 @@ const Header = () => {
             </div>
           ) : (
             <div className="flex justify-center items-center">
-              <div className="flex items-center bg-white rounded-full overflow-hidden shadow-md w-full md:w-[80%]">
+              <div className="flex items-center bg-white rounded overflow-hidden shadow-md w-full ">
                 <input
                   type="text"
-                  className="px-4 w-full text-black focus:outline-none"
+                  className="px-4 py-2 w-full text-black focus:outline-none"
                   placeholder="Search articles or topics"
                   value={search}
                   onChange={(e) => filterArticles(e.target.value)}
@@ -149,21 +93,77 @@ const Header = () => {
         </div>
       </div>
 
-      {isSearchOpen && search && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 search-results bg-white text-black p-4 mt-4 rounded-md shadow-md">
-          <ul>
-            {filteredArticles.length > 0 ? (
-              filteredArticles.map((article: any) => (
-                <li key={article.id} className="py-2 border-b last:border-b-0">
-                  <a href={article.link} className="hover:underline">
-                    {article.title}
-                  </a>
+      {isMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center"
+          onClick={closeMenu}
+        >
+          <div
+            className="bg-dark p-6 rounded-lg shadow-lg w-[80%] sm:w-[60%] md:w-[40%] lg:w-[30%]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="text-white p-2 rounded-full hover:bg-gray-600 mb-4"
+              onClick={closeMenu}
+            >
+              <FaTimes />
+            </button>
+            <nav>
+              <ul className="flex flex-col gap-4">
+                <li>
+                  <Link to="/category/Business" className="hover:underline">
+                    Business
+                  </Link>
                 </li>
-              ))
-            ) : (
-              <li>No articles found.</li>
-            )}
-          </ul>
+                <li>
+                  <Link to="/category/Technology" className="hover:underline">
+                    Technology
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/category/Sports" className="hover:underline">
+                    Sports
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/category/Entertainment"
+                    className="hover:underline"
+                  >
+                    Entertainment
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/a/" className="hover:underline">
+                    Entertainment
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      )}
+
+      {isSearchOpen && search && (
+        <div className="w-full px-4">
+          <div className="bg-white text-black p-4 my-2 rounded-md shadow-md">
+            <ul>
+              {filteredArticles.length > 0 ? (
+                filteredArticles.map((article: any) => (
+                  <li
+                    key={article.id}
+                    className="py-2 border-b last:border-b-0"
+                  >
+                    <a href={article.link} className="hover:underline">
+                      {article.title}
+                    </a>
+                  </li>
+                ))
+              ) : (
+                <li>No articles found.</li>
+              )}
+            </ul>
+          </div>
         </div>
       )}
     </header>
