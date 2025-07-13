@@ -58,3 +58,12 @@ export const userUpdateProfile = async (data: any) => {
         return handleError(error)
     }
 }
+
+export const userChangePassword = async (data: any) => {
+    try {
+        const response = await axiosInstance.put("/api/auth/change-password", data)
+        return response.data
+    } catch (error) {
+        return handleError(error)
+    }
+}

@@ -14,11 +14,6 @@ const menuItems = [
     label: 'Dashboard',
     icon: <MdDashboard size={20} />,
   },
-  {
-    to: '/staff/articles',
-    label: 'Articles',
-    icon: <PiArticleNyTimesBold size={20} />,
-  },
 ];
 
 const adminItems = [
@@ -37,7 +32,7 @@ const adminItems = [
 
 const journalistItems = [
   {
-    to: '/staff/my-articles',
+    to: '/journalist/my-articles',
     label: 'My Articles',
     icon: <PiArticleNyTimesBold size={20} />,
   },
@@ -45,15 +40,18 @@ const journalistItems = [
 
 const editorItems = [
   {
-    to: '/staff/my-articles',
-    label: 'My Articles',
+    to: '/editor/articles',
+    label: 'Articles',
     icon: <PiArticleNyTimesBold size={20} />,
   },
 ];
 
-const StaffSideBar = ({ onLogout, profile }: any) => {
+const StaffSideBar = ({ onLogout }: any) => {
   const [isOpen, setIsOpen] = useState(true);
   const { pathname } = useLocation();
+
+  const profileParsed = sessionStorage.getItem('profile');
+  const profile = profileParsed ? JSON.parse(profileParsed) : {};
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 

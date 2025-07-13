@@ -9,11 +9,9 @@ import ButtonSpinner from '../../Components/ButtonSpinner';
 import SEO from '../../utils/SEO';
 import { Helmet } from 'react-helmet-async';
 
-interface StaffLoginProps {
-  onLogin: () => void;
-}
+interface StaffLoginProps {}
 
-const StaffLogin = ({ onLogin }: StaffLoginProps) => {
+const StaffLogin = ({}: StaffLoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -44,15 +42,27 @@ const StaffLogin = ({ onLogin }: StaffLoginProps) => {
 
     try {
       const response = await userLogin({ email, password });
+
       if (response.status !== 200) {
         toast.error(response.message);
       } else {
         setEmail('');
         setPassword('');
         sessionStorage.setItem('token', response.session.content);
-        onLogin();
+
+        const { password: _, ...userWithoutPassword } = response.user;
+        sessionStorage.setItem('profile', JSON.stringify(userWithoutPassword));
+
         toast.success(response.message);
-        navigate('/staff/dashboard');
+        if (userWithoutPassword.role === 'Editor') {
+          navigate('/editor/dashboard');
+        } else if (userWithoutPassword.role === 'Admin') {
+          navigate('/admin/dashboard');
+        } else if (userWithoutPassword.role === 'Journalist') {
+          navigate('/journalist/dashboard');
+        } else {
+          throw new Error('Error occured trying to login');
+        }
       }
     } catch (error) {
       console.error('Error:', error);
@@ -74,7 +84,7 @@ const StaffLogin = ({ onLogin }: StaffLoginProps) => {
             title: ` Login to your journalist account  - Kickside News`,
             type: 'article',
           }}
-          canonicalUrl={`https://www.kickside.rw/staff/login`}
+          canonicalUrl={`https://www.kickside.rw/login`}
         />{' '}
         <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
           <div className="flex flex-col items-center mb-6">

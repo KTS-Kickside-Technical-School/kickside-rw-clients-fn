@@ -15,7 +15,7 @@ const Footer = () => {
         <ul className="flex flex-wrap justify-center gap-4">
           <li>
             <Link
-              to="/staff/login"
+              to="/login"
               aria-label="Staff"
               className="font-bold hover:underline"
             >

@@ -12,7 +12,7 @@ const AuthGuard = ({ isAuthenticated, fetchUserProfile }: any) => {
     }
   }, [isAuthenticated, fetchUserProfile]);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/staff/login" />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default AuthGuard;

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import SEO from '../../utils/SEO';
 import {
+  userChangePassword,
   userUpdateProfile,
   userViewProfile,
 } from '../../utils/requests/authRequest';
@@ -20,6 +21,10 @@ const Settings = () => {
   const [newProfileImage, setNewProfileImage] = useState('');
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [saving, setSaving] = useState(false);
+
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [originalState, setOriginalState] = useState({
     firstName: '',
@@ -114,6 +119,37 @@ const Settings = () => {
       phone !== originalState.phone ||
       (newProfileImage && newProfileImage !== originalState.profileImage)
     );
+  };
+
+  const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      toast.error('New passwords do not match.');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      toast.error('New password must be at least 6 characters.');
+      return;
+    }
+
+    try {
+      const response = await userChangePassword({
+        password: currentPassword,
+        newPassword,
+      });
+
+      if (response.status !== 200) {
+        toast.error(response.message || 'Failed to change password.');
+        return;
+      }
+
+      toast.success('Password updated successfully!');
+      setCurrentPassword('');
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (error) {
+      toast.error('An error occurred while changing password.');
+    }
   };
 
   return (
@@ -250,6 +286,52 @@ const Settings = () => {
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
                 {saving ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+
+            <div className="mt-10 border-t pt-6">
+              <h3 className="text-xl font-semibold mb-4">Change Password</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-600">
+                    Current Password
+                  </label>
+                  <input
+                    type="password"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="mt-1 p-2 border rounded-md w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-600">
+                    New Password
+                  </label>
+                  <input
+                    type="password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="mt-1 p-2 border rounded-md w-full"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-600">
+                    Confirm New Password
+                  </label>
+                  <input
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="mt-1 p-2 border rounded-md w-full"
+                  />
+                </div>
+              </div>
+              <button
+                onClick={handleChangePassword}
+                disabled={!currentPassword || !newPassword || !confirmPassword}
+                className="mt-4 px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white cursor-pointer disabled:opacity-50"
+              >
+                Change Password
               </button>
             </div>
           </div>

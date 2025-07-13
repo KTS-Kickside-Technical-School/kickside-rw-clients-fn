@@ -3,7 +3,7 @@ import Avatar from '/avatar.svg';
 import { Link } from 'react-router-dom';
 import { BellIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 
-const StaffHeader = ({ onLogout }: any) => {
+const AdminHeader = ({ onLogout }: any) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const profileParsed = sessionStorage.getItem('profile');
@@ -13,7 +13,7 @@ const StaffHeader = ({ onLogout }: any) => {
     <header className="w-full bg-white shadow-md px-6 py-3 flex justify-between items-center sticky top-0 z-50">
       <div className="flex items-center space-x-2">
         <Link to="/admin" className="text-2xl font-bold text-primary">
-          Kickside
+          Kickside Admin
         </Link>
       </div>
 
@@ -60,11 +60,7 @@ const StaffHeader = ({ onLogout }: any) => {
               <ul className="py-2 text-sm text-gray-700">
                 <li>
                   <Link
-                    to={
-                      profile.role === 'Editor'
-                        ? '/editor/profile'
-                        : '/journalist/profile'
-                    }
+                    to="/admin/profile"
                     className="block px-4 py-2 hover:bg-gray-100"
                     onClick={() => setIsProfileOpen(false)}
                   >
@@ -88,4 +84,4 @@ const StaffHeader = ({ onLogout }: any) => {
   );
 };
 
-export default StaffHeader;
+export default AdminHeader;

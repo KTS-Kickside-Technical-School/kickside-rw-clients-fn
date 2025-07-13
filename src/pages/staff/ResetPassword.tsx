@@ -78,7 +78,7 @@ const ResetPassword = () => {
               You can now log in with your new password.
             </p>
             <button
-              onClick={() => navigate('/staff/login')}
+              onClick={() => navigate('/login')}
               className="mt-4 w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-lg shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               Go to Login
@@ -144,7 +144,7 @@ const ResetPassword = () => {
             </form>
             <div className="mt-6 text-center text-sm text-gray-500">
               Remembered your password?{' '}
-              <Link to="/staff/login" className="text-blue-500 hover:underline">
+              <Link to="/login" className="text-blue-500 hover:underline">
                 Log in
               </Link>
             </div>
