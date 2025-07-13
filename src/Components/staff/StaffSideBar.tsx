@@ -17,6 +17,11 @@ const menuItems = [
 ];
 
 const adminItems = [
+  {
+    to: '/admin/articles',
+    label: 'Articles',
+    icon: <PiArticleNyTimesBold size={20} />,
+  },
   { to: '/staff/users', label: 'Users', icon: <BiUser size={20} /> },
   {
     to: '/staff/mailing-list',
@@ -97,7 +102,6 @@ const StaffSideBar = ({ onLogout }: any) => {
           isOpen ? 'w-64' : 'w-20'
         } transition-all duration-300 flex flex-col`}
       >
-        {/* Logo & Toggle */}
         <div className="flex items-center justify-between px-4 py-5 border-b border-gray-800">
           {isOpen && (
             <h1 className="text-xl font-bold text-white">Kickside Staff</h1>

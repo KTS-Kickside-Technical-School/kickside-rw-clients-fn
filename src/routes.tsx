@@ -33,6 +33,7 @@ import AdminDashboard from './pages/staff/admin/AdminDashboard';
 import AdminLayout from './pages/staff/admin/AdminLayout';
 import JournalistMyArticles from './pages/staff/journalist/JournalistMyArticles';
 import EditorViewArticles from './pages/staff/editor/EditorViewArticles';
+import AdminViewArticles from './pages/staff/admin/AdminViewArticles';
 
 const AuthContext = createContext<any>(null);
 
@@ -150,6 +151,7 @@ const AppRouter = () => {
 
         <Route path="/admin">
           <Route element={<AdminLayout onLogout={logout} />}>
+            <Route path="articles" element={<AdminViewArticles />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="profile" element={<Settings />} />
           </Route>
