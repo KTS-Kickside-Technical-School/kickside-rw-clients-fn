@@ -12,8 +12,7 @@ import { BsEye, BsArrowUpRight } from 'react-icons/bs';
 import { getGreeting } from '../../utils/helpers/articleHelpers';
 import { iArticleType, MonthlyAnalytics } from '../../utils/types/Article';
 import SEO from '../../utils/SEO';
-import DigitalClock from '../../Components/DigitalClock';
-import { BiComment, BiEdit, BiTrendingUp, BiCalendar } from 'react-icons/bi';
+import { BiComment, BiEdit, BiTrendingUp } from 'react-icons/bi';
 import { FiDownload, FiFilter } from 'react-icons/fi';
 import { Chart, Line } from 'react-chartjs-2';
 import {
@@ -78,7 +77,7 @@ const Dashboard = () => {
         setJournalistAnalysis({
           ...response.data,
           engagementRate: calculateEngagementRate(response.data),
-          avgReadTime: calculateAvgReadTime(response.data),
+          avgReadTime: calculateAvgReadTime(),
         });
       } else {
         toast.error(response.message);
@@ -96,7 +95,7 @@ const Dashboard = () => {
     return Math.round((data.totalComments / data.totalViews) * 100);
   };
 
-  const calculateAvgReadTime = (data: JournalistAnalysis) => {
+  const calculateAvgReadTime = () => {
     return Math.floor(Math.random() * 5) + 2;
   };
 
@@ -183,7 +182,7 @@ const Dashboard = () => {
           color: '#333',
           font: {
             size: 14,
-            weight: 'bold',
+            weight: 'bold' as const,
           },
         },
       },
