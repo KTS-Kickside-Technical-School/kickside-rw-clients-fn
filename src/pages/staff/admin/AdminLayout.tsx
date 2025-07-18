@@ -7,7 +7,7 @@ const AdminLayout = ({ onLogout }: any) => {
     <div className="flex h-screen overflow-hidden">
       <StaffSideBar onLogout={onLogout} />
       <div className="flex-grow flex flex-col w-1/4 md:w-1/5">
-        <AdminHeader onLogout={onLogout}  />
+        <AdminHeader onLogout={onLogout} />
         <main className="flex-grow overflow-y-auto bg-gray-100 p-6">
           <Outlet />
         </main>

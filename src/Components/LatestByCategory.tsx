@@ -1,12 +1,12 @@
 import React from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { ArticleType } from '../utils/types/Article';
+import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
 import MostPopular from './MostPopularArticle';
 
 interface LatestNewsProps {
   title: string;
-  articles: ArticleType[];
+  articles: iArticleType[];
   loading: boolean;
 }
 
@@ -35,7 +35,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
                   </div>
                 </div>
               ))
-            : articles.map((item: ArticleType, index) => (
+            : articles.map((item: iArticleType, index) => (
                 <Link to={`/news/${item.slug}`} key={index} className="block">
                   <div className="flex flex-col sm:flex-row mb-4 border-b-2 border-[#ACACAC] pb-2">
                     <img

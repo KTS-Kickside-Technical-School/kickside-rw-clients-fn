@@ -10,7 +10,7 @@ import AdvertisementSection from '../Components/AdvertisementSection';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from '../Components/Footer';
-import { ArticleType } from '../utils/types/Article';
+import { iArticleType } from '../utils/types/Article';
 import RelatedArticles from '../Components/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
@@ -32,7 +32,7 @@ const formatDate = (dateString: string): string => {
 
 const ArticleDetails: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [article, setArticle] = useState<ArticleType | null>(null);
+  const [article, setArticle] = useState<iArticleType | null>(null);
   const [articles, setArticles] = useState<any[]>([]);
 
   const [comments, setComments] = useState<any>([]);

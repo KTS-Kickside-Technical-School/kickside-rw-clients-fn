@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { FiPlus } from 'react-icons/fi';
 import { ToastContainer } from 'react-toastify';
 import ArticleEditRequests from '../../pages/staff/ArticleEditRequests';
-import ArticlesListSubHeader from './ArticlesListSubHeader';
 import SEO from '../../utils/SEO';
+import AdminArticlesSubHeader from './admin/AdminArticlesSubHeader';
+import EditorArticlesSubHeader from './editor/EditorArticlesSubHeader';
 
 const StaffViewArticlesEditRequests = ({ profile }: any) => {
   return (
@@ -29,8 +30,11 @@ const StaffViewArticlesEditRequests = ({ profile }: any) => {
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
-          <ArticlesListSubHeader profile={profile} />
-
+          {profile.role === 'Admin' ? (
+            <AdminArticlesSubHeader />
+          ) : (
+            <EditorArticlesSubHeader />
+          )}
           <ArticleEditRequests />
         </div>
       </div>
