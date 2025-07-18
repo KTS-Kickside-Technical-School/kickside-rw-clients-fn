@@ -3,7 +3,8 @@ import { FiPlus } from 'react-icons/fi';
 import { ToastContainer } from 'react-toastify';
 import ArticleEditRequests from '../../pages/staff/ArticleEditRequests';
 import SEO from '../../utils/SEO';
-import ArticlesListSubHeader from '../../Components/staff/ArticlesListSubHeader';
+import AdminArticlesSubHeader from '../../Components/staff/admin/AdminArticlesSubHeader';
+import EditorArticlesSubHeader from '../../Components/staff/editor/EditorArticlesSubHeader';
 
 const StaffViewArticlesEditRequests = ({ profile }: any) => {
   return (
@@ -25,8 +26,11 @@ const StaffViewArticlesEditRequests = ({ profile }: any) => {
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
-          <ArticlesListSubHeader profile={profile} />
-
+          {profile.role === 'Admin' ? (
+            <AdminArticlesSubHeader />
+          ) : (
+            <EditorArticlesSubHeader />
+          )}
           <ArticleEditRequests />
         </div>
       </div>

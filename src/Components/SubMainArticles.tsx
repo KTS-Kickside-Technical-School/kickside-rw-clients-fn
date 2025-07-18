@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AdvertisementSection from './AdvertisementSection';
-import { ArticleType } from '../utils/types/Article';
+import { iArticleType } from '../utils/types/Article';
 import { formatDistanceToNow } from 'date-fns';
 
 interface SubMainArticlesProps {
   title?: string;
-  articles: ArticleType[];
+  articles: iArticleType[];
   loading: boolean;
 }
 
@@ -31,7 +31,7 @@ const SubMainArticles: React.FC<SubMainArticlesProps> = ({
                   <div className="h-4 bg-gray-400 rounded w-3/4"></div>
                 </div>
               ))
-            : articles.map((article: ArticleType, index) => (
+            : articles.map((article: iArticleType, index) => (
                 <div className="p-3" key={index}>
                   <div>
                     <Link

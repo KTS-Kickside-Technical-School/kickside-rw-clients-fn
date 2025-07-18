@@ -2,27 +2,29 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { FiEdit, FiEye, FiPlus } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
-import { iArticleType } from '../../utils/types/Article';
-import {
-  getOwnArticles,
-  getAllArticles,
-  journalistRequestEditAccess,
-} from '../../utils/requests/articlesRequest';
 import { toast, ToastContainer } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
-import { formatDateTime } from '../../utils/helpers/articleHelpers';
-import SEO from '../../utils/SEO';
 import { BiEditAlt } from 'react-icons/bi';
-import AdminArticlesSubHeader from '../../Components/staff/admin/AdminArticlesSubHeader';
-import EditorArticlesSubHeader from '../../Components/staff/editor/EditorArticlesSubHeader';
+import {
+  getAllArticles,
+  getOwnArticles,
+  journalistRequestEditAccess,
+} from '../../../utils/requests/articlesRequest';
+import SEO from '../../../utils/SEO';
+import { iArticleType } from '../../../utils/types/Article';
+import { formatDateTime } from '../../../utils/helpers/articleHelpers';
+import AdminArticlesSubHeader from '../../../Components/staff/admin/AdminArticlesSubHeader';
 
-const StaffViewArticles = ({ profile }: any) => {
+const AdminViewArticles = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState('date');
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+
+  const profileParsed = sessionStorage.getItem('profile');
+  const profile = profileParsed ? JSON.parse(profileParsed) : {};
 
   const articlesPerPage = 15;
 
@@ -106,13 +108,6 @@ const StaffViewArticles = ({ profile }: any) => {
       <div className="max-w-8xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Articles list</h1>
-          <Link
-            to="/staff/article/new"
-            className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm"
-          >
-            <FiPlus className="mr-2" />
-            New Article
-          </Link>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
@@ -121,11 +116,8 @@ const StaffViewArticles = ({ profile }: any) => {
               {error}
             </div>
           )}
-          {profile.role === 'Admin' ? (
-            <AdminArticlesSubHeader />
-          ) : (
-            <EditorArticlesSubHeader />
-          )}
+          <AdminArticlesSubHeader />
+
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500"></div>
@@ -305,4 +297,4 @@ const StaffViewArticles = ({ profile }: any) => {
   );
 };
 
-export default StaffViewArticles;
+export default AdminViewArticles;

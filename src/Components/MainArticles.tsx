@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { ArticleType } from '../utils/types/Article';
+import { iArticleType } from '../utils/types/Article';
 import { formatDistanceToNow } from 'date-fns';
 
 interface MainArticlesProps {
   loading: boolean;
-  articles: ArticleType[];
+  articles: iArticleType[];
   title: string;
 }
 

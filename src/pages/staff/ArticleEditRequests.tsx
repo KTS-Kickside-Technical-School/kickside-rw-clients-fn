@@ -5,13 +5,13 @@ import {
   getArticleEditRequests,
   approveEditRequest,
 } from '../../utils/requests/articlesRequest'; // Adjust the import based on your actual requests
-import { ArticleType } from '../../utils/types/Article';
+import { iArticleType } from '../../utils/types/Article';
 import ReactPaginate from 'react-paginate';
 import { formatDateTime } from '../../utils/helpers/articleHelpers';
 import { Link } from 'react-router-dom';
 
 const ArticleEditRequests = () => {
-  const [editRequests, setEditRequests] = useState<ArticleType[]>([]);
+  const [editRequests, setEditRequests] = useState<iArticleType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(0);

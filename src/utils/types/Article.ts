@@ -1,6 +1,6 @@
 import { Author } from "./User";
 
-export interface ArticleType {
+export interface iArticleType {
     _id?: any;
     title: string;
     coverImage: string;
@@ -19,4 +19,5 @@ export interface MonthlyAnalytics {
     month: string;
     comments: number;
     views: number;
+    articles: number;
 }
