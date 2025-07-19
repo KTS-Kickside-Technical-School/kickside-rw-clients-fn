@@ -1,20 +1,59 @@
 import { useState } from 'react';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { getPublishedArticles } from '../utils/requests/articlesRequest';
 
 const Header = () => {
-  const articles: any = [];
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
-  const [filteredArticles, setFilteredArticles] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [allArticles, setAllArticles] = useState<any[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<any[]>([]);
+  const [hasFetched, setHasFetched] = useState(false);
 
-  const filterArticles = (title: any) => {
-    setSearch(title);
-    const filtered = articles.filter((article: any) =>
-      article.title.toLowerCase().includes(title.toLowerCase())
-    );
+  const fetchArticles = async () => {
+    try {
+      const response = await getPublishedArticles();
+      console.log(response);
+      if (response.status === 200) {
+        setAllArticles(response.articles);
+        setHasFetched(true);
+        filterArticles(search, response.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch articles:', error);
+    }
+  };
+
+  const filterArticles = (value: string, sourceData?: any[]) => {
+    setSearch(value);
+    const source = sourceData || allArticles;
+
+    const keywords = value
+      .toLowerCase()
+      .split(' ')
+      .filter((word) => word.trim() !== '');
+
+    const filtered = source.filter((article) => {
+      const title = article.title?.toLowerCase() || '';
+      const content = article.content?.toLowerCase() || '';
+
+      return keywords.some(
+        (keyword) => title.includes(keyword) || content.includes(keyword)
+      );
+    });
+
     setFilteredArticles(filtered);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (!hasFetched) {
+      setSearch(value);
+      fetchArticles();
+    } else {
+      filterArticles(value);
+    }
   };
 
   const closeMenu = () => setIsMenuOpen(false);
@@ -25,9 +64,7 @@ const Header = () => {
         <div className="text-center mb-4">
           {window.location.pathname === '/' ? (
             <button
-              onClick={() => {
-                window.location.href = '/';
-              }}
+              onClick={() => (window.location.href = '/')}
               className="mx-auto block"
             >
               <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
@@ -73,17 +110,21 @@ const Header = () => {
             </div>
           ) : (
             <div className="flex justify-center items-center">
-              <div className="flex items-center bg-white rounded overflow-hidden shadow-md w-full ">
+              <div className="flex items-center bg-white rounded overflow-hidden shadow-md w-full">
                 <input
                   type="text"
                   className="px-4 py-2 w-full text-black focus:outline-none"
                   placeholder="Search articles or topics"
                   value={search}
-                  onChange={(e) => filterArticles(e.target.value)}
+                  onChange={handleSearchChange}
                 />
                 <button
                   className="text-black bg-gray-200 p-2 rounded-r-full hover:bg-gray-300"
-                  onClick={() => setIsSearchOpen(false)}
+                  onClick={() => {
+                    setIsSearchOpen(false);
+                    setSearch('');
+                    setFilteredArticles([]);
+                  }}
                 >
                   <FaTimes />
                 </button>
@@ -133,11 +174,6 @@ const Header = () => {
                     Entertainment
                   </Link>
                 </li>
-                <li>
-                  <Link to="/a/" className="hover:underline">
-                    Entertainment
-                  </Link>
-                </li>
               </ul>
             </nav>
           </div>
@@ -149,7 +185,7 @@ const Header = () => {
           <div className="bg-white text-black p-4 my-2 rounded-md shadow-md">
             <ul>
               {filteredArticles.length > 0 ? (
-                filteredArticles.map((article: any) => (
+                filteredArticles.map((article) => (
                   <li
                     key={article.id}
                     className="py-2 border-b last:border-b-0"
