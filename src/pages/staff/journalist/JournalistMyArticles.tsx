@@ -11,12 +11,13 @@ import {
   journalistRequestEditAccess,
 } from '../../../utils/requests/articlesRequest';
 import SEO from '../../../utils/SEO';
-import { ArticleType } from '../../../utils/types/Article';
-import ArticlesListSubHeader from '../../../Components/staff/ArticlesListSubHeader';
+import { iArticleType } from '../../../utils/types/Article';
 import { formatDateTime } from '../../../utils/helpers/articleHelpers';
+import AdminArticlesSubHeader from '../../../Components/staff/admin/AdminArticlesSubHeader';
+import EditorArticlesSubHeader from '../../../Components/staff/editor/EditorArticlesSubHeader';
 
 const JournalistMyArticles = () => {
-  const [articles, setArticles] = useState<ArticleType[]>([]);
+  const [articles, setArticles] = useState<iArticleType[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState('date');
   const [currentPage, setCurrentPage] = useState(0);
@@ -53,12 +54,12 @@ const JournalistMyArticles = () => {
     fetchArticles();
   }, []);
 
-  const filteredArticles = articles.filter((article: ArticleType) =>
+  const filteredArticles = articles.filter((article: iArticleType) =>
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const sortedArticles = useMemo(() => {
-    return [...filteredArticles].sort((a: ArticleType, b: ArticleType) => {
+    return [...filteredArticles].sort((a: iArticleType, b: iArticleType) => {
       if (sortOption === 'date') return b.createdAt.localeCompare(a.createdAt);
       if (sortOption === 'status') return a.status.localeCompare(b.status);
       if (sortOption === 'category')
@@ -123,8 +124,11 @@ const JournalistMyArticles = () => {
               {error}
             </div>
           )}
-          <ArticlesListSubHeader profile={profile} />
-
+          {profile.role === 'Admin' ? (
+            <AdminArticlesSubHeader />
+          ) : (
+            <EditorArticlesSubHeader />
+          )}
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500"></div>
@@ -186,7 +190,7 @@ const JournalistMyArticles = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {displayedArticles.map((article: ArticleType, index) => (
+                      {displayedArticles.map((article: iArticleType, index) => (
                         <tr
                           key={article?._id}
                           className="hover:bg-gray-50 transition-colors"

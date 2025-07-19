@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiEye, FiPlus, FiSlash } from 'react-icons/fi';
+import { FiEye,  FiSlash } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
@@ -67,13 +67,6 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
       <div className="max-w-8xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Users List</h1>
-          <Link
-            to="/staff/user/new"
-            className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm"
-          >
-            <FiPlus className="mr-2" />
-            New User
-          </Link>
         </div>
 
         {error && (

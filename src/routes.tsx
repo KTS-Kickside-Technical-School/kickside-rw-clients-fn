@@ -34,6 +34,8 @@ import AdminLayout from './pages/staff/admin/AdminLayout';
 import JournalistMyArticles from './pages/staff/journalist/JournalistMyArticles';
 import EditorViewArticles from './pages/staff/editor/EditorViewArticles';
 import AdminViewArticles from './pages/staff/admin/AdminViewArticles';
+import RoleProtectedRoute from './Components/staff/RoleProtectRoute';
+import AdminNewArticle from './pages/staff/admin/AdminNewArticle';
 
 const AuthContext = createContext<any>(null);
 
@@ -131,45 +133,67 @@ const AppRouter = () => {
                 path="articles/admin-view-own-articles"
                 element={<StaffViewOwnArticles profile={profile} />}
               />
-              <Route
-                path="users"
-                element={<AdminViewUsers profile={profile} />}
-              />
-              <Route path="user/:id" element={<StaffViewSingleUser />} />
-              <Route path="user/new" element={<AdminNewUser />} />
+
               <Route path="settings" element={<Settings />} />
-              <Route
-                path="inquiries"
-                element={<AdminViewInquiries profile={profile} />}
-              />
-              <Route path="inquiry/:id" element={<AdminVIewSingleInquiry />} />
-              <Route path="mailing-list" element={<AdminMailingList />} />
               <Route path="*" element={<StaffNotFound />} />
             </Route>
           </Route>
         </Route>
 
-        <Route path="/admin">
-          <Route element={<AdminLayout onLogout={logout} />}>
-            <Route path="articles" element={<AdminViewArticles />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="profile" element={<Settings />} />
-          </Route>
+        <Route
+          path="/admin"
+          element={
+            <RoleProtectedRoute allowedRoles={['Admin']}>
+              <AdminLayout onLogout={logout} />
+            </RoleProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="articles/view" element={<AdminViewArticles />} />
+          <Route path="articles/add" element={<AdminNewArticle />} />
+          <Route path="profile" element={<Settings />} />
+          <Route
+            path="users/view"
+            element={<AdminViewUsers profile={profile} />}
+          />
+          <Route path="user/:id" element={<StaffViewSingleUser />} />
+          <Route path="users/add" element={<AdminNewUser />} />
+          <Route
+            path="inquiries"
+            element={<AdminViewInquiries profile={profile} />}
+          />
+          <Route path="inquiry/:id" element={<AdminVIewSingleInquiry />} />
+          <Route path="mailing-list" element={<AdminMailingList />} />
         </Route>
-        <Route path="/editor">
-          <Route element={<StaffLayout onLogout={logout} />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="articles" element={<EditorViewArticles />} />
-            <Route path="profile" element={<Settings />} />
-          </Route>
+
+        <Route
+          path="/editor"
+          element={
+            <RoleProtectedRoute allowedRoles={['Editor']}>
+              <StaffLayout onLogout={logout} />
+            </RoleProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="articles/view" element={<EditorViewArticles />} />
+          <Route path="articles/add" element={<StaffNewArticle />} />
+          <Route path="profile" element={<Settings />} />
         </Route>
-        <Route path="/journalist">
-          <Route element={<StaffLayout onLogout={logout} />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="my-articles" element={<JournalistMyArticles />} />
-            <Route path="profile" element={<Settings />} />
-          </Route>
+
+        <Route
+          path="/journalist"
+          element={
+            <RoleProtectedRoute allowedRoles={['Journalist']}>
+              <StaffLayout onLogout={logout} />
+            </RoleProtectedRoute>
+          }
+        >
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="my-articles/view" element={<JournalistMyArticles />} />
+          <Route path="my-articles/add" element={<StaffNewArticle />} />
+          <Route path="profile" element={<Settings />} />
         </Route>
+
         <Route path="*" element={<NotFound backUrl={backUrl} />} />
       </Routes>
     </AuthContext.Provider>

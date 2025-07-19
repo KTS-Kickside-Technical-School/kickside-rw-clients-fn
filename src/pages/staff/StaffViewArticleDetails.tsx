@@ -10,10 +10,10 @@ import {
 import { BiCalendar, BiCategory } from 'react-icons/bi';
 import { formatDateTime } from '../../utils/helpers/articleHelpers';
 import { GrStatusInfo } from 'react-icons/gr';
-import { ArticleType } from '../../utils/types/Article';
+import { iArticleType } from '../../utils/types/Article';
 
 const StaffViewArticleDetails = ({ profile }: any) => {
-  const [article, setArticle] = useState<ArticleType | null>(null);
+  const [article, setArticle] = useState<iArticleType | null>(null);
   const [comments, setComments] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -195,13 +195,13 @@ const StaffViewArticleDetails = ({ profile }: any) => {
                     <li key={index} className="mb-4">
                       <div className="flex justify-between items-center">
                         <span className="font-semibold text-gray-700">
-                          {comment.author}
+                          {comment.names}
                         </span>
                         <span className="text-gray-500 text-sm">
                           {formatDateTime(comment.createdAt)}
                         </span>
                       </div>
-                      <p className="text-gray-700 mt-2">{comment.content}</p>
+                      <p className="text-gray-700 mt-2">{comment.comment}</p>
                     </li>
                   ))}
                 </ul>

@@ -183,9 +183,18 @@ export const updateArticle = async (id: string, data: any) => {
   }
 }
 
-export const getPopularArticles = async ()=> {
+export const getPopularArticles = async () => {
   try {
     const response = await axiosInstance.get("/api/articles/get-popular-articles");
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}
+
+export const getTopArticlesByMonth = async (month: number, year: number) => {
+  try {
+    const response = await axiosInstance.get(`/api/articles/journalist-get-monthly-top?month=${month}&year=${year}`);
     return response.data
   } catch (error) {
     return handleError(error)

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { FiEdit, FiEye, FiPlus } from 'react-icons/fi';
+import { FiEdit, FiEye } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
@@ -11,12 +11,12 @@ import {
   journalistRequestEditAccess,
 } from '../../../utils/requests/articlesRequest';
 import SEO from '../../../utils/SEO';
-import { ArticleType } from '../../../utils/types/Article';
-import ArticlesListSubHeader from '../../../Components/staff/ArticlesListSubHeader';
+import { iArticleType } from '../../../utils/types/Article';
 import { formatDateTime } from '../../../utils/helpers/articleHelpers';
+import AdminArticlesSubHeader from '../../../Components/staff/admin/AdminArticlesSubHeader';
 
 const AdminViewArticles = () => {
-  const [articles, setArticles] = useState<ArticleType[]>([]);
+  const [articles, setArticles] = useState<iArticleType[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState('date');
   const [currentPage, setCurrentPage] = useState(0);
@@ -53,12 +53,12 @@ const AdminViewArticles = () => {
     fetchArticles();
   }, []);
 
-  const filteredArticles = articles.filter((article: ArticleType) =>
+  const filteredArticles = articles.filter((article: iArticleType) =>
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const sortedArticles = useMemo(() => {
-    return [...filteredArticles].sort((a: ArticleType, b: ArticleType) => {
+    return [...filteredArticles].sort((a: iArticleType, b: iArticleType) => {
       if (sortOption === 'date') return b.createdAt.localeCompare(a.createdAt);
       if (sortOption === 'status') return a.status.localeCompare(b.status);
       if (sortOption === 'category')
@@ -108,13 +108,6 @@ const AdminViewArticles = () => {
       <div className="max-w-8xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Articles list</h1>
-          <Link
-            to="/staff/article/new"
-            className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition shadow-sm"
-          >
-            <FiPlus className="mr-2" />
-            New Article
-          </Link>
         </div>
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
@@ -123,7 +116,7 @@ const AdminViewArticles = () => {
               {error}
             </div>
           )}
-          <ArticlesListSubHeader profile={profile} />
+          <AdminArticlesSubHeader />
 
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
@@ -186,7 +179,7 @@ const AdminViewArticles = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      {displayedArticles.map((article: ArticleType, index) => (
+                      {displayedArticles.map((article: iArticleType, index) => (
                         <tr
                           key={article?._id}
                           className="hover:bg-gray-50 transition-colors"

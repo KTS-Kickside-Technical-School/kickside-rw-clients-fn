@@ -10,14 +10,14 @@ import {
 } from '../utils/requests/articlesRequest';
 import SubMainArticles from '../Components/SubMainArticles';
 import NewsLetter from '../Components/Newsletter';
-import { ArticleType } from '../utils/types/Article';
+import { iArticleType } from '../utils/types/Article';
 import SEO from '../utils/SEO';
 import MainTopKSAd from '../Components/ads/MainTopKSAd';
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
-  const [articles, setArticles] = useState<ArticleType[]>([]);
-  const [publishedArticles, setPublishedArticles] = useState<ArticleType[]>([]);
+  const [articles, setArticles] = useState<iArticleType[]>([]);
+  const [publishedArticles, setPublishedArticles] = useState<iArticleType[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchArticles = async () => {
