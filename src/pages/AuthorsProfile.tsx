@@ -2,19 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import SEO from '../utils/SEO';
-import Header from '../Components/Header';
-import Footer from '../Components/Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
-import AdvertisementSection from '../Components/AdvertisementSection';
-import MostPopular from '../Components/MostPopularArticle';
+import AdvertisementSection from '../components/AdvertisementSection';
+import MostPopular from '../components/MostPopularArticle';
 import { toast } from 'react-toastify';
 import { getAuthorsProfile } from '../utils/requests/articlesRequest';
 import Avatar from '/avatar.svg';
 import { PiArticleNyTimes } from 'react-icons/pi';
 import { BiUser } from 'react-icons/bi';
 import { MdCheck, MdEmail } from 'react-icons/md';
-import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import MainTopKSAd from '../components/ads/MainTopKSAd';
 import { FiHome } from 'react-icons/fi';
 
 const AuthorProfile: React.FC = () => {

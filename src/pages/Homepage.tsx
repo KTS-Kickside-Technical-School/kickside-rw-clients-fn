@@ -1,26 +1,26 @@
 import React, { Suspense, useMemo, useCallback } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../Components/Header';
+import Header from '../components/Header';
 import SEO from '../utils/SEO';
-import Footer from '../Components/Footer';
+import Footer from '../components/Footer';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
-import NewsLetter from '../Components/Newsletter';
-import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import NewsLetter from '../components/Newsletter';
+import MainTopKSAd from '../components/ads/MainTopKSAd';
 import { FaSpinner } from 'react-icons/fa';
 import { iArticleType } from '../utils/types/Article';
-import HomePageSkeletonLoader from '../Components/clients/homepage/HomePageSkeletonLoader';
+import HomePageSkeletonLoader from '../components/clients/homepage/HomePageSkeletonLoader';
 import useCachedFetch from '../hooks/useCached';
-import HomePageArticleItem from '../Components/clients/homepage/HomePageArticleItem';
-import HomepageTopHeadlines from '../Components/clients/homepage/HomePageTopHeadlines';
+import HomePageArticleItem from '../components/clients/homepage/HomePageArticleItem';
+import HomepageTopHeadlines from '../components/clients/homepage/HomePageTopHeadlines';
 
 const AdvertisementSection = React.lazy(
-  () => import('../Components/AdvertisementSection')
+  () => import('../components/AdvertisementSection')
 );
-const LatestNews = React.lazy(() => import('../Components/LatestByCategory'));
-const MainArticles = React.lazy(() => import('../Components/MainArticles'));
+const LatestNews = React.lazy(() => import('../components/LatestByCategory'));
+const MainArticles = React.lazy(() => import('../components/MainArticles'));
 const SubMainArticles = React.lazy(
-  () => import('../Components/SubMainArticles')
+  () => import('../components/SubMainArticles')
 );
 
 

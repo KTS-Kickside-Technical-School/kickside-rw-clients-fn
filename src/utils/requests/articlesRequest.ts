@@ -200,3 +200,12 @@ export const getTopArticlesByMonth = async (month: number, year: number) => {
     return handleError(error)
   }
 }
+
+export const adminGetJournalistsAnalytics = async (userId: string) => {
+  try {
+    const response = await axiosInstance.get(`/api/articles/journalist/${userId}/analytics`);
+    return response.data
+  } catch (error) {
+    return handleError(error);
+  }
+}

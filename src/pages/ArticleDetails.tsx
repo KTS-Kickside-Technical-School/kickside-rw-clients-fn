@@ -5,18 +5,18 @@ import {
   postComment,
 } from '../utils/requests/articlesRequest';
 import SEO from '../utils/SEO';
-import Header from '../Components/Header';
-import AdvertisementSection from '../Components/AdvertisementSection';
+import Header from '../components/Header';
+import AdvertisementSection from '../components/AdvertisementSection';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import Footer from '../Components/Footer';
+import Footer from '../components/Footer';
 import { iArticleType } from '../utils/types/Article';
-import RelatedArticles from '../Components/RelatedArticles';
+import RelatedArticles from '../components/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
-import NewsLetter from '../Components/Newsletter';
-import MainTopKSAd from '../Components/ads/MainTopKSAd';
-import MostPopular from '../Components/MostPopularArticle';
+import NewsLetter from '../components/Newsletter';
+import MainTopKSAd from '../components/ads/MainTopKSAd';
+import MostPopular from '../components/MostPopularArticle';
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import XIcon from '../icons/X';
 

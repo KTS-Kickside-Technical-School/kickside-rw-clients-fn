@@ -23,9 +23,8 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
     try {
       setIsLoading(true);
       const response = await getAllUsers();
-      if (response.status !== 200) {
+      if (response.status !== 200)
         throw new Error(response.message || 'Failed to fetch users');
-      }
       setUsers(response.data.workers || []);
       setError('');
     } catch (err: any) {
@@ -37,16 +36,14 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
   };
 
   useEffect(() => {
-    if (profile) {
-      fetchUsers();
-    }
+    if (profile) fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter((user: any) =>
+  const filteredUsers = users.filter((user) =>
     user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedUsers = [...filteredUsers].sort((a: any, b: any) => {
+  const sortedUsers = [...filteredUsers].sort((a, b) => {
     if (sortOption === 'Date Joined')
       return b?.createdAt.localeCompare(a.createdAt);
     if (sortOption === 'firstName')
@@ -61,44 +58,46 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
   const displayedUsers = sortedUsers.slice(offset, offset + usersPerPage);
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <ToastContainer />
+    <div className="p-4 sm:p-6 bg-gray-50 min-h-screen">
       <SEO mainData={{ title: 'View Users - Kickside News' }} />
-      <div className="max-w-8xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">Users List</h1>
+      <ToastContainer />
+
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+          <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
+            👥 Users Management
+          </h1>
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
+          <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-6 border border-red-300">
             {error}
           </div>
         )}
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6">
+        <div className="bg-white rounded-xl shadow-md border border-gray-200 p-4">
           {isLoading ? (
             <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-indigo-500"></div>
+              <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-b-4 border-indigo-500"></div>
             </div>
           ) : (
-            <div>
-              <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
-                <div className="flex-1">
-                  <div className="relative">
-                    <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                    <input
-                      type="text"
-                      placeholder="Search users..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full pl-10 py-2.5 border border-blue-300 outline-0 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50"
-                    />
-                  </div>
+            <>
+              <div className="flex flex-col md:flex-row items-center gap-4 mb-4">
+                <div className="relative w-full md:w-1/2">
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm" />
+                  <input
+                    type="text"
+                    placeholder="Search users..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50"
+                  />
                 </div>
+
                 <select
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
-                  className="py-2.5 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 border-primary outline-0"
+                  className="text-sm py-2 px-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 bg-gray-50"
                 >
                   <option value="Date Joined">Sort by Date Joined</option>
                   <option value="firstName">Sort by First Name</option>
@@ -108,100 +107,90 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
               </div>
 
               {displayedUsers.length > 0 ? (
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="bg-gray-50 border-b border-gray-200">
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          #
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Names
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Email
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Role
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Date Joined
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Status
-                        </th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {displayedUsers.map((user, index) => (
-                        <tr
-                          key={user._id}
-                          className="hover:bg-gray-50 transition-colors"
-                        >
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {offset + index + 1}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            {user.firstName} {user.lastName}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <Link to={`mailto: ${user.email}`}>
-                              {user.email}
-                            </Link>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            {user.role}{' '}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {formatDateTime(user?.createdAt)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {user.isDisabled ? (
-                              <span className="flex text-red-600">
-                                <FiSlash className="mt-1 mr-1" />
-                                <span>
-                                  Disabled{' '}
-                                  <strong>"{user.disableReason}"</strong>
-                                </span>
-                              </span>
-                            ) : (
-                              <span className="text-green-600">Active</span>
-                            )}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <Link
-                              to={`/admin/user/${user._id}`}
-                              className="text-indigo-600"
-                            >
-                              <FiEye />
-                            </Link>
-                          </td>
+                <>
+                  <div className="overflow-x-auto rounded-lg border border-gray-100">
+                    <table className="min-w-full text-sm text-gray-700">
+                      <thead className="bg-gray-100 text-xs text-gray-500 uppercase tracking-wide">
+                        <tr>
+                          <th className="px-4 py-3 text-left">#</th>
+                          <th className="px-4 py-3 text-left">Names</th>
+                          <th className="px-4 py-3 text-left">Email</th>
+                          <th className="px-4 py-3 text-left">Role</th>
+                          <th className="px-4 py-3 text-left">Joined</th>
+                          <th className="px-4 py-3 text-left">Status</th>
+                          <th className="px-4 py-3 text-left">Action</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody className="bg-white divide-y divide-gray-100">
+                        {displayedUsers.map((user, index) => (
+                          <tr key={user._id} className="hover:bg-gray-50">
+                            <td className="px-4 py-2">{offset + index + 1}</td>
+                            <td className="px-4 py-2">
+                              {user.firstName} {user.lastName}
+                            </td>
+                            <td className="px-4 py-2">
+                              <Link
+                                to={`mailto:${user.email}`}
+                                className="text-blue-600 hover:underline"
+                              >
+                                {user.email}
+                              </Link>
+                            </td>
+                            <td className="px-4 py-2 capitalize">
+                              {user.role}
+                            </td>
+                            <td className="px-4 py-2">
+                              {formatDateTime(user.createdAt)}
+                            </td>
+                            <td className="px-4 py-2">
+                              {user.isDisabled ? (
+                                <span className="flex items-center text-red-600">
+                                  <FiSlash className="mr-1" />
+                                  Disabled{' '}
+                                  {user.disableReason && (
+                                    <span className="ml-1 italic text-xs text-gray-500">
+                                      ({user.disableReason})
+                                    </span>
+                                  )}
+                                </span>
+                              ) : (
+                                <span className="text-green-600 font-medium">
+                                  Active
+                                </span>
+                              )}
+                            </td>
+                            <td className="px-4 py-2">
+                              <Link
+                                to={`/admin/user/${user._id}`}
+                                className="text-indigo-600 hover:underline flex items-center gap-1"
+                              >
+                                <FiEye className="text-sm" /> View
+                              </Link>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
 
-                  <div className="mt-6">
+                  <div className="mt-4 flex justify-center">
                     <ReactPaginate
-                      previousLabel="← Previous"
-                      nextLabel="Next →"
+                      previousLabel="←"
+                      nextLabel="→"
                       pageCount={pageCount}
-                      onPageChange={(event) => setCurrentPage(event.selected)}
-                      containerClassName="flex justify-center items-center gap-2"
-                      pageClassName="px-3 py-1 border rounded-lg cursor-pointer hover:bg-gray-200"
+                      onPageChange={({ selected }) => setCurrentPage(selected)}
+                      containerClassName="flex items-center gap-2 text-sm"
+                      pageClassName="px-3 py-1 border rounded-md hover:bg-gray-100"
                       activeClassName="bg-indigo-500 text-white"
                     />
                   </div>
-                </div>
+                </>
               ) : (
-                <div className="py-6 text-center text-gray-500">
+                <div className="py-8 text-center text-sm text-gray-500">
                   No users found.
                 </div>
               )}
-            </div>
+            </>
           )}
         </div>
       </div>

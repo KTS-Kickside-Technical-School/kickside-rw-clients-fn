@@ -8,10 +8,42 @@ import {
   updateUser,
 } from '../../utils/requests/usersRequest';
 import { Author } from '../../utils/types/User';
-import { BiCalendar, BiCategory } from 'react-icons/bi';
+import { BiCalendar, BiCategory, BiNews, BiTrendingUp } from 'react-icons/bi';
 import { BsBan } from 'react-icons/bs';
-import { MdTurnedInNot } from 'react-icons/md';
+import { MdTurnedInNot, MdOutlineAnalytics } from 'react-icons/md';
+import { FiUsers, FiEdit } from 'react-icons/fi';
 import { formatDateToCustomString } from '../../utils/helpers/articleHelpers';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+  ArcElement,
+} from 'chart.js';
+import { adminGetJournalistsAnalytics } from '../../utils/requests/articlesRequest';
+import AdminViewPerformanceMetrics from '../../components/admin/users/AdminViewPerformanceMetrics';
+import AdminViewPersonalInformation from '../../components/admin/users/AdminViewPersonalInformation';
+import AdminViewJournalistsArticles from '../../components/admin/users/AdminViewJournalistsArticles';
+import AdminViewJournalistOverview from '../../components/admin/users/AdminViewJournalistOverview';
+import SEO from '../../utils/SEO';
+import AdminDisableUser from '../../components/admin/users/AdminDisableUser';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+  ArcElement
+);
 
 const AdminViewSingleUser = () => {
   const [user, setUser] = useState<Author | null>(null);
@@ -22,12 +54,16 @@ const AdminViewSingleUser = () => {
   const [editedUser, setEditedUser] = useState<Partial<Author>>({});
   const { id } = useParams<{ id: string }>();
   const [isFormLoading, setIsFormLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState('overview');
+
+  const [analyticsData, setAnalyticsData] = useState<any>({});
 
   const fetchSingleUser = async () => {
     try {
       const response = await getSingleUser(id);
       if (response?.data?.worker) {
         setUser(response.data.worker);
+        await generatePerformanceData();
       } else {
         toast.error('User not found!');
       }
@@ -36,6 +72,13 @@ const AdminViewSingleUser = () => {
       toast.error('Failed to load user.');
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const generatePerformanceData = async () => {
+    const response = await adminGetJournalistsAnalytics(id || 'no user');
+    if (response.status === 200) {
+      setAnalyticsData(response.data);
     }
   };
 
@@ -105,7 +148,9 @@ const AdminViewSingleUser = () => {
         toast.success('User enabled successfully!');
         await fetchSingleUser();
       } else {
-        toast.error('Failed to enable user!');
+        toast.error(
+          response.message || 'An error occurred while enabling the user.'
+        );
       }
     } catch (error) {
       console.error('Error enabling user:', error);
@@ -113,6 +158,69 @@ const AdminViewSingleUser = () => {
     } finally {
       setIsFormLoading(false);
     }
+  };
+
+  const readershipChartData = {
+    labels: analyticsData?.readershipStats?.labels,
+    datasets: [
+      {
+        label: 'Views',
+        data: analyticsData?.readershipStats?.data,
+        backgroundColor: 'rgba(79, 70, 229, 0.5)',
+        borderColor: 'rgba(79, 70, 229, 1)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+      },
+      {
+        label: 'Comments',
+        data: analyticsData?.commentStats?.data,
+        backgroundColor: 'rgba(16, 185, 129, 0.5)',
+        borderColor: 'rgba(5, 150, 105, 1)',
+        borderWidth: 2,
+        tension: 0.4,
+        fill: true,
+      },
+    ],
+  };
+
+  const articleTrendsData = {
+    labels: analyticsData?.articleTrends?.labels,
+    datasets: [
+      {
+        label: 'Published',
+        data: analyticsData?.articleTrends?.published,
+        borderColor: 'rgba(16, 185, 129, 1)',
+        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+        borderWidth: 2,
+        tension: 0.4,
+      },
+      {
+        label: 'Drafts',
+        data: analyticsData?.articleTrends?.drafts,
+        borderColor: 'rgba(245, 158, 11, 1)',
+        backgroundColor: 'rgba(245, 158, 11, 0.1)',
+        borderWidth: 2,
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const categoryDistributionData = {
+    labels: analyticsData?.categoryDistribution?.labels,
+    datasets: [
+      {
+        data: analyticsData?.categoryDistribution?.data,
+        backgroundColor: [
+          'rgba(79, 70, 229, 0.7)',
+          'rgba(16, 185, 129, 0.7)',
+          'rgba(245, 158, 11, 0.7)',
+          'rgba(239, 68, 68, 0.7)',
+          'rgba(59, 130, 246, 0.7)',
+        ],
+        borderWidth: 1,
+      },
+    ],
   };
 
   if (isLoading) {
@@ -134,219 +242,229 @@ const AdminViewSingleUser = () => {
   return (
     <>
       <ToastContainer />
+      <SEO
+        mainData={{
+          title: `Journalist: ${user.firstName} ${user.lastName} - Admin : Kickside Rwanda`,
+        }}
+      />
       <div className="p-6 bg-gray-50 min-h-screen">
-        <div className="bg-white shadow-md rounded-lg max-w-5xl mx-auto p-6">
-          <div className="flex gap-6 mb-8 items-center">
-            <img
-              src={user.profile || '/avatar.svg'}
-              alt="Profile"
-              className="w-28 h-28 rounded-full border border-gray-300"
-            />
-            <div>
-              <h1 className="text-2xl font-bold text-gray-800">
-                {isEditing ? (
-                  <div className="flex gap-4 mb-3">
-                    <input
-                      type="text"
-                      className="border p-1 rounded-md w-auto outline-0 border-primary"
-                      value={editedUser.firstName || user.firstName}
-                      onChange={(e) =>
-                        handleInputChange('firstName', e.target.value)
-                      }
-                    />
-                    <input
-                      type="text"
-                      className="border p-1 rounded-md w-auto  outline-0 border-primary"
-                      value={editedUser.lastName || user.lastName}
-                      onChange={(e) =>
-                        handleInputChange('lastName', e.target.value)
-                      }
-                    />
-                  </div>
-                ) : (
-                  `${user.firstName} ${user.lastName}`
-                )}
-              </h1>
-              <p className="text-gray-600">
-                <BiCategory className="inline-block mr-2 text-lg" />
-                <span className="font-medium">Role:</span>{' '}
-                {isEditing ? (
-                  <select
-                    value={editedUser.role || user.role}
-                    className="border p-1 rounded-md outline-0 border-primary"
-                    onChange={(e) => handleInputChange('role', e.target.value)}
+        <div className="bg-white shadow-md rounded-lg max-w-full mx-auto overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white">
+            <div className="flex flex-col md:flex-row gap-6 items-center">
+              <img
+                src={user.profile || '/avatar.svg'}
+                alt="Profile"
+                className="w-28 h-28 rounded-full border-4 border-white shadow-lg"
+              />
+              <div className="flex-1">
+                <h1 className="text-3xl font-bold">
+                  {isEditing ? (
+                    <div className="flex gap-4 mb-3 flex-wrap">
+                      <input
+                        type="text"
+                        className="border p-2 rounded-md w-full md:w-auto outline-0 bg-white/20 text-white placeholder-white/70"
+                        value={editedUser.firstName || user.firstName}
+                        onChange={(e) =>
+                          handleInputChange('firstName', e.target.value)
+                        }
+                        placeholder="First Name"
+                      />
+                      <input
+                        type="text"
+                        className="border p-2 rounded-md w-full md:w-auto outline-0 bg-white/20 text-white placeholder-white/70"
+                        value={editedUser.lastName || user.lastName}
+                        onChange={(e) =>
+                          handleInputChange('lastName', e.target.value)
+                        }
+                        placeholder="Last Name"
+                      />
+                    </div>
+                  ) : (
+                    `${user.firstName} ${user.lastName}`
+                  )}
+                </h1>
+                <div className="flex flex-wrap items-center gap-4 mt-2">
+                  <p className="flex items-center bg-white/20 px-3 py-1 rounded-full text-sm">
+                    <BiCategory className="mr-1" />
+                    {isEditing ? (
+                      <select
+                        value={editedUser.role || user.role}
+                        className="bg-transparent outline-0 text-white"
+                        onChange={(e) =>
+                          handleInputChange('role', e.target.value)
+                        }
+                      >
+                        <option value="Admin" className="text-gray-800">
+                          Admin
+                        </option>
+                        <option value="Editor" className="text-gray-800">
+                          Editor
+                        </option>
+                        <option value="Journalist" className="text-gray-800">
+                          Journalist
+                        </option>
+                      </select>
+                    ) : (
+                      user.role
+                    )}
+                  </p>
+                  <p className="flex items-center bg-white/20 px-3 py-1 rounded-full text-sm">
+                    <BiCalendar className="mr-1" />
+                    Joined: {formatDateToCustomString(user.createdAt)}
+                  </p>
+                  <p
+                    className={`flex items-center px-3 py-1 rounded-full text-sm ${
+                      user.isDisabled ? 'bg-red-500/90' : 'bg-green-500/90'
+                    }`}
                   >
-                    <option value="Admin">Admin</option>
-                    <option value="Editor">Editor</option>
-                    <option value="Journalist">Journalist</option>
-                  </select>
-                ) : (
-                  user.role
-                )}
-              </p>
-            </div>
-          </div>
-
-          <div className="mb-6 p-4 bg-gray-200 rounded-lg">
-            <h2 className="text-lg font-semibold mb-2 text-gray-800">
-              Account Status
-            </h2>
-            <p
-              className={`font-medium ${
-                user.isDisabled ? 'text-red-600' : 'text-green-600'
-              }`}
-            >
-              {user.isDisabled ? 'Disabled' : 'Active'}
-            </p>
-            <button
-              className={`mt-4 px-4 py-2 rounded-md ${
-                user.isDisabled
-                  ? 'bg-green-600 hover:bg-green-700'
-                  : 'bg-red-600 hover:bg-red-700'
-              } text-white`}
-              onClick={
-                !user.isDisabled
-                  ? () => setShowModal(true)
-                  : () => handleEnableUser(user._id)
-              }
-            >
-              {isFormLoading ? (
-                'Loading...'
-              ) : user.isDisabled ? (
-                <span className="flex">
-                  <MdTurnedInNot className="mt-1 mr-2" />
-                  <span>Enable User</span>
-                </span>
-              ) : (
-                <span className="flex">
-                  <BsBan className="mt-1 mr-2" />
-                  <span>Disable User</span>
-                </span>
-              )}
-            </button>
-          </div>
-
-          {isEditing ? (
-            <div className="space-y-4">
-              <label className="block">
-                <span className="font-semibold">Email:</span>
-                <input
-                  type="text"
-                  className="block w-full border p-2 rounded-md mt-1 outline-0 border-primary"
-                  value={editedUser.email || user.email || ''}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                />
-              </label>
-              <label className="block">
-                <span className="font-semibold">Role:</span>
-                <select
-                  value={editedUser.role || user.role}
-                  className="block w-full border p-2 rounded-md mt-1 outline-0 border-primary"
-                  onChange={(e) => handleInputChange('role', e.target.value)}
-                >
-                  <option value="Admin">Admin</option>
-                  <option value="Editor">Editor</option>
-                  <option value="Journalist">Journalist</option>
-                </select>
-              </label>
-
-              <label className="block">
-                <span className="font-semibold">Rank:</span>
-                <input
-                  type="text"
-                  className="block w-full border p-2 rounded-md mt-1 outline-0 border-primary"
-                  value={editedUser.rank || user.rank || ''}
-                  onChange={(e) => handleInputChange('rank', e.target.value)}
-                />
-              </label>
-              <label className="block">
-                <span className="font-semibold">Bio:</span>
-                <textarea
-                  className="block w-full border p-2 rounded-md mt-1 outline-0 border-primary"
-                  value={editedUser.bio || user.bio || ''}
-                  onChange={(e) => handleInputChange('bio', e.target.value)}
-                />
-              </label>
-              <div className="flex justify-end gap-4">
-                <button
-                  className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"
-                  onClick={() => setIsEditing(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 cursor-pointer"
-                  onClick={saveChanges}
-                >
-                  Save Changes
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <BiCalendar className="mr-2 text-lg text-gray-500" />
-                <span className="font-medium">Joined:</span>
-                &nbsp; {formatDateToCustomString(user.createdAt)}
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-800">Email:</h3>
-                <p className="text-gray-700">{user.email || 'No email'}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-800">Rank:</h3>
-                <p className="text-gray-700">
-                  {user.rank || 'No rank assigned'}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-800">Bio:</h3>
-                <p className="text-gray-700">
-                  {user.bio || 'No bio available.'}
-                </p>
-              </div>
-            </div>
-          )}
-          {!isEditing && (
-            <button
-              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-              onClick={() => setIsEditing(true)}
-            >
-              Edit Details
-            </button>
-          )}
-
-          {showModal && (
-            <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
-              <div className="bg-white p-6 rounded-md w-96">
-                <h3 className="text-xl font-semibold">
-                  Reason for Disabling User
-                </h3>
-                <textarea
-                  className="w-full p-2 mt-4 border rounded-md outline-0 border-primary"
-                  placeholder="Provide a reason for disabling this user..."
-                  value={disableReason}
-                  onChange={(e) => setDisableReason(e.target.value)}
-                />
-                <div className="mt-4 flex justify-end gap-4">
-                  <button
-                    className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700"
-                    onClick={saveDisableReason}
-                  >
-                    {isFormLoading ? 'Please wait...' : 'Save Reason'}
-                  </button>
+                    {user.isDisabled ? 'Disabled' : 'Active'}
+                  </p>
                 </div>
               </div>
+              <div className="flex gap-2">
+                {!isEditing ? (
+                  <button
+                    onClick={() => setIsEditing(true)}
+                    className="flex items-center gap-1 bg-white text-indigo-600 px-4 py-2 rounded-md hover:bg-gray-100 transition-colors"
+                  >
+                    <FiEdit /> Edit Profile
+                  </button>
+                ) : (
+                  <div className="flex gap-2">
+                    <button
+                      className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition-colors"
+                      onClick={() => setIsEditing(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="bg-indigo-800 text-white px-4 py-2 rounded-md hover:bg-indigo-900 transition-colors"
+                      onClick={saveChanges}
+                    >
+                      Save Changes
+                    </button>
+                  </div>
+                )}
+                <button
+                  className={`flex items-center gap-1 px-4 py-2 rounded-md text-white transition-colors ${
+                    user.isDisabled
+                      ? 'bg-green-600 hover:bg-green-700'
+                      : 'bg-red-600 hover:bg-red-700'
+                  }`}
+                  onClick={
+                    !user.isDisabled
+                      ? () => setShowModal(true)
+                      : () => handleEnableUser(user._id)
+                  }
+                >
+                  {isFormLoading ? (
+                    'Loading...'
+                  ) : user.isDisabled ? (
+                    <>
+                      <MdTurnedInNot />
+                      Enable
+                    </>
+                  ) : (
+                    <>
+                      <BsBan />
+                      Disable
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-          )}
+          </div>
+
+          <div className="border-b border-gray-200">
+            <nav className="flex overflow-x-auto">
+              <button
+                onClick={() => setActiveTab('overview')}
+                className={`px-6 py-4 font-medium text-sm flex items-center gap-2 ${
+                  activeTab === 'overview'
+                    ? 'text-indigo-600 border-b-2 border-indigo-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <MdOutlineAnalytics /> Overview
+              </button>
+              <button
+                onClick={() => setActiveTab('articles')}
+                className={`px-6 py-4 font-medium text-sm flex items-center gap-2 ${
+                  activeTab === 'articles'
+                    ? 'text-indigo-600 border-b-2 border-indigo-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <BiNews /> Articles
+              </button>
+              <button
+                onClick={() => setActiveTab('performance')}
+                className={`px-6 py-4 font-medium text-sm flex items-center gap-2 ${
+                  activeTab === 'performance'
+                    ? 'text-indigo-600 border-b-2 border-indigo-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <BiTrendingUp /> Performance
+              </button>
+              <button
+                onClick={() => setActiveTab('details')}
+                className={`px-6 py-4 font-medium text-sm flex items-center gap-2 ${
+                  activeTab === 'details'
+                    ? 'text-indigo-600 border-b-2 border-indigo-600'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <FiUsers /> Details
+              </button>
+            </nav>
+          </div>
+
+          <div className="p-6">
+            {activeTab === 'overview' && (
+              <AdminViewJournalistOverview
+                analyticsData={analyticsData}
+                articleTrendsData={articleTrendsData}
+                categoryDistributionData={categoryDistributionData}
+              />
+            )}
+
+            {activeTab === 'performance' && (
+              <AdminViewPerformanceMetrics
+                readershipChartData={readershipChartData}
+                analyticsData={analyticsData}
+              />
+            )}
+
+            {activeTab === 'details' && (
+              <AdminViewPersonalInformation
+                isEditing={isEditing}
+                editedUser={editedUser}
+                user={user}
+                handleInputChange={handleInputChange}
+                formatDateToCustomString={formatDateToCustomString}
+              />
+            )}
+
+            {activeTab === 'articles' && (
+              <AdminViewJournalistsArticles
+                analyticsData={analyticsData}
+                formatDateToCustomString={formatDateToCustomString}
+              />
+            )}
+          </div>
         </div>
       </div>
+
+      {showModal && (
+        <AdminDisableUser
+          disableReason={disableReason}
+          setDisableReason={setDisableReason}
+          setShowModal={setShowModal}
+          saveDisableReason={saveDisableReason}
+          isFormLoading={isFormLoading}
+        />
+      )}
     </>
   );
 };

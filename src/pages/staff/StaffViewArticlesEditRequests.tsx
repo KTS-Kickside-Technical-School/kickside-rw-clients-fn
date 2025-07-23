@@ -3,8 +3,8 @@ import { FiPlus } from 'react-icons/fi';
 import { ToastContainer } from 'react-toastify';
 import ArticleEditRequests from '../../pages/staff/ArticleEditRequests';
 import SEO from '../../utils/SEO';
-import AdminArticlesSubHeader from '../../Components/staff/admin/AdminArticlesSubHeader';
-import EditorArticlesSubHeader from '../../Components/staff/editor/EditorArticlesSubHeader';
+import AdminArticlesSubHeader from '../../components/staff/admin/AdminArticlesSubHeader';
+import EditorArticlesSubHeader from '../../components/staff/editor/EditorArticlesSubHeader';
 
 const StaffViewArticlesEditRequests = ({ profile }: any) => {
   return (

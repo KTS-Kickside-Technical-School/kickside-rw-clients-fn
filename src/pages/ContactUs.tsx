@@ -1,10 +1,10 @@
 import React from 'react';
-import Header from '../Components/Header';
-import ContactForm from '../Components/ContactForm';
-import MostPopular from '../Components/MostPopularArticle';
-import AdvertisementSection from '../Components/AdvertisementSection';
-import Footer from '../Components/Footer';
-import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import Header from '../components/Header';
+import ContactForm from '../components/ContactForm';
+import MostPopular from '../components/MostPopularArticle';
+import AdvertisementSection from '../components/AdvertisementSection';
+import Footer from '../components/Footer';
+import MainTopKSAd from '../components/ads/MainTopKSAd';
 
 const ContactUs: React.FC = () => {
   return (

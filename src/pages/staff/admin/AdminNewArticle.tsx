@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { uploadImageToCloudinary } from '../../../utils/helpers/cloudinary';
 import { publishArticle } from '../../../utils/requests/articlesRequest';
 import SEO from '../../../utils/SEO';
-import RichTextEditor from '../../../Components/staff/RichTextEditor';
-import ButtonSpinner from '../../../Components/ButtonSpinner';
+import RichTextEditor from '../../../components/staff/RichTextEditor';
+import ButtonSpinner from '../../../components/ButtonSpinner';
 
 const AdminNewArticle = () => {
   const [category, setCategory] = useState('');
