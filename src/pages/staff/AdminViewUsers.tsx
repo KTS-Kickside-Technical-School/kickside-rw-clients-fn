@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FiEye,  FiSlash } from 'react-icons/fi';
+import { FiEye, FiSlash } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
@@ -173,7 +173,7 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <Link
-                              to={`/staff/user/${user._id}`}
+                              to={`/admin/user/${user._id}`}
                               className="text-indigo-600"
                             >
                               <FiEye />

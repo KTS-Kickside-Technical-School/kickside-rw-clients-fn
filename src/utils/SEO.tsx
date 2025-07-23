@@ -19,7 +19,6 @@ interface SEOProps {
   iaRulesUrlDev?: string;
 }
 
-// Force absolute URL for Facebook, Twitter, etc.
 const makeAbsoluteUrl = (url: string) =>
   url?.startsWith('http') ? url : `https://www.kickside.rw${url}`;
 
@@ -68,7 +67,6 @@ const SEO = ({
 
   return (
     <Helmet>
-      {/* HTML Title and Description */}
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="author" content={author} />
@@ -77,10 +75,8 @@ const SEO = ({
         content="Kickside, Rwanda News, Tech, Sports, Entertainment, Kigali"
       />
 
-      {/* Canonical */}
       <link rel="canonical" href={currentUrl} />
 
-      {/* Open Graph (Facebook, LinkedIn, WhatsApp) */}
       <meta property="og:locale" content="en_RW" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
@@ -88,20 +84,15 @@ const SEO = ({
       <meta property="og:image:width" content="1200" />
       <meta property="og:image:height" content="630" />
       <meta property="og:url" content={currentUrl} />
-      <meta
-        property="og:type"
-        content={type === 'article' ? 'article' : 'website'}
-      />
+      <meta property="og:type" content="article" />
       <meta property="og:site_name" content="Kickside Rwanda" />
 
-      {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={currentImage} />
       <meta name="twitter:creator" content={twitterCreator} />
 
-      {/* Instant Articles (Facebook IA) */}
       {iaMarkupUrl && <meta property="ia:markup_url" content={iaMarkupUrl} />}
       {iaMarkupUrlDev && (
         <meta property="ia:markup_url_dev" content={iaMarkupUrlDev} />
@@ -111,7 +102,6 @@ const SEO = ({
         <meta property="ia:rules_url_dev" content={iaRulesUrlDev} />
       )}
 
-      {/* Structured JSON-LD */}
       <script type="application/ld+json">
         {JSON.stringify(structuredData)}
       </script>

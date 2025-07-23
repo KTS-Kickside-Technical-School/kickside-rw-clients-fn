@@ -14,10 +14,11 @@ import { iArticleType } from '../utils/types/Article';
 import RelatedArticles from '../Components/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
-import { BsEye } from 'react-icons/bs';
 import NewsLetter from '../Components/Newsletter';
 import MainTopKSAd from '../Components/ads/MainTopKSAd';
 import MostPopular from '../Components/MostPopularArticle';
+import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
+import XIcon from '../icons/X';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -94,19 +95,29 @@ const ArticleDetails: React.FC = () => {
       setIsCommentsLoading(false);
     }
   };
+
+  const shareUrl = `https://www.kickside.rw/news/${
+    article?.slug || window.location.href
+  }`;
+
   return (
     <>
-      <SEO
-        mainData={{
-          title: `${article?.title} - Kickside News`,
-          description: `${article?.content}`,
-          author: `${article?.author.firstName} ${article?.author.lastName}`,
-          image: article?.coverImage,
-          publishedAt: article?.createdAt,
-          type: 'article',
-        }}
-        canonicalUrl={`https://www.kickside.rw/news/${article?.slug}`}
-      />
+      {article && (
+        <SEO
+          mainData={{
+            title: `${article.title} - Kickside News`,
+            description: article.content || 'Kickside Article',
+            author: `${article.author?.firstName || ''} ${
+              article.author?.lastName || ''
+            }`,
+            image: article.coverImage,
+            publishedAt: article.createdAt,
+            type: 'article',
+          }}
+          canonicalUrl={`https://www.kickside.rw/news/${article.slug}`}
+        />
+      )}
+
       <MainTopKSAd />
 
       <Header />
@@ -140,15 +151,56 @@ const ArticleDetails: React.FC = () => {
                   {article?.author?.lastName || 'Author'} on{' '}
                   {formatDate(article?.createdAt || '')}
                 </span>
-                <p className="flex items-center py-2">
-                  <div className="flex items-center bg-gray-50 p-2 rounded-md shadow-sm">
-                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 text-gray-700">
-                      <BsEye className="text-xl" aria-label="Views Icon" />
-                    </span>
 
-                    <strong className="ml-3 text-gray-900 text-sm font-semibold">
-                      {article?.views || 0}
-                    </strong>
+                <p className="flex items-center gap-4 py-2 flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <a
+                      href={`https://wa.me/?text=${encodeURIComponent(
+                        `${article?.title}\n${shareUrl}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-green-100 hover:bg-green-200 text-green-700"
+                      aria-label="Share on WhatsApp"
+                    >
+                      <FaWhatsapp />
+                    </a>
+
+                    <a
+                      href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                        `${article?.title}\n\n${shareUrl}`
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-600"
+                      aria-label="Share on X"
+                    >
+                      <XIcon />
+                    </a>
+                    <a
+                      href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
+                        shareUrl
+                      )}&title=${encodeURIComponent(
+                        article?.title || 'www.kickside.rw'
+                      )}&summary=${encodeURIComponent(
+                        article?.title || 'Welcome to kickside Rwanda'
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-blue-50 hover:bg-blue-100 text-blue-800"
+                      aria-label="Share on LinkedIn"
+                    >
+                      <FaLinkedin />
+                    </a>
+                    <a
+                      href="https://www.instagram.com/kickside_rw/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-600"
+                      aria-label="View on Instagram"
+                    >
+                      <FaInstagram />
+                    </a>
                   </div>
                 </p>
               </>
