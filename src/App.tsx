@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import AppRouter from './routes'
 import { HelmetProvider } from 'react-helmet-async'
-import ScrollToTop from './components/ScrollTop'
+import ScrollToTop from './components/ScrollToTop'
 
 const App: React.FC = () => {
 

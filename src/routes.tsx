@@ -33,9 +33,9 @@ import AdminDashboard from './pages/staff/admin/AdminDashboard';
 import AdminLayout from './pages/staff/admin/AdminLayout';
 import JournalistMyArticles from './pages/staff/journalist/JournalistMyArticles';
 import EditorViewArticles from './pages/staff/editor/EditorViewArticles';
-import AdminViewArticles from './pages/staff/admin/AdminViewArticles';
 import RoleProtectedRoute from './components/staff/RoleProtectRoute';
 import AdminNewArticle from './pages/staff/admin/AdminNewArticle';
+import AdminViewArticles from './pages/staff/admin/AdminViewArticles';
 
 const AuthContext = createContext<any>(null);
 
