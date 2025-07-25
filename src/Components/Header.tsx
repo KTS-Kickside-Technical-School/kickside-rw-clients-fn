@@ -186,11 +186,11 @@ const Header = () => {
             <ul>
               {filteredArticles.length > 0 ? (
                 filteredArticles.map((article) => (
-                  <li
-                    key={article.id}
-                    className="py-2 border-b last:border-b-0"
-                  >
-                    <a href={article.link} className="hover:underline">
+                  <li className="py-2 border-b last:border-b-0">
+                    <a
+                      href={`/news/${article.slug}`}
+                      className="hover:underline"
+                    >
                       {article.title}
                     </a>
                   </li>

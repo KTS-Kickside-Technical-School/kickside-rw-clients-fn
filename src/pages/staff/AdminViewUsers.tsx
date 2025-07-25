@@ -39,17 +39,17 @@ const AdminViewUsers = ({ profile }: { profile: any }) => {
     if (profile) fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter((user) =>
-    user.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = users.filter((user: any) =>
+    user?.firstName?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const sortedUsers = [...filteredUsers].sort((a, b) => {
+  const sortedUsers = [...filteredUsers].sort((a: any, b: any) => {
     if (sortOption === 'Date Joined')
-      return b?.createdAt.localeCompare(a.createdAt);
+      return b?.createdAt?.localeCompare(a?.createdAt);
     if (sortOption === 'firstName')
-      return a?.firstName.localeCompare(b.firstName);
+      return a?.firstName.localeCompare(b?.firstName);
     if (sortOption === 'lastName') return a?.lastName.localeCompare(b.lastName);
-    if (sortOption === 'role') return a.role.localeCompare(b.role);
+    if (sortOption === 'role') return a?.role?.localeCompare(b?.role);
     return 0;
   });
 
