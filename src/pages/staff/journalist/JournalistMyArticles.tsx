@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { FiEdit, FiEye, FiPlus } from 'react-icons/fi';
+import { FiEdit, FiEye } from 'react-icons/fi';
 import { FaSearch } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
