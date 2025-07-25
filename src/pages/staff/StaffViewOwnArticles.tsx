@@ -12,8 +12,8 @@ import ReactPaginate from 'react-paginate';
 import { formatDateTime } from '../../utils/helpers/articleHelpers';
 import SEO from '../../utils/SEO';
 import { BiEditAlt } from 'react-icons/bi';
-import AdminArticlesSubHeader from '../../Components/staff/admin/AdminArticlesSubHeader';
-import EditorArticlesSubHeader from '../../Components/staff/editor/EditorArticlesSubHeader';
+import AdminArticlesSubHeader from '../../components/staff/admin/AdminArticlesSubHeader';
+import EditorArticlesSubHeader from '../../components/staff/editor/EditorArticlesSubHeader';
 
 const StaffViewOwnArticles = ({ profile }: any) => {
   const [articles, setArticles] = useState<iArticleType[]>([]);

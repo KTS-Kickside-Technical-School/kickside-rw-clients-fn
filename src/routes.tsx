@@ -3,7 +3,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import ArticleDetails from './pages/ArticleDetails';
 import StaffLogin from './pages/staff/StaffLogin';
-import AuthGuard from './Components/staff/AuthGuard';
+import AuthGuard from './components/staff/AuthGuard';
 import StaffViewArticles from './pages/staff/StaffViewArticles';
 import StaffNotFound from './pages/staff/StaffNotFound';
 import StaffViewArticleDetails from './pages/staff/StaffViewArticleDetails';
@@ -34,7 +34,7 @@ import AdminLayout from './pages/staff/admin/AdminLayout';
 import JournalistMyArticles from './pages/staff/journalist/JournalistMyArticles';
 import EditorViewArticles from './pages/staff/editor/EditorViewArticles';
 import AdminViewArticles from './pages/staff/admin/AdminViewArticles';
-import RoleProtectedRoute from './Components/staff/RoleProtectRoute';
+import RoleProtectedRoute from './components/staff/RoleProtectRoute';
 import AdminNewArticle from './pages/staff/admin/AdminNewArticle';
 
 const AuthContext = createContext<any>(null);

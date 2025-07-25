@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import MainArticles from '../Components/MainArticles';
-import Header from '../Components/Header';
-import LatestNews from '../Components/LatestByCategory';
-import Footer from '../Components/Footer';
+import MainArticles from '../components/MainArticles';
+import Header from '../components/Header';
+import LatestNews from '../components/LatestByCategory';
+import Footer from '../components/Footer';
 import { useParams } from 'react-router-dom';
 import {
   getArticlesByCategory,
   getPublishedArticles,
 } from '../utils/requests/articlesRequest';
-import SubMainArticles from '../Components/SubMainArticles';
-import NewsLetter from '../Components/Newsletter';
+import SubMainArticles from '../components/SubMainArticles';
+import NewsLetter from '../components/Newsletter';
 import { iArticleType } from '../utils/types/Article';
 import SEO from '../utils/SEO';
-import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import MainTopKSAd from '../components/ads/MainTopKSAd';
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();

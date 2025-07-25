@@ -1,130 +1,56 @@
-import React, {
-  useEffect,
-  useState,
-  Suspense,
-  useMemo,
-  useCallback,
-} from 'react';
+import React, { Suspense, useMemo, useCallback } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { Link } from 'react-router-dom';
-import Header from '../Components/Header';
+import { Link, useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 import SEO from '../utils/SEO';
-import Footer from '../Components/Footer';
+import Footer from '../components/Footer';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
-import NewsLetter from '../Components/Newsletter';
-import MainTopKSAd from '../Components/ads/MainTopKSAd';
+import NewsLetter from '../components/Newsletter';
+import MainTopKSAd from '../components/ads/MainTopKSAd';
 import { FaSpinner } from 'react-icons/fa';
+import { iArticleType } from '../utils/types/Article';
+import HomePageSkeletonLoader from '../components/clients/homepage/HomePageSkeletonLoader';
+import useCachedFetch from '../hooks/useCached';
+import HomePageArticleItem from '../components/clients/homepage/HomePageArticleItem';
+import HomepageTopHeadlines from '../components/clients/homepage/HomePageTopHeadlines';
 
 const AdvertisementSection = React.lazy(
-  () => import('../Components/AdvertisementSection')
+  () => import('../components/AdvertisementSection')
 );
-const LatestNews = React.lazy(() => import('../Components/LatestByCategory'));
-const MainArticles = React.lazy(() => import('../Components/MainArticles'));
+const LatestNews = React.lazy(() => import('../components/LatestByCategory'));
+const MainArticles = React.lazy(() => import('../components/MainArticles'));
 const SubMainArticles = React.lazy(
-  () => import('../Components/SubMainArticles')
+  () => import('../components/SubMainArticles')
 );
 
-const SkeletonLoader = React.memo(() => (
-  <div className="w-full flex flex-col lg:flex-row gap-4 animate-pulse">
-    <div className="flex-1 h-[300px] sm:h-[400px] md:h-[500px] bg-gray-700 rounded-lg" />
-    <div className="flex-1 space-y-4">
-      {[...Array(3)].map((_, i) => (
-        <div key={i} className="h-[200px] bg-gray-700 rounded-lg" />
-      ))}
-    </div>
-    <div className="flex-1 space-y-3">
-      <div className="h-6 bg-gray-700 w-1/2 rounded" />
-      {[...Array(4)].map((_, i) => (
-        <div key={i} className="h-5 bg-gray-700 rounded" />
-      ))}
-    </div>
-  </div>
-));
 
-const ArticleItem = React.memo(({ article }: { article: any }) => (
-  <Link to={`/news/${article?.slug}`} className="block w-full">
-    <div className="relative h-[300px] md:h-[350px] lg:h-[250px] xl:h-[200px] overflow-hidden rounded-md">
-      <img
-        src={article?.coverImage || ''}
-        srcSet={`${article?.coverImage} 300w, ${article?.coverImage} 600w`}
-        sizes="(max-width: 768px) 100vw, 33vw"
-        loading="lazy"
-        alt={article?.title || ''}
-        width={600}
-        height={400}
-        className="absolute inset-0 w-full h-full object-cover z-0"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-      <div className="relative z-20 flex flex-col justify-end h-full p-4">
-        <Link
-          to={`category/${article?.category}`}
-          className="border-t-2 border-white text-white font-bold text-xs md:text-sm"
-        >
-          {article?.category}
-        </Link>
-        <Link
-          to={`/news/${article?.slug}`}
-          className="text-white line-clamp-2 mt-2 text-sm md:text-base"
-        >
-          {article?.title}
-        </Link>
-      </div>
-    </div>
-  </Link>
-));
-
-const TopHeadlines = React.memo(({ articles }: { articles: any[] }) => (
-  <ol className="space-y-3">
-    {articles.map((article, index) => (
-      <li
-        className="text-white text-sm md:text-base font-medium flex"
-        key={article?._id}
-      >
-        <strong className="mr-2">{index + 1}.</strong>
-        <Link
-          to={`/news/${article?.slug}`}
-          className="hover:text-gray-200 transition"
-        >
-          {article?.title}
-        </Link>
-      </li>
-    ))}
-  </ol>
-));
 
 const Homepage = () => {
-  const [articles, setArticles] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data: articles = [], loading } = useCachedFetch({
+    key: 'ks_articles',
+    fetcher: async () => {
+      const res = await getPublishedArticles();
+      return res.articles || [];
+    },
+    ttl: 5 * 60 * 1000, // 5 minutes
+  });
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      try {
-        const response = await getPublishedArticles();
-        setArticles(response.articles || []);
-      } catch (error) {
-        console.error('Error fetching articles:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const delay = setTimeout(fetchArticles, 300);
-    return () => clearTimeout(delay);
-  }, []);
-
-  const featuredArticle = useMemo(() => articles[0], [articles]);
-  const firstThreeArticles = useMemo(() => articles.slice(1, 4), [articles]);
-  const topHeadlinesArticles = useMemo(() => articles.slice(4, 8), [articles]);
+  const featuredArticle = useMemo(() => articles?.[0], [articles]);
+  const firstThreeArticles = useMemo(() => articles?.slice(1, 4), [articles]);
+  const topHeadlinesArticles = useMemo(() => articles?.slice(4, 8), [articles]);
 
   const filterArticlesByCategory = useCallback(
     (category: string) =>
-      articles.filter((article) => article.category === category),
+      articles?.filter(
+        (article: iArticleType) => article.category === category
+      ),
     [articles]
   );
 
   const uniqueArticles = useCallback(
-    (articles: any[], excludeIds: string[]) =>
-      articles.filter((article) => !excludeIds.includes(article._id)),
+    (articles: iArticleType[], excludeIds: string[]) =>
+      articles?.filter((article) => !excludeIds.includes(article._id)),
     []
   );
 
@@ -132,11 +58,11 @@ const Homepage = () => {
     () =>
       ['Business', 'Technology'].map((category) => {
         const filteredArticles = filterArticlesByCategory(category);
-        const mainArticles = filteredArticles.slice(0, 2);
+        const mainArticles = filteredArticles?.slice(0, 2);
         const subMainArticles = uniqueArticles(
           filteredArticles,
-          mainArticles.map((a) => a._id)
-        ).slice(0, 3);
+          mainArticles?.map((a: iArticleType) => a._id)
+        )?.slice(0, 3);
 
         return (
           <React.Fragment key={category}>
@@ -178,12 +104,12 @@ const Homepage = () => {
         <Header />
         <div className="w-full px-4 mx-auto flex flex-col lg:flex-row gap-6">
           {loading ? (
-            <SkeletonLoader />
+            <HomePageSkeletonLoader />
           ) : (
             <>
               {featuredArticle && (
-                <Link
-                  to={`/news/${featuredArticle?.slug}`}
+                <button
+                  onClick={() => navigate(`/news/${featuredArticle?.slug}`)}
                   className="relative flex-1 h-[300px] sm:h-[400px] md:h-[500px] flex flex-col justify-end rounded-md overflow-hidden"
                 >
                   <img
@@ -228,12 +154,12 @@ const Homepage = () => {
                       </span>
                     </div>
                   </div>
-                </Link>
+                </button>
               )}
 
               <div className="flex-1 space-y-4">
-                {firstThreeArticles.map((article) => (
-                  <ArticleItem key={article._id} article={article} />
+                {firstThreeArticles.map((article: iArticleType) => (
+                  <HomePageArticleItem key={article._id} article={article} />
                 ))}
               </div>
 
@@ -242,7 +168,7 @@ const Homepage = () => {
                   Top Headlines
                 </h1>
                 {topHeadlinesArticles.length > 0 ? (
-                  <TopHeadlines articles={topHeadlinesArticles} />
+                  <HomepageTopHeadlines articles={topHeadlinesArticles} />
                 ) : (
                   !loading && (
                     <p className="text-white">No headlines available</p>

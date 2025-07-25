@@ -4,14 +4,14 @@ import 'react-quill/dist/quill.snow.css';
 import { useDropzone } from 'react-dropzone';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import RichTextEditor from '../../Components/staff/RichTextEditor';
+import RichTextEditor from '../../components/staff/RichTextEditor';
 import { uploadImageToCloudinary } from '../../utils/helpers/cloudinary';
 import {
   getSingleArticle,
   updateArticle,
 } from '../../utils/requests/articlesRequest';
 import SEO from '../../utils/SEO';
-import ButtonSpinner from '../../Components/ButtonSpinner';
+import ButtonSpinner from '../../components/ButtonSpinner';
 import { useParams } from 'react-router-dom';
 import { iArticleType } from '../../utils/types/Article';
 
