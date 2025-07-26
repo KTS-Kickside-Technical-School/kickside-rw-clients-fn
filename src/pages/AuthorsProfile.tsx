@@ -72,7 +72,7 @@ const AuthorProfile: React.FC = () => {
       <MainTopKSAd />
       <div className="bg-gray-50 min-h-screen">
         <Header />
-        <main className="w-full px-4 py-8">
+        <main className="max-w-7xl mx-auto px-4 py-8">
           {error ? (
             <div className="flex flex-col items-center justify-center min-h-[700px] bg-gray-100">
               <h1 className="text-6xl font-bold text-indigo-500 mb-4">404</h1>
