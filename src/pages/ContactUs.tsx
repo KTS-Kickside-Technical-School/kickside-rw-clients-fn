@@ -12,8 +12,8 @@ const ContactUs: React.FC = () => {
       <MainTopKSAd />
       <Header />
 
-      <div className=" w-full md:w-[80%] m-auto p-3 text-white px-5">
-        <div className="container mx-auto px-4 py-16">
+      <div className="max-w-7xl mx-auto text-white px-5">
+        <div className="px-4 py-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
             <div>
               <h2 className="text-2xl text-black font-bold mb-4">Contact Us</h2>
@@ -42,7 +42,6 @@ const ContactUs: React.FC = () => {
               <ContactForm />
             </div>
             <div className="lg:w-80 lg:mx-32 ">
-              {/*  ads area*/}
               <div className=" border-4 border-blue-700 bg-[#D8D8D8]  h-96  p-4  w-[303] ">
                 <p className="text-center mt-32 text-gray-700 ">
                   Advertisement

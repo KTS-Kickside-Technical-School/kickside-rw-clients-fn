@@ -11,7 +11,7 @@ const MainTopKSAd = () => {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className="block w-full bg-white text-black shadow-md hover:shadow-xl transition-shadow duration-300"
     >
-      <div className="flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py-4 gap-4 overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4 md:px-8 py-4 gap-4 overflow-hidden">
         <div className="flex items-center gap-4">
           <img
             src="/logo.svg"
