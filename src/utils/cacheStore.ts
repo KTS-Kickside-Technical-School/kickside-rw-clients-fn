@@ -1,7 +1,7 @@
 // utils/cacheStore.js
 const cacheStore = new Map();
 
-export function getCachedValue(key) {
+export function getCachedValue(key: any) {
   const entry = cacheStore.get(key);
   if (!entry) return null;
 
@@ -16,7 +16,7 @@ export function getCachedValue(key) {
   return value;
 }
 
-export function setCachedValue(key, value, ttl) {
+export function setCachedValue(key: any, value: any, ttl: any) {
   cacheStore.set(key, {
     value,
     ttl,
