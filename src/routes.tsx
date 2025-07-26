@@ -87,7 +87,7 @@ const AppRouter = () => {
         fetchUserProfile();
       }
     }
-  }, [isAuthenticated, profile]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ profile, setProfile }}>
