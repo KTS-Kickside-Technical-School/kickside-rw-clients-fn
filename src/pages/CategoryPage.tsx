@@ -61,7 +61,7 @@ const CategoryPage: React.FC = () => {
       <MainTopKSAd />
 
       <Header />
-      <div className="w-full mx-auto m-auto  text-white">
+      <div className="w-full px-4 mx-auto max-w-7xl">
         <div className=" mx-auto">
           <MainArticles
             loading={loading}

@@ -121,7 +121,7 @@ const ArticleDetails: React.FC = () => {
       <MainTopKSAd />
 
       <Header />
-      <div className="bg-gray-100 min-h-screen w-full px-4">
+      <div className="w-full px-4 mx-auto max-w-7xl">
         <div className="py-6 flex flex-col lg:flex-row w-full min-h-[40vh] items-center gap-8 px-4">
           {isLoading ? (
             <Skeleton className="w-full lg:w-1/2 h-64 rounded-lg" />

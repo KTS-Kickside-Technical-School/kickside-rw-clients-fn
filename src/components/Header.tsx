@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
 
 const Header = () => {
@@ -10,15 +10,34 @@ const Header = () => {
   const [allArticles, setAllArticles] = useState<any[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<any[]>([]);
   const [hasFetched, setHasFetched] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth >= 1024 && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    setIsSearchOpen(false);
+    setSearch('');
+    setFilteredArticles([]);
+  }, [location]);
 
   const fetchArticles = async () => {
     try {
       const response = await getPublishedArticles();
-      console.log(response);
       if (response.status === 200) {
         setAllArticles(response.articles);
         setHasFetched(true);
-        filterArticles(search, response.data);
+        filterArticles(search, response.articles);
       }
     } catch (error) {
       console.error('Failed to fetch articles:', error);
@@ -59,74 +78,83 @@ const Header = () => {
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <header className="text-white py-4 bg-primary w-full">
-      <div className="w-full px-4">
+    <header className="text-white py-4 bg-primary w-full sticky top-0 z-40">
+      <div className="w-full px-4 mx-auto max-w-7xl">
         <div className="text-center mb-4">
-          {window.location.pathname === '/' ? (
-            <button
-              onClick={() => (window.location.href = '/')}
-              className="mx-auto block"
-            >
-              <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
-            </button>
-          ) : (
-            <Link to="/" className="mx-auto block">
-              <h1 className="font-bold text-2xl text-white">KICKSIDE</h1>
-            </Link>
-          )}
+          <Link to="/" className="mx-auto block">
+            <h1 className="font-bold text-2xl md:text-3xl text-white">
+              KICKSIDE
+            </h1>
+          </Link>
         </div>
 
-        <div className="bg-dark w-full p-3 rounded-lg px-5">
+        <div className="bg-dark w-full p-3 rounded-lg px-4 md:px-5">
           {!isSearchOpen ? (
             <div className="flex justify-between items-center gap-4">
               <button
-                className="text-white lg:hidden p-2 rounded-full hover:bg-gray-600"
+                className="text-white lg:hidden p-2 rounded-full hover:bg-gray-600 transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
               >
-                <FaBars />
+                <FaBars size={18} />
               </button>
 
-              <nav className="hidden lg:flex gap-6">
-                <Link to="/category/Business" className="hover:underline">
+              <nav className="hidden lg:flex gap-4 xl:gap-6">
+                <a
+                  href="/category/Business"
+                  className="hover:underline px-2 py-1"
+                >
                   Business
-                </Link>
-                <Link to="/category/Technology" className="hover:underline">
+                </a>
+                <a
+                  href="/category/Technology"
+                  className="hover:underline px-2 py-1"
+                >
                   Technology
-                </Link>
-                <Link to="/category/Sports" className="hover:underline">
+                </a>
+                <a
+                  href="/category/Sports"
+                  className="hover:underline px-2 py-1"
+                >
                   Sports
-                </Link>
-                <Link to="/category/Entertainment" className="hover:underline">
+                </a>
+                <a
+                  href="/category/Entertainment"
+                  className="hover:underline px-2 py-1"
+                >
                   Entertainment
-                </Link>
+                </a>
               </nav>
 
               <button
-                className="text-white p-2 rounded-full hover:bg-gray-600"
+                className="text-white p-2 rounded-full hover:bg-gray-600 transition-colors"
                 onClick={() => setIsSearchOpen(true)}
+                aria-label="Open search"
               >
-                <FaSearch />
+                <FaSearch size={18} />
               </button>
             </div>
           ) : (
             <div className="flex justify-center items-center">
-              <div className="flex items-center bg-white rounded overflow-hidden shadow-md w-full">
+              <div className="flex items-center bg-white rounded overflow-hidden shadow-md w-full max-w-2xl">
                 <input
                   type="text"
                   className="px-4 py-2 w-full text-black focus:outline-none"
-                  placeholder="Search articles or topics"
+                  placeholder="Search articles or topics..."
                   value={search}
                   onChange={handleSearchChange}
+                  autoFocus={windowWidth > 768}
                 />
                 <button
-                  className="text-black bg-gray-200 p-2 rounded-r-full hover:bg-gray-300"
+                  className="text-black bg-gray-200 p-2 hover:bg-gray-300 transition-colors"
                   onClick={() => {
                     setIsSearchOpen(false);
                     setSearch('');
                     setFilteredArticles([]);
                   }}
+                  aria-label="Close search"
                 >
-                  <FaTimes />
+                  <FaTimes size={18} />
                 </button>
               </div>
             </div>
@@ -136,43 +164,60 @@ const Header = () => {
 
       {isMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center items-center"
+          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-end"
           onClick={closeMenu}
         >
           <div
-            className="bg-dark p-6 rounded-lg shadow-lg w-[80%] sm:w-[60%] md:w-[40%] lg:w-[30%]"
+            className="bg-dark p-6 w-full max-w-xs h-full animate-slide-in"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className="text-white p-2 rounded-full hover:bg-gray-600 mb-4"
-              onClick={closeMenu}
-            >
-              <FaTimes />
-            </button>
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-xl font-bold">Menu</h2>
+              <button
+                className="text-white p-2 rounded-full hover:bg-gray-600 transition-colors"
+                onClick={closeMenu}
+                aria-label="Close menu"
+              >
+                <FaTimes size={20} />
+              </button>
+            </div>
             <nav>
               <ul className="flex flex-col gap-4">
                 <li>
-                  <Link to="/category/Business" className="hover:underline">
+                  <a
+                    href="/category/Business"
+                    className="hover:underline block py-3 text-lg"
+                    onClick={closeMenu}
+                  >
                     Business
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link to="/category/Technology" className="hover:underline">
+                  <a
+                    href="/category/Technology"
+                    className="hover:underline block py-3 text-lg"
+                    onClick={closeMenu}
+                  >
                     Technology
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link to="/category/Sports" className="hover:underline">
+                  <a
+                    href="/category/Sports"
+                    className="hover:underline block py-3 text-lg"
+                    onClick={closeMenu}
+                  >
                     Sports
-                  </Link>
+                  </a>
                 </li>
                 <li>
-                  <Link
-                    to="/category/Entertainment"
-                    className="hover:underline"
+                  <a
+                    href="/category/Entertainment"
+                    className="hover:underline block py-3 text-lg"
+                    onClick={closeMenu}
                   >
                     Entertainment
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -181,24 +226,30 @@ const Header = () => {
       )}
 
       {isSearchOpen && search && (
-        <div className="w-full px-4">
-          <div className="bg-white text-black p-4 my-2 rounded-md shadow-md">
-            <ul>
-              {filteredArticles.length > 0 ? (
-                filteredArticles.map((article) => (
-                  <li className="py-2 border-b last:border-b-0">
-                    <a
-                      href={`/news/${article.slug}`}
-                      className="hover:underline"
+        <div className="w-full px-4 mx-auto max-w-7xl">
+          <div className="bg-white text-black p-4 my-2 rounded-md shadow-md max-h-96 overflow-y-auto">
+            {filteredArticles.length > 0 ? (
+              <ul className="divide-y">
+                {filteredArticles.map((article) => (
+                  <li key={article.id} className="py-3">
+                    <Link
+                      to={`/news/${article.slug}`}
+                      className="hover:underline block"
+                      onClick={() => {
+                        setIsSearchOpen(false);
+                        setSearch('');
+                      }}
                     >
                       {article.title}
-                    </a>
+                    </Link>
                   </li>
-                ))
-              ) : (
-                <li>No articles found.</li>
-              )}
-            </ul>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-600">
+                No articles found. Try different keywords.
+              </p>
+            )}
           </div>
         </div>
       )}

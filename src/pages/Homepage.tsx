@@ -1,34 +1,22 @@
-import React, {
-  useEffect,
-  useState,
-  useMemo,
-  useCallback,
-  Suspense,
-} from 'react';
+import React, { useEffect, useState, useCallback, lazy } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
+
 import Header from '../components/Header';
 import SEO from '../utils/SEO';
 import Footer from '../components/Footer';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
 import NewsLetter from '../components/Newsletter';
 import MainTopKSAd from '../components/ads/MainTopKSAd';
-import { FaSpinner } from 'react-icons/fa';
 import { iArticleType } from '../utils/types/Article';
 import HomePageSkeletonLoader from '../components/clients/homepage/HomePageSkeletonLoader';
 import HomePageArticleItem from '../components/clients/homepage/HomePageArticleItem';
 import HomepageTopHeadlines from '../components/clients/homepage/HomePageTopHeadlines';
+import MainArticles from '../components/MainArticles';
+import SubMainArticles from '../components/SubMainArticles';
+import LatestNews from '../components/LatestByCategory';
 
-const AdvertisementSection = React.lazy(
-  () => import('../components/AdvertisementSection')
-);
-const LatestNews = React.lazy(() => import('../components/LatestByCategory'));
-const MainArticles = React.lazy(() => import('../components/MainArticles'));
-const SubMainArticles = React.lazy(
-  () => import('../components/SubMainArticles')
-);
-
-const Homepage = () => {
+const Homepage: React.FC = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -38,9 +26,9 @@ const Homepage = () => {
       setLoading(true);
       try {
         const res = await getPublishedArticles();
-        setArticles(res.articles || []);
+        setArticles(res?.articles || []);
       } catch (error) {
-        console.error('Failed to fetch articles', error);
+        console.error('Error fetching articles:', error);
       } finally {
         setLoading(false);
       }
@@ -49,53 +37,40 @@ const Homepage = () => {
     fetchArticles();
   }, []);
 
-  const featuredArticle = useMemo(() => articles?.[0], [articles]);
-  const firstThreeArticles = useMemo(() => articles?.slice(1, 4), [articles]);
-  const topHeadlinesArticles = useMemo(() => articles?.slice(4, 8), [articles]);
+  const featuredArticle = articles[0];
+  const firstThreeArticles = articles.slice(1, 4);
+  const topHeadlinesArticles = articles.slice(4, 8);
 
   const filterArticlesByCategory = useCallback(
     (category: string) =>
-      articles?.filter(
-        (article: iArticleType) => article.category === category
-      ),
+      articles.filter((article) => article.category === category),
     [articles]
   );
 
-  const uniqueArticles = useCallback(
-    (articles: iArticleType[], excludeIds: string[]) =>
-      articles?.filter((article) => !excludeIds.includes(article._id)),
+  const excludeByIds = useCallback(
+    (items: iArticleType[], ids: string[]) =>
+      items.filter((item) => !ids.includes(item._id)),
     []
   );
 
-  const categorySections = useMemo(
-    () =>
-      ['Business', 'Technology'].map((category) => {
-        const filteredArticles = filterArticlesByCategory(category);
-        const mainArticles = filteredArticles?.slice(0, 2);
-        const subMainArticles = uniqueArticles(
-          filteredArticles,
-          mainArticles?.map((a: iArticleType) => a._id)
-        )?.slice(0, 3);
+  const renderCategorySections = () => {
+    const categories = ['Business', 'Technology'];
+    return categories.map((category) => {
+      const filtered = filterArticlesByCategory(category);
+      const main = filtered.slice(0, 2);
+      const sub = excludeByIds(
+        filtered,
+        main.map((a) => a._id)
+      ).slice(0, 3);
 
-        return (
-          <React.Fragment key={category}>
-            <Suspense fallback={<div className="h-96" />}>
-              <MainArticles
-                title={category}
-                articles={mainArticles}
-                loading={loading}
-              />
-              <SubMainArticles
-                title=""
-                articles={subMainArticles}
-                loading={loading}
-              />
-            </Suspense>
-          </React.Fragment>
-        );
-      }),
-    [articles, loading]
-  );
+      return (
+        <div className="max-w-7xl mx-auto" key={category}>
+          <MainArticles title={category} articles={main} loading={loading} />
+          <SubMainArticles title="" articles={sub} loading={loading} />
+        </div>
+      );
+    });
+  };
 
   return (
     <>
@@ -116,106 +91,99 @@ const Homepage = () => {
 
       <div className="bg-primary pb-5">
         <Header />
-        <div className="w-full px-4 mx-auto flex flex-col lg:flex-row gap-6">
-          {loading ? (
-            <HomePageSkeletonLoader />
-          ) : (
-            <>
-              {featuredArticle && (
-                <button
-                  onClick={() => navigate(`/news/${featuredArticle?.slug}`)}
-                  className="relative flex-1 h-[300px] sm:h-[400px] md:h-[500px] flex flex-col justify-end rounded-md overflow-hidden"
-                >
-                  <img
-                    src={featuredArticle?.coverImage || ''}
-                    srcSet={`${featuredArticle?.coverImage} 300w, ${featuredArticle?.coverImage} 1200w`}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    loading="eager"
-                    alt={featuredArticle?.title || 'Featured'}
-                    width={1200}
-                    height={800}
-                    className="absolute inset-0 w-full h-full object-cover z-0"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10" />
-                  <div className="relative z-20 flex flex-col justify-end h-full p-4">
+
+        <div className="w-full px-4 mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {featuredArticle && (
+            <div className="lg:col-span-2">
+              <button
+                onClick={() => navigate(`/news/${featuredArticle.slug}`)}
+                className="relative w-full aspect-[16/9] sm:aspect-[3/2] md:aspect-[16/9] flex flex-col justify-end rounded-xl overflow-hidden transition-transform hover:scale-[0.98]"
+                aria-label={`Read ${featuredArticle.title}`}
+              >
+                <img
+                  src={featuredArticle.coverImage}
+                  srcSet={`${featuredArticle.coverImage} 640w, ${featuredArticle.coverImage} 1200w`}
+                  sizes="(max-width: 1023px) 100vw, 66vw"
+                  loading="eager"
+                  alt={featuredArticle.title}
+                  className="absolute inset-0 w-full h-full object-cover z-0"
+                  width={1200}
+                  height={800}
+                  decoding="async"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10" />
+                <div className="relative z-20 flex flex-col justify-end h-full p-4 sm:p-6 md:p-8">
+                  <Link
+                    to={`/category/${featuredArticle.category}`}
+                    className="self-start border-t-2 border-white text-white font-bold text-sm sm:text-base mb-2 px-1 hover:underline"
+                  >
+                    {featuredArticle.category}
+                  </Link>
+                  <h2 className="text-white text-xl sm:text-2xl md:text-3xl font-bold mt-2 line-clamp-3 text-left">
+                    {featuredArticle.title}
+                  </h2>
+                  <div className="text-gray-200 mt-2 text-sm sm:text-base">
                     <Link
-                      to={`category/${featuredArticle?.category}`}
-                      className="border-t-2 border-white text-white font-bold text-sm"
+                      to={`/author/${featuredArticle.author?.username}`}
+                      className="hover:underline"
                     >
-                      {featuredArticle?.category}
+                      {featuredArticle.author?.firstName}{' '}
+                      {featuredArticle.author?.lastName}
                     </Link>
-                    <Link
-                      to={`/news/${featuredArticle?.slug}`}
-                      className="text-white text-lg font-bold mt-2 line-clamp-3"
-                    >
-                      {featuredArticle?.title}
-                    </Link>
-                    <div className="text-[#D8D8D8] mt-2 text-sm">
-                      <Link to="author" className="text-[#D8D8D8]">
-                        {featuredArticle?.author?.firstName}{' '}
-                        {featuredArticle?.author?.lastName}
-                      </Link>
-                      <span>
-                        {' '}
-                        –{' '}
-                        {featuredArticle?.createdAt &&
-                          formatDistanceToNow(
-                            new Date(featuredArticle?.createdAt),
-                            { addSuffix: true }
-                          )}
-                      </span>
-                    </div>
+                    <span>
+                      {' '}
+                      –{' '}
+                      {formatDistanceToNow(
+                        new Date(featuredArticle.createdAt),
+                        {
+                          addSuffix: true,
+                        }
+                      )}
+                    </span>
                   </div>
-                </button>
-              )}
-
-              <div className="flex-1 space-y-4">
-                {firstThreeArticles.map((article: iArticleType) => (
-                  <HomePageArticleItem key={article._id} article={article} />
-                ))}
-              </div>
-
-              <div className="flex-1 px-2">
-                <h1 className="font-bold text-white text-lg md:text-xl mb-4">
-                  Top Headlines
-                </h1>
-                {topHeadlinesArticles.length > 0 ? (
-                  <HomepageTopHeadlines articles={topHeadlinesArticles} />
-                ) : (
-                  !loading && (
-                    <p className="text-white">No headlines available</p>
-                  )
-                )}
-              </div>
-            </>
+                </div>
+              </button>
+            </div>
           )}
-        </div>
 
-        <div className="w-full px-4 mx-auto">
-          <Suspense fallback={<FaSpinner className="animate-spin" />}>
-            <AdvertisementSection />
-          </Suspense>
+          <div className="lg:col-span-1 space-y-4 sm:space-y-6">
+            {firstThreeArticles.map((article) => (
+              <HomePageArticleItem key={article._id} article={article} />
+            ))}
+          </div>
+
+          <div className="lg:col-span-3">
+            <div className="border-t border-gray-700 pt-6">
+              <h2 className="font-bold text-white text-xl md:text-2xl mb-4 sm:mb-6">
+                Top Headlines
+              </h2>
+              {topHeadlinesArticles.length > 0 ? (
+                <HomepageTopHeadlines articles={topHeadlinesArticles} />
+              ) : (
+                !loading && (
+                  <p className="text-gray-400 text-center py-8">
+                    No headlines available
+                  </p>
+                )
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
       <div className="w-full px-4 mx-auto">
-        <Suspense fallback={<div className="h-96" />}>
-          <LatestNews
-            title="Latest news"
-            loading={loading}
-            articles={articles}
-          />
-        </Suspense>
+        <LatestNews title="Latest News" loading={loading} articles={articles} />
       </div>
 
-      <div className="w-full mx-auto">{categorySections}</div>
+      <div className="w-full mx-auto">{renderCategorySections()}</div>
 
       <div className="mt-5">
         <NewsLetter />
       </div>
+
       <Footer />
     </>
   );
 };
 
-export default React.memo(Homepage);
+export default Homepage;

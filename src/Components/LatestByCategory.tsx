@@ -16,7 +16,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
   loading,
 }) => {
   return (
-    <div className="mx-auto mt-5">
+    <div className="mx-auto mt-5 max-w-7xl">
       <h1 className="text-4xl font-bold text-blue-600 mb-6">{title}</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
