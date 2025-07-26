@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, lazy } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,6 @@ import { getPublishedArticles } from '../utils/requests/articlesRequest';
 import NewsLetter from '../components/Newsletter';
 import MainTopKSAd from '../components/ads/MainTopKSAd';
 import { iArticleType } from '../utils/types/Article';
-import HomePageSkeletonLoader from '../components/clients/homepage/HomePageSkeletonLoader';
 import HomePageArticleItem from '../components/clients/homepage/HomePageArticleItem';
 import HomepageTopHeadlines from '../components/clients/homepage/HomePageTopHeadlines';
 import MainArticles from '../components/MainArticles';
