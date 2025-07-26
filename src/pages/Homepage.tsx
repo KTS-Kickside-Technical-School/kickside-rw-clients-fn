@@ -1,4 +1,10 @@
-import React, { Suspense, useMemo, useCallback } from 'react';
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  Suspense,
+} from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -10,7 +16,6 @@ import MainTopKSAd from '../components/ads/MainTopKSAd';
 import { FaSpinner } from 'react-icons/fa';
 import { iArticleType } from '../utils/types/Article';
 import HomePageSkeletonLoader from '../components/clients/homepage/HomePageSkeletonLoader';
-import useCachedFetch from '../hooks/useCached';
 import HomePageArticleItem from '../components/clients/homepage/HomePageArticleItem';
 import HomepageTopHeadlines from '../components/clients/homepage/HomePageTopHeadlines';
 
@@ -23,18 +28,26 @@ const SubMainArticles = React.lazy(
   () => import('../components/SubMainArticles')
 );
 
-
-
 const Homepage = () => {
-  const { data: articles = [], loading } = useCachedFetch({
-    key: 'ks_articles',
-    fetcher: async () => {
-      const res = await getPublishedArticles();
-      return res.articles || [];
-    },
-    ttl: 5 * 60 * 1000, // 5 minutes
-  });
+  const [articles, setArticles] = useState<iArticleType[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        const res = await getPublishedArticles();
+        setArticles(res.articles || []);
+      } catch (error) {
+        console.error('Failed to fetch articles', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, []);
 
   const featuredArticle = useMemo(() => articles?.[0], [articles]);
   const firstThreeArticles = useMemo(() => articles?.slice(1, 4), [articles]);
@@ -98,6 +111,7 @@ const Homepage = () => {
         }}
         canonicalUrl="https://www.kickside.rw/"
       />
+
       <MainTopKSAd />
 
       <div className="bg-primary pb-5">
@@ -147,9 +161,7 @@ const Homepage = () => {
                         {featuredArticle?.createdAt &&
                           formatDistanceToNow(
                             new Date(featuredArticle?.createdAt),
-                            {
-                              addSuffix: true,
-                            }
+                            { addSuffix: true }
                           )}
                       </span>
                     </div>
