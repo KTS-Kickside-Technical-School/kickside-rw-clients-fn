@@ -24,6 +24,7 @@ const MostPopular = () => {
       }
     } catch (error) {
       setHasError(true);
+      console.error('Error fetching popular articles:', error);
     } finally {
       setIsLoading(false);
     }

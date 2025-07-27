@@ -42,6 +42,7 @@ const AuthorProfile: React.FC = () => {
       } catch (err: any) {
         setError("Author's profile is not available.");
         toast.error("Error loading author's profile. Try again later.");
+        console.error('Error fetching author profile:', err);
       } finally {
         setLoading(false);
       }
