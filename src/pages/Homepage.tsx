@@ -48,7 +48,7 @@ const Homepage: React.FC = () => {
 
   const excludeByIds = useCallback(
     (items: iArticleType[], ids: string[]) =>
-      items.filter((item) => !ids.includes(item._id)),
+      items.filter((item: iArticleType) => !ids.includes(item?._id || '')),
     []
   );
 
@@ -59,7 +59,7 @@ const Homepage: React.FC = () => {
       const main = filtered.slice(0, 2);
       const sub = excludeByIds(
         filtered,
-        main.map((a) => a._id)
+        main.map((a: iArticleType) => a._id as string)
       ).slice(0, 3);
 
       return (

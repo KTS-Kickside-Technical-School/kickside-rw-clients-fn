@@ -3,9 +3,10 @@ import { BsGraphUpArrow } from 'react-icons/bs';
 import { getPopularArticles } from '../utils/requests/articlesRequest';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import {  iItemArticle } from '../utils/types/Article';
 
 const MostPopular = () => {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<iItemArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
@@ -55,7 +56,7 @@ const MostPopular = () => {
         </div>
       ) : (
         <ul className="list-none space-y-2">
-          {data.map((item: any, i: number) => (
+          {data.map((item: iItemArticle, i: number) => (
             <motion.li
               key={i}
               className="flex items-center border-b-2 border-white pb-2"

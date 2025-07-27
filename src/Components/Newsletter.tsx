@@ -57,9 +57,10 @@ const NewsLetter: React.FC = () => {
         type: 'success',
       });
       setEmail('');
-    } catch (err: any) {
+    } catch (err) {
+      console.error('Error subscribing to newsletter:', err);
       setFormMessage({
-        text: err.message || 'Subscription failed',
+        text: 'Subscription failed',
         type: 'error',
       });
     } finally {

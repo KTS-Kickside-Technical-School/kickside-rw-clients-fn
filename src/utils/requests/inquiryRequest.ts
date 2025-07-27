@@ -1,9 +1,10 @@
 import axiosInstance from "../axios/axiosInstance";
+import { iInquiry } from "../types/inquiryType";
 import { handleError } from "./articlesRequest";
 
 
 
-export const sendInquiry = async (data: any) => {
+export const sendInquiry = async (data: iInquiry) => {
     try {
         const response = await axiosInstance.post("/api/inquiry/create-inquiry", {
             topic: data.inquiry,

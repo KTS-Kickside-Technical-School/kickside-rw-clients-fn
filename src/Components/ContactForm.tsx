@@ -92,8 +92,8 @@ const ContactForm: React.FC = () => {
         inquiry: '',
         message: '',
       });
-    } catch (error: any) {
-      console.error('Error: ' + error.message);
+    } catch (error) {
+      console.error('Error: ' + error);
       toast.error('Error sending inquiry');
     } finally {
       setIsLoading(false);

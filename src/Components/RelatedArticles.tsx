@@ -1,7 +1,18 @@
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { iArticleType } from '../utils/types/Article';
 
-const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
+interface RelatedArticlesProps {
+  title: string;
+  articles: iArticleType[];
+  seeMore?: boolean;
+}
+
+const RelatedArticles = ({
+  title,
+  articles,
+  seeMore = false,
+}: RelatedArticlesProps) => {
   return (
     <div className="pb-3 mb-3 ">
       <div className="flex justify-between items-center mb-6">
@@ -17,7 +28,7 @@ const RelatedArticles = ({ title, articles, seeMore = false }: any) => {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.length > 0 &&
-          articles.slice(0, 3).map((article: any) => (
+          articles.slice(0, 3).map((article: iArticleType) => (
             <Link
               to={`/news/${article.slug}`}
               className="bg-white shadow-md overflow-hidden transition-transform transform hover:scale-105"

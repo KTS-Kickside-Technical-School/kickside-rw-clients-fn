@@ -17,7 +17,9 @@ import MainTopKSAd from '../components/ads/MainTopKSAd';
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
   const [articles, setArticles] = useState<iArticleType[]>([]);
-  const [publishedArticles, setPublishedArticles] = useState<iArticleType[]>([]);
+  const [publishedArticles, setPublishedArticles] = useState<iArticleType[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchArticles = async () => {
@@ -34,7 +36,7 @@ const CategoryPage: React.FC = () => {
     };
 
     fetchArticles();
-  }, [categoryName]);
+  }, [categoryName, loading]);
 
   useEffect(() => {
     const fetchArticles = async () => {

@@ -3,7 +3,7 @@ export interface User {
     password: string;
 }
 
-export interface Author {
+export interface iAuthor {
     _id: string;
     firstName?: string;
     lastName?: string;
@@ -13,8 +13,8 @@ export interface Author {
     rank?: string;
     createdAt?: string;
     updatedAt?: string;
-    isDisabled: boolean;
-    role: string;
-    disableReason: string;
-    username: string;
+    isDisabled?: boolean;
+    role?: string;
+    disableReason?: string;
+    username?: string;
 }
