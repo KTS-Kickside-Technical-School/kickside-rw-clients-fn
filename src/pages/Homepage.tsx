@@ -2,18 +2,18 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Header from '../components/Header';
+import Header from '../component/Header';
 import SEO from '../utils/SEO';
-import Footer from '../components/Footer';
+import Footer from '../component/Footer';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
-import NewsLetter from '../components/Newsletter';
-import MainTopKSAd from '../components/ads/MainTopKSAd';
+import NewsLetter from '../component/Newsletter';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 import { iArticleType } from '../utils/types/Article';
-import HomePageArticleItem from '../components/clients/homepage/HomePageArticleItem';
-import HomepageTopHeadlines from '../components/clients/homepage/HomePageTopHeadlines';
-import MainArticles from '../components/MainArticles';
-import SubMainArticles from '../components/SubMainArticles';
-import LatestNews from '../components/LatestByCategory';
+import HomePageArticleItem from '../component/clients/homepage/HomePageArticleItem';
+import HomepageTopHeadlines from '../component/clients/homepage/HomePageTopHeadlines';
+import MainArticles from '../component/MainArticles';
+import SubMainArticles from '../component/SubMainArticles';
+import LatestNews from '../component/LatestByCategory';
 
 const Homepage: React.FC = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
