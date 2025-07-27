@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import MainArticles from '../components/MainArticles';
-import Header from '../components/Header';
-import LatestNews from '../components/LatestByCategory';
-import Footer from '../components/Footer';
+import MainArticles from '../component/MainArticles';
+import Header from '../component/Header';
+import LatestNews from '../component/LatestByCategory';
+import Footer from '../component/Footer';
 import { useParams } from 'react-router-dom';
 import {
   getArticlesByCategory,
   getPublishedArticles,
 } from '../utils/requests/articlesRequest';
-import SubMainArticles from '../components/SubMainArticles';
-import NewsLetter from '../components/Newsletter';
+import SubMainArticles from '../component/SubMainArticles';
+import NewsLetter from '../component/Newsletter';
 import { iArticleType } from '../utils/types/Article';
 import SEO from '../utils/SEO';
-import MainTopKSAd from '../components/ads/MainTopKSAd';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 
 const CategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
   const [articles, setArticles] = useState<iArticleType[]>([]);
-  const [publishedArticles, setPublishedArticles] = useState<iArticleType[]>([]);
+  const [publishedArticles, setPublishedArticles] = useState<iArticleType[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchArticles = async () => {
@@ -34,7 +36,7 @@ const CategoryPage: React.FC = () => {
     };
 
     fetchArticles();
-  }, [categoryName]);
+  }, [categoryName, loading]);
 
   useEffect(() => {
     const fetchArticles = async () => {

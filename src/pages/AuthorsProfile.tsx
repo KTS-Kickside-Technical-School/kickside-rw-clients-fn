@@ -2,27 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Skeleton from 'react-loading-skeleton';
 import SEO from '../utils/SEO';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../component/Header';
+import Footer from '../component/Footer';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
-import AdvertisementSection from '../components/AdvertisementSection';
-import MostPopular from '../components/MostPopularArticle';
+import AdvertisementSection from '../component/AdvertisementSection';
+import MostPopular from '../component/MostPopularArticle';
 import { toast } from 'react-toastify';
 import { getAuthorsProfile } from '../utils/requests/articlesRequest';
 import Avatar from '/avatar.svg';
 import { PiArticleNyTimes } from 'react-icons/pi';
 import { BiUser } from 'react-icons/bi';
 import { MdCheck, MdEmail } from 'react-icons/md';
-import MainTopKSAd from '../components/ads/MainTopKSAd';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 import { FiHome } from 'react-icons/fi';
+import { iAuthor } from '../utils/types/User';
+import { iArticleType } from '../utils/types/Article';
 
 const AuthorProfile: React.FC = () => {
   const { username } = useParams<{ username: string }>();
   const [loading, setLoading] = useState(true);
-  const [author, setAuthor] = useState<any>(null);
-  const [articles, setArticles] = useState<any[]>([]);
-  const [otherJournalists, setOtherJournalists] = useState<any[]>([]);
+  const [author, setAuthor] = useState<iAuthor | null>(null);
+  const [articles, setArticles] = useState<iArticleType[]>([]);
+  const [otherJournalists, setOtherJournalists] = useState<iAuthor[]>([]);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const articlesPerPage = 10;
@@ -31,7 +33,7 @@ const AuthorProfile: React.FC = () => {
     const fetchAuthorProfile = async () => {
       try {
         setLoading(true);
-        const response = await getAuthorsProfile(username);
+        const response = await getAuthorsProfile(username || '');
         if (response.status === 200) {
           setAuthor(response.data.author);
           setArticles(response.data.articles);
@@ -39,9 +41,10 @@ const AuthorProfile: React.FC = () => {
         } else {
           throw new Error("Author's profile not available");
         }
-      } catch (err: any) {
+      } catch (err) {
         setError("Author's profile is not available.");
         toast.error("Error loading author's profile. Try again later.");
+        console.error('Error fetching author profile:', err);
       } finally {
         setLoading(false);
       }

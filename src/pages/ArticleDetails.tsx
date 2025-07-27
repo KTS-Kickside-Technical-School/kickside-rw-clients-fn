@@ -5,20 +5,21 @@ import {
   postComment,
 } from '../utils/requests/articlesRequest';
 import SEO from '../utils/SEO';
-import Header from '../components/Header';
-import AdvertisementSection from '../components/AdvertisementSection';
+import Header from '../component/Header';
+import AdvertisementSection from '../component/AdvertisementSection';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import Footer from '../components/Footer';
+import Footer from '../component/Footer';
 import { iArticleType } from '../utils/types/Article';
-import RelatedArticles from '../components/RelatedArticles';
+import RelatedArticles from '../component/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
-import NewsLetter from '../components/Newsletter';
-import MainTopKSAd from '../components/ads/MainTopKSAd';
-import MostPopular from '../components/MostPopularArticle';
+import NewsLetter from '../component/Newsletter';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
+import MostPopular from '../component/MostPopularArticle';
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import XIcon from '../icons/X';
+import { iComment } from '../utils/types/commentType';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -34,12 +35,19 @@ const formatDate = (dateString: string): string => {
 const ArticleDetails: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<iArticleType | null>(null);
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<iArticleType[]>([]);
 
-  const [comments, setComments] = useState<any>([]);
+  const [comments, setComments] = useState<iComment[]>([]);
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [comment, setComment] = useState('');
+  const [isCommentsLoading, setIsCommentsLoading] = useState(false);
+  const [commentMessage, setCommentMessage] = useState<{
+    error?: string;
+    success?: string;
+  }>({});
 
   useEffect(() => {
     const fetchSingleArticle = async (slug: string) => {
@@ -76,21 +84,21 @@ const ArticleDetails: React.FC = () => {
     );
   }
 
-  const [comment, setComment] = useState('');
-  const [isCommentsLoading, setIsCommentsLoading] = useState(false);
-  const [commentMessage, setCommentMessage] = useState<any>({});
-
-  const handlePostComments = async (e: any) => {
+  const handlePostComments = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsCommentsLoading(true);
     setCommentMessage({});
     try {
-      const response = await postComment({ article: article?._id, comment });
-      setComments((prev: any) => [...prev, response.comment]);
+      const response = await postComment({
+        article: article?._id || '',
+        comment,
+      });
+      setComments((prev: iComment[]) => [...prev, response.comment]);
       setComment('');
       setCommentMessage({ success: 'Comment posted successfully!' });
-    } catch (error: any) {
-      setCommentMessage({ error: error.message || 'Unknown error occurred' });
+    } catch (error) {
+      setCommentMessage({ error: 'Unknown error occurred' });
+      console.error('Error posting comment:', error);
     } finally {
       setIsCommentsLoading(false);
     }
@@ -266,11 +274,13 @@ const ArticleDetails: React.FC = () => {
             {isCommentsLoading ? (
               <Skeleton count={3} className="h-8 mb-4" />
             ) : comments.length ? (
-              comments.map((comment: any, index: number) => (
+              comments.map((comment: iComment, index: number) => (
                 <div key={index} className="mb-4 border-b pb-2">
                   <p className="text-gray-700">{comment.comment}</p>
                   <span className="text-sm text-gray-500">
-                    {formatDateTime(comment.createdAt)}
+                    {formatDateTime(
+                      comment?.createdAt || new Date().toISOString()
+                    )}
                   </span>
                 </div>
               ))

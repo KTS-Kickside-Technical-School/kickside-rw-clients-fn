@@ -1,4 +1,4 @@
-export const formatDateTime = (dateString: any) => {
+export const formatDateTime = (dateString: string) => {
     const date = new Date(dateString);
     const options: Intl.DateTimeFormatOptions = {
         weekday: 'short',
@@ -13,7 +13,7 @@ export const formatDateTime = (dateString: any) => {
 };
 
 
-export const formatDateToCustomString = (dateInput: any) => {
+export const formatDateToCustomString = (dateInput: string) => {
     const date = new Date(dateInput);
 
     const day = date.getDate();
@@ -25,7 +25,7 @@ export const formatDateToCustomString = (dateInput: any) => {
     const formattedHour = hour % 12 || 12;
     const formattedMinute = minute < 10 ? `0${minute}` : minute;
 
-    const getDaySuffix = (day: any) => {
+    const getDaySuffix = (day: number) => {
         if (day > 3 && day < 21) return `${day}th`;
         switch (day % 10) {
             case 1: return `${day}st`;
@@ -38,7 +38,7 @@ export const formatDateToCustomString = (dateInput: any) => {
     return `${getDaySuffix(day)} ${month} ${year} at ${formattedHour}:${formattedMinute} ${period}`;
 }
 
-export const getGreeting = (name:any) => {
+export const getGreeting = (name: string) => {
     const currentHour = new Date().getHours();
 
     if (currentHour < 12) {

@@ -1,4 +1,3 @@
-import { createContext, useContext } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import ArticleDetails from './pages/ArticleDetails';
@@ -8,7 +7,6 @@ import AuthorProfile from './pages/AuthorsProfile';
 import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
 
-const AuthContext = createContext<any>(null);
 
 const AppRouter = () => {
   return (
@@ -27,5 +25,3 @@ const AppRouter = () => {
 };
 
 export default AppRouter;
-
-export const useAuth = () => useContext(AuthContext);

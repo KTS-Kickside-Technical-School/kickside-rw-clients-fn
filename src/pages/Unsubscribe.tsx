@@ -30,11 +30,9 @@ const Unsubscribe: React.FC = () => {
         toast.success('You have successfully unsubscribed.');
       }
       setTimeout(() => navigate('/'), 3000);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error unsubscribing:', error);
-      const errorMessage =
-        error?.response?.data?.message ||
-        'Failed to unsubscribe. Please try again.';
+      const errorMessage = 'Failed to unsubscribe. Please try again.';
       toast.error(errorMessage);
     } finally {
       setLoading(false);

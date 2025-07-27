@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
+import { iArticleType } from '../utils/types/Article';
 
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [allArticles, setAllArticles] = useState<any[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<any[]>([]);
+  const [allArticles, setAllArticles] = useState<iArticleType[]>([]);
+  const [filteredArticles, setFilteredArticles] = useState<iArticleType[]>([]);
   const [hasFetched, setHasFetched] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const location = useLocation();
@@ -44,7 +45,7 @@ const Header = () => {
     }
   };
 
-  const filterArticles = (value: string, sourceData?: any[]) => {
+  const filterArticles = (value: string, sourceData?: iArticleType[]) => {
     setSearch(value);
     const source = sourceData || allArticles;
 
@@ -230,8 +231,8 @@ const Header = () => {
           <div className="bg-white text-black p-4 my-2 rounded-md shadow-md max-h-96 overflow-y-auto">
             {filteredArticles.length > 0 ? (
               <ul className="divide-y">
-                {filteredArticles.map((article) => (
-                  <li key={article.id} className="py-3">
+                {filteredArticles.map((article: iArticleType) => (
+                  <li key={article?._id} className="py-3">
                     <Link
                       to={`/news/${article.slug}`}
                       className="hover:underline block"
