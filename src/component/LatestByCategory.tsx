@@ -35,7 +35,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
                 </div>
               </div>
             ))
-          : articles.slice(0,20).map((item: iArticleType, index) => (
+          : articles.slice(0, 20).map((item: iArticleType, index) => (
               <Link
                 to={`/news/${item.slug}`}
                 key={index}
