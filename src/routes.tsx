@@ -6,7 +6,7 @@ import ContactUs from './pages/ContactUs';
 import AuthorProfile from './pages/AuthorsProfile';
 import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
-
+import News from './pages/News';
 
 const AppRouter = () => {
   return (
@@ -19,7 +19,8 @@ const AppRouter = () => {
       <Route path="author/:username" element={<AuthorProfile />} />
       <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} />
 
-      <Route path="*" element={<NotFound  />} />
+      <Route path="/news" element={<News />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

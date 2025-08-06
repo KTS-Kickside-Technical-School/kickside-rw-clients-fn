@@ -107,3 +107,12 @@ export const getTopFeaturedArticles = async () => {
     return handleError(error)
   }
 }
+
+export const getTOpWeeklyArticlesByCategories = async () => {
+  try {
+    const response = await axiosInstance.get("/api/articles/get-top-weekly-categories");
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}

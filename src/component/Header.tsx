@@ -82,11 +82,11 @@ const Header = () => {
     <header className="text-white py-4 bg-primary w-full sticky top-0 z-40">
       <div className="w-full px-4 mx-auto max-w-7xl">
         <div className="text-center mb-4">
-          <Link to="/" className="mx-auto block">
+          <a href="/" className="mx-auto block">
             <h1 className="font-bold text-2xl md:text-3xl text-white">
               KICKSIDE
             </h1>
-          </Link>
+          </a>
         </div>
 
         <div className="bg-dark w-full p-3 rounded-lg px-4 md:px-5">
