@@ -21,9 +21,11 @@ const CategoryPage: React.FC = () => {
     []
   );
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchArticles = async () => {
       try {
+        setLoading(true);
         if (categoryName) {
           const response = await getArticlesByCategory(categoryName);
           setArticles(response?.data?.articles || []);
@@ -31,16 +33,17 @@ const CategoryPage: React.FC = () => {
       } catch (error) {
         console.error('Error fetching articles:', error);
       } finally {
-        setLoading(!loading);
+        setLoading(false);
       }
     };
 
     fetchArticles();
-  }, [categoryName, loading]);
+  }, [categoryName]);
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
+        setLoading(true);
         const response = await getPublishedArticles();
         setPublishedArticles(response.articles || []);
       } catch (error) {
@@ -50,21 +53,21 @@ const CategoryPage: React.FC = () => {
       }
     };
     fetchArticles();
-  }, [categoryName]);
+  }, []);
+
   return (
     <>
       <SEO
         mainData={{
-          title: ` All Trending ${categoryName} - Kickside News`,
+          title: `All Trending ${categoryName} - Kickside News`,
           type: 'article',
         }}
         canonicalUrl={`https://www.kickside.rw/category/${categoryName}`}
       />
       <MainTopKSAd />
-
       <Header />
       <div className="w-full px-4 mx-auto max-w-7xl">
-        <div className=" mx-auto">
+        <div className="mx-auto">
           <MainArticles
             loading={loading}
             articles={articles.slice(0, 2)}
@@ -85,7 +88,7 @@ const CategoryPage: React.FC = () => {
                 loading={loading}
               />
             )}
-            {articles.length < 0 && !loading && (
+            {articles.length <= 0 && !loading && (
               <LatestNews
                 title={`Latest articles`}
                 articles={publishedArticles.slice(0, 20)}
@@ -97,7 +100,7 @@ const CategoryPage: React.FC = () => {
       </div>
       <NewsLetter />
       {articles.length > 18 && (
-        <div className="w-full md:w-[80%] m-auto  text-white">
+        <div className="w-full md:w-[80%] m-auto text-white">
           <div className="container mx-auto px-4">
             <MainArticles
               loading={loading}

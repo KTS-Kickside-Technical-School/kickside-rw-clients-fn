@@ -3,7 +3,7 @@ import { BsGraphUpArrow } from 'react-icons/bs';
 import { getPopularArticles } from '../utils/requests/articlesRequest';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {  iItemArticle } from '../utils/types/Article';
+import { iItemArticle } from '../utils/types/Article';
 
 const MostPopular = () => {
   const [data, setData] = useState<iItemArticle[]>([]);
@@ -34,7 +34,8 @@ const MostPopular = () => {
   if (hasError || (!isLoading && data.length === 0)) return null;
 
   return (
-    <div className="bg-[#14D163] p-4 mt-8 rounded shadow">
+    <div className="bg-[#14D163] p-4 mt-8 rounded shadow w-full">
+      {' '}
       <div className="flex justify-between items-center mb-4 text-white">
         <div className="flex flex-col items-start">
           <h1 className="text-3xl font-bold">The KS</h1>
@@ -42,7 +43,6 @@ const MostPopular = () => {
         </div>
         <BsGraphUpArrow className="text-5xl text-blue-700 w-10" />
       </div>
-
       {isLoading ? (
         <div className="space-y-3">
           {Array(5)
