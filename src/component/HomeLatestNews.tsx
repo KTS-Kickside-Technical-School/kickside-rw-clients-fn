@@ -1,28 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
+import { getPublishedArticles } from '../utils/requests/articlesRequest';
 
-interface LatestNewsProps {
-  title: string;
-  articles: iArticleType[];
-  loading: boolean;
-}
+interface LatestNewsProps {}
 
-const LatestNews: React.FC<LatestNewsProps> = ({
-  title,
-  articles,
-  loading,
-}) => {
+const HomeLatestNews: React.FC<LatestNewsProps> = () => {
+  const [articles, setArticles] = useState<iArticleType[]>([]);
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        const res = await getPublishedArticles();
+        setArticles(res?.articles || []);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchArticles();
+  }, []);
   return (
-    <div className="w-full pt-4 mt-8">
+    <div className="w-full mt-4">
       <h1 className="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
-        {title}
+        Latest news
       </h1>
 
       <div className="space-y-4">
         {loading
-          ? Array.from({ length: 5 }).map((_, index) => (
+          ? Array.from({ length: 15 }).map((_, index) => (
               <div
                 key={index}
                 className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
@@ -35,7 +46,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
                 </div>
               </div>
             ))
-          : articles.slice(0, 20).map((item: iArticleType, index) => (
+          : articles.slice(0, 18).map((item: iArticleType, index) => (
               <Link
                 to={`/news/${item.slug}`}
                 key={index}
@@ -58,10 +69,7 @@ const LatestNews: React.FC<LatestNewsProps> = ({
                       {item.title}
                     </h2>
                     <p className="text-xs text-gray-500 mt-1">
-                      <span className="font-medium text-blue-600">
-                        {item.author.firstName} {item.author.lastName}
-                      </span>
-                      {' · '}
+                     
                       {formatDistanceToNow(new Date(item.createdAt), {
                         addSuffix: true,
                       })}
@@ -75,4 +83,4 @@ const LatestNews: React.FC<LatestNewsProps> = ({
   );
 };
 
-export default LatestNews;
+export default HomeLatestNews;
