@@ -98,3 +98,12 @@ export const getPopularArticles = async () => {
     return handleError(error)
   }
 }
+
+export const getTopFeaturedArticles = async () => {
+  try {
+    const response = await axiosInstance.get("/api/articles/get-top-featured-articles");
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}
