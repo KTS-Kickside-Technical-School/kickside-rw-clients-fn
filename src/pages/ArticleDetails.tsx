@@ -20,6 +20,7 @@ import MostPopular from '../component/MostPopularArticle';
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import XIcon from '../icons/X';
 import { iComment } from '../utils/types/commentType';
+import AdstrerraPortraitBanner from '../component/ads/adstrerra/AdstrerraPortraitBanner';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -308,6 +309,7 @@ const ArticleDetails: React.FC = () => {
 
           <aside className="w-full lg:w-1/3">
             <AdvertisementSection />
+            <AdstrerraPortraitBanner />
             <MostPopular />
           </aside>
         </div>

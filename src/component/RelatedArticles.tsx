@@ -29,45 +29,47 @@ const RelatedArticles = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.length > 0 &&
           articles.slice(0, 3).map((article: iArticleType) => (
-            <Link
-              to={`/news/${article.slug}`}
-              className="bg-white shadow-md overflow-hidden transition-transform transform hover:scale-105"
-            >
-              <img
-                className="w-full h-56 object-cover"
-                src={article.coverImage}
-                alt={`Image of ${article.title}`}
-              />
-              <div className="p-4">
-                <Link
-                  to={`/category/${article.category}`}
-                  className="text-sm text-blue-600 font-semibold uppercase"
-                >
-                  {article.category}
-                </Link>
-                <Link
-                  to={`/news/${article.slug}`}
-                  className="block text-lg text-gray-900 font-medium my-2 line-clamp-2"
-                >
-                  {article.title}
-                </Link>
-                <p className="text-sm text-gray-400">
+            <div key={article._id}>
+              <Link
+                to={`/news/${article.slug}`}
+                className="bg-white shadow-md overflow-hidden transition-transform transform hover:scale-105"
+              >
+                <img
+                  className="w-full h-56 object-cover"
+                  src={article.coverImage}
+                  alt={`Image of ${article.title}`}
+                />
+                <div className="p-4">
                   <Link
-                    to={`/author/${article.author.username}`}
-                    className=" hover:underline"
+                    to={`/category/${article.category}`}
+                    className="text-sm text-blue-600 font-semibold uppercase"
                   >
-                    {article.author.firstName} {article.author.lastName}
-                  </Link>{' '}
-                  -{' '}
-                  <span>
-                    {article?.createdAt &&
-                      formatDistanceToNow(new Date(article?.createdAt), {
-                        addSuffix: true,
-                      })}
-                  </span>
-                </p>
-              </div>
-            </Link>
+                    {article.category}
+                  </Link>
+                  <Link
+                    to={`/news/${article.slug}`}
+                    className="block text-lg text-gray-900 font-medium my-2 line-clamp-2"
+                  >
+                    {article.title}
+                  </Link>
+                  <p className="text-sm text-gray-400">
+                    <Link
+                      to={`/author/${article.author.username}`}
+                      className=" hover:underline"
+                    >
+                      {article.author.firstName} {article.author.lastName}
+                    </Link>{' '}
+                    -{' '}
+                    <span>
+                      {article?.createdAt &&
+                        formatDistanceToNow(new Date(article?.createdAt), {
+                          addSuffix: true,
+                        })}
+                    </span>
+                  </p>
+                </div>
+              </Link>
+            </div>
           ))}
       </div>
     </div>

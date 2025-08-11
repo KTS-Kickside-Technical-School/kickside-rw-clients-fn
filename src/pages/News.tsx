@@ -1,3 +1,4 @@
+import AdstrerraPortraitBanner from '../component/ads/adstrerra/AdstrerraPortraitBanner';
 import AdvertisementSection from '../component/AdvertisementSection';
 import Footer from '../component/Footer';
 import Header from '../component/Header';
@@ -37,6 +38,7 @@ const News = () => {
 
             <div className="w-full lg:w-1/5 xl:w-2/10">
               <MostPopular />
+              <AdstrerraPortraitBanner />
               <AdvertisementSection />
             </div>
           </div>
