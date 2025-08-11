@@ -10,6 +10,7 @@ import MostPopular from '../component/MostPopularArticle';
 import AdvertisementSection from '../component/AdvertisementSection';
 import HomeLatestNews from '../component/HomeLatestNews';
 import HomeProductsCategories from '../component/HomeProductsCategories';
+import AdstrerraPortraitBanner from '../component/ads/adstrerra/AdstrerraPortraitBanner';
 
 const Homepage: React.FC = () => {
   return (
@@ -48,6 +49,7 @@ const Homepage: React.FC = () => {
 
           <div className="w-full lg:w-1/5 xl:w-2/10">
             <MostPopular />
+            <AdstrerraPortraitBanner />
             <AdvertisementSection />
           </div>
         </div>

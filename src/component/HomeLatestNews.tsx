@@ -33,7 +33,7 @@ const HomeLatestNews: React.FC<LatestNewsProps> = () => {
 
       <div className="space-y-4">
         {loading
-          ? Array.from({ length: 15 }).map((_, index) => (
+          ? Array.from({ length: 20 }).map((_, index) => (
               <div
                 key={index}
                 className="w-full flex border-b border-gray-200 pb-4 animate-pulse"

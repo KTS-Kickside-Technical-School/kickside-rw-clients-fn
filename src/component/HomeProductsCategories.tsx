@@ -19,7 +19,7 @@ const HomeProductsCategories = () => {
       setLoading(true);
       try {
         const res = await getTOpWeeklyArticlesByCategories();
-        console.log(res);
+
         if (res.status === 200) {
           setData(res.data || {});
         }
