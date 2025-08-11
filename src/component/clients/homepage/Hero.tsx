@@ -93,7 +93,6 @@ const Hero = ({}: HeroProps) => {
 
   return (
     <div className="w-full px-4 mx-auto max-w-7xl">
-      {/* Main Featured Articles (2 articles side by side) */}
       <div className="flex flex-col md:flex-row gap-6 mb-8">
         {topFeaturedArticles.slice(0, 2).map((article, index) => (
           <div
@@ -155,7 +154,7 @@ const Hero = ({}: HeroProps) => {
       </div>
 
       <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-        Latest Stories
+        Trending Stories
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {topFeaturedArticles.slice(2, 6).map((article) => (
