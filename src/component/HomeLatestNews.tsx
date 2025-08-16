@@ -14,7 +14,6 @@ const HomeLatestNews: React.FC = () => {
 
       try {
         const res = await getLatestCustomizedArticles();
-        console.log(res);
         if (res?.data) {
           setArticles(res.data);
         }
