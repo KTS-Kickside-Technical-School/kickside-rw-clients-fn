@@ -1,16 +1,10 @@
 import { useState, useEffect } from 'react';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
-import { Link, useLocation } from 'react-router-dom';
-import { getPublishedArticles } from '../utils/requests/articlesRequest';
-import { iArticleType } from '../utils/types/Article';
+import { useLocation } from 'react-router-dom';
 
 const Header = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [search, setSearch] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [allArticles, setAllArticles] = useState<iArticleType[]>([]);
-  const [filteredArticles, setFilteredArticles] = useState<iArticleType[]>([]);
-  const [hasFetched, setHasFetched] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const location = useLocation();
 
@@ -27,54 +21,8 @@ const Header = () => {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    setIsSearchOpen(false);
     setSearch('');
-    setFilteredArticles([]);
   }, [location]);
-
-  const fetchArticles = async () => {
-    try {
-      const response = await getPublishedArticles();
-      if (response.status === 200) {
-        setAllArticles(response.articles);
-        setHasFetched(true);
-        filterArticles(search, response.articles);
-      }
-    } catch (error) {
-      console.error('Failed to fetch articles:', error);
-    }
-  };
-
-  const filterArticles = (value: string, sourceData?: iArticleType[]) => {
-    setSearch(value);
-    const source = sourceData || allArticles;
-
-    const keywords = value
-      .toLowerCase()
-      .split(' ')
-      .filter((word) => word.trim() !== '');
-
-    const filtered = source.filter((article) => {
-      const title = article.title?.toLowerCase() || '';
-      const content = article.content?.toLowerCase() || '';
-
-      return keywords.some(
-        (keyword) => title.includes(keyword) || content.includes(keyword)
-      );
-    });
-
-    setFilteredArticles(filtered);
-  };
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (!hasFetched) {
-      setSearch(value);
-      fetchArticles();
-    } else {
-      filterArticles(value);
-    }
-  };
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -99,7 +47,7 @@ const Header = () => {
               className="flex-1 px-4 py-2 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               placeholder="Search articles or topics..."
               value={search}
-              onChange={handleSearchChange}
+              onChange={(e) => setSearch(e.target.value)}
               autoFocus={windowWidth > 768}
             />
             <button

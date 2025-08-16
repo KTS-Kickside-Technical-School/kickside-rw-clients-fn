@@ -173,9 +173,10 @@ const SearchResults = () => {
                 )}
               </div>
             </div>
-            <div className="w-full lg:w-1/5 xl:w-2/10">
+            <div className="w-full lg:w-1/5 xl:w-2/10 mb-4">
               <MostPopular />
               <AdstrerraPortraitBanner />
+              
               <AdvertisementSection />
             </div>
           </div>
