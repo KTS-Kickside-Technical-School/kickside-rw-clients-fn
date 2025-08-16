@@ -7,6 +7,7 @@ import AuthorProfile from './pages/AuthorsProfile';
 import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
 import News from './pages/News';
+import SearchResults from './pages/SearchResults';
 
 const AppRouter = () => {
   return (
@@ -15,11 +16,12 @@ const AppRouter = () => {
       <Route path="/category/:categoryName" element={<CategoryPage />} />
       <Route path="/contactus" element={<ContactUs />} />
 
-      <Route path="news/:slug" element={<ArticleDetails />} />
       <Route path="author/:username" element={<AuthorProfile />} />
       <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} />
 
       <Route path="/news" element={<News />} />
+      <Route path="/news/search" element={<SearchResults />} />
+      <Route path="news/:slug" element={<ArticleDetails />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
