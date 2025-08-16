@@ -116,3 +116,21 @@ export const getTOpWeeklyArticlesByCategories = async () => {
     return handleError(error)
   }
 }
+
+export const getUserSearch = async (query: string, page = 1, limit = 35) => {
+  try {
+    const response = await axiosInstance.get(`/api/articles/user-search?query=${query}&page=${page}&limit=${limit}`);
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}
+
+export const getLatestCustomizedArticles = async (limit = 25) => {
+  try {
+    const response = await axiosInstance.get(`/api/articles//get-latest-articles-customized?limit=${limit}`);
+    return response.data
+  } catch (error) {
+    return handleError(error)
+  }
+}

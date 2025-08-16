@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
-import { getPublishedArticles } from '../utils/requests/articlesRequest';
-
-const CACHE_KEY = 'latest_articles_cache';
-const CACHE_TIME = 1000 * 60 * 15;
+import { getLatestCustomizedArticles } from '../utils/requests/articlesRequest';
 
 const HomeLatestNews: React.FC = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
@@ -15,25 +12,11 @@ const HomeLatestNews: React.FC = () => {
     const fetchArticles = async () => {
       setLoading(true);
 
-      const cached = localStorage.getItem(CACHE_KEY);
-      if (cached) {
-        try {
-          const parsed = JSON.parse(cached);
-          if (Date.now() - parsed.timestamp < CACHE_TIME) {
-            setArticles(parsed.data);
-            setLoading(false);
-          }
-        } catch {}
-      }
-
       try {
-        const res = await getPublishedArticles();
-        if (res?.articles) {
-          setArticles(res.articles);
-          localStorage.setItem(
-            CACHE_KEY,
-            JSON.stringify({ timestamp: Date.now(), data: res.articles })
-          );
+        const res = await getLatestCustomizedArticles();
+        console.log(res);
+        if (res?.data) {
+          setArticles(res.data);
         }
       } catch (error) {
         console.error('Error fetching articles:', error);
@@ -66,7 +49,7 @@ const HomeLatestNews: React.FC = () => {
                 </div>
               </div>
             ))
-          : articles.slice(0, 25).map((item, index) => (
+          : articles?.map((item, index) => (
               <Link
                 to={`/news/${item.slug}`}
                 key={item._id || index}
