@@ -4,27 +4,47 @@ import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
 import { getPublishedArticles } from '../utils/requests/articlesRequest';
 
-interface LatestNewsProps {}
+const CACHE_KEY = 'latest_articles_cache';
+const CACHE_TIME = 1000 * 60 * 15;
 
-const HomeLatestNews: React.FC<LatestNewsProps> = () => {
+const HomeLatestNews: React.FC = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
-
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchArticles = async () => {
       setLoading(true);
+
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          if (Date.now() - parsed.timestamp < CACHE_TIME) {
+            setArticles(parsed.data);
+            setLoading(false);
+          }
+        } catch {}
+      }
+
       try {
         const res = await getPublishedArticles();
-        setArticles(res?.articles || []);
+        if (res?.articles) {
+          setArticles(res.articles);
+          localStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify({ timestamp: Date.now(), data: res.articles })
+          );
+        }
       } catch (error) {
         console.error('Error fetching articles:', error);
       } finally {
         setLoading(false);
       }
     };
+
     fetchArticles();
   }, []);
+
   return (
     <div className="w-full mt-4">
       <h1 className="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
@@ -33,7 +53,7 @@ const HomeLatestNews: React.FC<LatestNewsProps> = () => {
 
       <div className="space-y-4">
         {loading
-          ? Array.from({ length: 20 }).map((_, index) => (
+          ? Array.from({ length: 10 }).map((_, index) => (
               <div
                 key={index}
                 className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
@@ -46,17 +66,17 @@ const HomeLatestNews: React.FC<LatestNewsProps> = () => {
                 </div>
               </div>
             ))
-          : articles.slice(0, 18).map((item: iArticleType, index) => (
+          : articles.slice(0, 25).map((item, index) => (
               <Link
                 to={`/news/${item.slug}`}
-                key={index}
+                key={item._id || index}
                 className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
               >
                 <div className="flex w-full border-b border-gray-200 pb-4">
                   <div className="w-24 h-16 mr-3 flex-shrink-0">
                     <img
                       src={item.coverImage}
-                      alt="Article"
+                      alt={item.title}
                       className="w-full h-full object-cover rounded-lg"
                       loading="lazy"
                     />
@@ -69,7 +89,6 @@ const HomeLatestNews: React.FC<LatestNewsProps> = () => {
                       {item.title}
                     </h2>
                     <p className="text-xs text-gray-500 mt-1">
-                     
                       {formatDistanceToNow(new Date(item.createdAt), {
                         addSuffix: true,
                       })}

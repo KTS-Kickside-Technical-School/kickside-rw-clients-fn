@@ -47,10 +47,12 @@ const Homepage: React.FC = () => {
             <HomeProductsCategories />
           </div>
 
-          <div className="w-full lg:w-1/5 xl:w-2/10">
+          <div className="w-full lg:w-1/5 xl:w-2/10 ">
             <MostPopular />
             <AdstrerraPortraitBanner />
-            <AdvertisementSection />
+            <div className="">
+              <AdvertisementSection />
+            </div>
           </div>
         </div>
       </div>
