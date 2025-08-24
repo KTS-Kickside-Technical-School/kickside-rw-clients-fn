@@ -1,5 +1,4 @@
 import { Link, useLocation } from 'react-router-dom';
-import AdstrerraPortraitBanner from '../component/ads/adstrerra/AdstrerraPortraitBanner';
 import AdvertisementSection from '../component/AdvertisementSection';
 import Footer from '../component/Footer';
 import Header from '../component/Header';
@@ -154,7 +153,6 @@ const SearchResults = () => {
 
           <div className="w-full lg:w-1/5 xl:w-2/10 mb-4">
             <MostPopular />
-            <AdstrerraPortraitBanner />
             <AdvertisementSection />
           </div>
         </div>

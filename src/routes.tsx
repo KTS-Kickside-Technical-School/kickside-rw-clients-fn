@@ -8,6 +8,8 @@ import CategoryPage from './pages/CategoryPage';
 import Unsubscribe from './pages/Unsubscribe';
 import News from './pages/News';
 import SearchResults from './pages/SearchResults';
+import MatchCenter from './pages/MatchCenter';
+import SeasonFixtures from './pages/SeasonFixtures';
 
 const AppRouter = () => {
   return (
@@ -22,6 +24,10 @@ const AppRouter = () => {
       <Route path="/news" element={<News />} />
       <Route path="/news/search" element={<SearchResults />} />
       <Route path="news/:slug" element={<ArticleDetails />} />
+      <Route path="/match-center">
+        <Route path="" element={<MatchCenter />} />
+        <Route path="fixtures/:seasonSlug" element={<SeasonFixtures />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -10,7 +10,7 @@ import MostPopular from '../component/MostPopularArticle';
 import AdvertisementSection from '../component/AdvertisementSection';
 import HomeLatestNews from '../component/HomeLatestNews';
 import HomeProductsCategories from '../component/HomeProductsCategories';
-import AdstrerraPortraitBanner from '../component/ads/adstrerra/AdstrerraPortraitBanner';
+import TrendsMatches from '../component/TrendsMatches';
 
 const Homepage: React.FC = () => {
   return (
@@ -44,12 +44,12 @@ const Homepage: React.FC = () => {
           </div>
 
           <div className="w-full lg:w-3/5 xl:w-6/10">
+            <TrendsMatches />
             <HomeProductsCategories />
           </div>
 
           <div className="w-full lg:w-1/5 xl:w-2/10 ">
             <MostPopular />
-            <AdstrerraPortraitBanner />
             <div className="">
               <AdvertisementSection />
             </div>

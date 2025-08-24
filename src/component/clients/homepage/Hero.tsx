@@ -20,7 +20,7 @@ const Hero = ({}: HeroProps) => {
       try {
         const res = await getTopFeaturedArticles();
         if (res?.status === 200) {
-          setTopFeaturedArticles(res.data.articles.slice(0, 6)); // Get 6 articles
+          setTopFeaturedArticles(res.data.articles.slice(0, 6));
         } else {
           setError('Failed to load articles. Please try again later.');
         }

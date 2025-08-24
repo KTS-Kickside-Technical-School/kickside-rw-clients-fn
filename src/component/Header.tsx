@@ -92,6 +92,9 @@ const Header = () => {
               >
                 Entertainment
               </a>
+              <a href="/match-center" className="hover:underline px-2 py-1">
+                Match Center
+              </a>
             </nav>
           </div>
         </div>
@@ -147,11 +150,11 @@ const Header = () => {
                 </li>
                 <li>
                   <a
-                    href="/category/Entertainment"
+                    href="/match-center"
                     className="hover:underline block py-3 text-lg"
                     onClick={closeMenu}
                   >
-                    Entertainment
+                    Match Center
                   </a>
                 </li>
               </ul>
