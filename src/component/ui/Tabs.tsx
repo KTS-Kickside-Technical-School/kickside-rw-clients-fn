@@ -1,11 +1,13 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext } from 'react';
 
 interface TabsContextType {
   value: string;
   onValueChange: (value: string) => void;
 }
 
-const TabsContext = createContext<TabsContextType | undefined>(undefined);
+export const TabsContext = createContext<TabsContextType | undefined>(
+  undefined
+);
 
 interface TabsProps {
   children: React.ReactNode;

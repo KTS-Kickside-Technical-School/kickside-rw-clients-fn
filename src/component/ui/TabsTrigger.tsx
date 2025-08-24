@@ -18,7 +18,7 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
     throw new Error('TabsTrigger must be used within a Tabs component');
   }
 
-  const { value: currentValue, onValueChange } = context;
+  const { value: currentValue, onValueChange }: any = context;
   const isActive = currentValue === value;
 
   return (

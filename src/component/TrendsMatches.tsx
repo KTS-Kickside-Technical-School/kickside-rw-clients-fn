@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHomepageMatches } from '../utils/requests/tournamentsRequest';
-import { formatTournamentsTime, formatTimeOnly } from '../utils/helpers/tournamentsHelpers';
+import {
+  formatTournamentsTime,
+} from '../utils/helpers/tournamentsHelpers';
 import {
   FaCircle,
   FaExclamationTriangle,
@@ -161,7 +163,8 @@ const TrendsMatches = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-gray-500">
-                      {tournament.matches.length} match{tournament.matches.length !== 1 ? 'es' : ''}
+                      {tournament.matches.length} match
+                      {tournament.matches.length !== 1 ? 'es' : ''}
                     </span>
                     {expandedTournaments[tournament.tournamentName] ? (
                       <FaChevronUp className="text-gray-500 text-xs" />
@@ -195,13 +198,13 @@ const TrendsMatches = () => {
                               : 'border-gray-100'
                           } hover:shadow-xs transition`}
                         >
-                          {/* Time */}
                           <div className="w-12 text-xs text-gray-500 text-center">
-                            {match.status === 'scheduled' 
-                              ? formatTimeOnly(match.matchTime)
-                              : formatTournamentsTime(match.matchTime)
-                            }
+                            {formatTournamentsTime(
+                              match.matchTime,
+                              match.status === 'scheduled'
+                            )}
                           </div>
+                          
 
                           {/* Teams & Scores */}
                           <div className="flex-1 flex flex-col gap-1 ml-2">
@@ -248,7 +251,9 @@ const TrendsMatches = () => {
                               {getStatusIcon(match.status)}
                               {getStatusText(match.status) && (
                                 <span
-                                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-medium ${getStatusColor(match.status)} ${
+                                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-medium ${getStatusColor(
+                                    match.status
+                                  )} ${
                                     match.status === 'in_progress' ||
                                     match.status === 'halftime'
                                       ? 'animate-pulse'
