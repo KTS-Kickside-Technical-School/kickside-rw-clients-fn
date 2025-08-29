@@ -1,3 +1,4 @@
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 import AdvertisementSection from '../component/AdvertisementSection';
 import Footer from '../component/Footer';
 import Header from '../component/Header';
@@ -21,7 +22,8 @@ const News = () => {
         }}
         canonicalUrl="https://www.kickside.rw/"
       />
-      <div className="bg-primary pb-5">
+      <MainTopKSAd />
+      <div className=" pb-5">
         <Header />
       </div>
       <div>

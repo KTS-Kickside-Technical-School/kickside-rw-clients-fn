@@ -8,6 +8,7 @@ import { iArticleType } from '../utils/types/Article';
 import { getUserSearch } from '../utils/requests/articlesRequest';
 import { useEffect, useState, useMemo } from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 
 const SearchResults = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
@@ -57,8 +58,8 @@ const SearchResults = () => {
           type: 'website',
         }}
       />
-
-      <div className="bg-primary pb-5">
+<MainTopKSAd />
+      <div className=" pb-5">
         <Header />
       </div>
       <div className="max-w-7xl px-4 mx-auto w-full">

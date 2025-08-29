@@ -16,6 +16,7 @@ import {
   groupMatchesByTournament,
 } from '../utils/helpers/tournamentsHelpers';
 import { Link } from 'react-router-dom';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 
 const MatchCenter = () => {
   const [matches, setMatches] = useState<any[]>([]);
@@ -76,6 +77,8 @@ const MatchCenter = () => {
             'Match Center: Rwandan Livescores, East Africa Live updates on Kickside News',
         }}
       />
+      <MainTopKSAd />
+
       <Header />
       <main className="max-w-7xl mx-auto p-4 sm:px-6">
         <div className="flex items-center mb-4 text-xs text-gray-600 space-x-2">
