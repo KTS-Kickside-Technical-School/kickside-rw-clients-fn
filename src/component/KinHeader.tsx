@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FaSearch, FaTimes, FaBars, FaEllipsisH } from 'react-icons/fa';
+import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import LanguageSwitcher from './clients/homepage/LanguageSwitcher';
 
@@ -16,7 +16,7 @@ const KinHeader = () => {
     { label: 'Imyidagaduro', path: '/category/Imyidagaduro' },
     { label: 'Ikoranabuhanga', path: '/category/Ikoranabuhanga' },
     { label: 'Ubukungu', path: '/category/Ubukungu' },
-    { label: 'Match Center', path: '/match-center', external: true },
+    { label: 'Amarushanwa', path: '/en/match-center', external: true },
   ];
 
   useEffect(() => {
@@ -91,7 +91,7 @@ const KinHeader = () => {
               )
             )}
 
-            {navItems.length > 4 && (
+            {navItems.length > 3 && (
               <div className="relative" ref={moreMenuRef}>
                 <button
                   onClick={() => setIsMoreOpen(!isMoreOpen)}
@@ -100,12 +100,11 @@ const KinHeader = () => {
                   aria-expanded={isMoreOpen}
                 >
                   <span>Ibindi</span>
-                  <FaEllipsisH size={14} />
                 </button>
 
                 {isMoreOpen && (
                   <div className="absolute top-full right-0 mt-1 bg-gray-800 rounded-md shadow-lg py-2 z-50 min-w-[150px]">
-                    {navItems.slice(4).map((item) =>
+                    {navItems.slice(3).map((item) =>
                       item.external ? (
                         <a
                           key={item.label}
@@ -184,7 +183,7 @@ const KinHeader = () => {
               <FaSearch className="absolute left-3 text-gray-400" size={16} />
               <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder="Shakisha..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
