@@ -25,7 +25,7 @@ const SeasonsList = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 min-h-screen">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 min-h-screen w-[200]">
       <h2 className="font-semibold text-sm mb-3 flex items-center text-gray-800">
         <FaTrophy className="text-yellow-500 mr-2 text-sm" />
         Select a Tournament
