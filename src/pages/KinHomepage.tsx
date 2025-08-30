@@ -3,7 +3,6 @@ import React from "react";
 import SEO from "../utils/SEO";
 import Footer from "../component/Footer";
 import NewsLetter from "../component/Newsletter";
-import MainTopKSAd from "../component/ads/MainTopKSAd";
 import Hero from "../component/clients/homepage/Hero";
 import MostPopular from "../component/MostPopularArticle";
 import AdvertisementSection from "../component/AdvertisementSection";

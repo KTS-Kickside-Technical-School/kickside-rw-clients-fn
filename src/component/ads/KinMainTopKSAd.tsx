@@ -41,7 +41,7 @@ const KinMainTopKSAd = () => {
         <motion.div
           whileHover={{
             scale: 1.1,
-            boxShadow: '0px 0px 15px rgba(5, 150, 105, 0.5)', // emerald-600 glow
+            boxShadow: '0px 0px 15px rgba(5, 150, 105, 0.5)',
           }}
           whileTap={{ scale: 0.95 }}
           className="bg-emerald-600 text-white font-semibold px-5 py-2 uppercase tracking-wide text-sm md:text-base hover:bg-emerald-700 transition"
