@@ -11,6 +11,7 @@ import HomeProductsCategories from "../component/HomeProductsCategories";
 import TrendsMatches from "../component/TrendsMatches";
 import KinHeader from "../component/KinHeader";
 import KinMainTopKSAd from "../component/ads/KinMainTopKSAd";
+import KinHero from "../component/clients/homepage/KinHero";
 
 const KinHomepage: React.FC = () => {
   return (
@@ -34,7 +35,7 @@ const KinHomepage: React.FC = () => {
         <KinHeader />
       </div>
       <div className="bg-primary pb-5">
-        <Hero />
+        <KinHero/>
       </div>
 
       <div className="max-w-7xl px-4 mx-auto w-full">

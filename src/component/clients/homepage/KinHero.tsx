@@ -4,8 +4,8 @@ import { getTopFeaturedArticles } from '../../../utils/requests/articlesRequest'
 import { Link, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 
-interface HeroProps {}
-const Hero = ({}: HeroProps) => {
+interface KinHeroProps {}
+const KinHero = ({}: KinHeroProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -81,14 +81,14 @@ const Hero = ({}: HeroProps) => {
       <div className="w-full px-4 mx-auto max-w-7xl py-12 text-center">
         <div className="bg-blue-900/20 p-6 rounded-xl border border-blue-800">
           <h3 className="text-xl font-bold text-white mb-3">
-            Oops! Something went wrong
+            Oops! Habyeho ikibazo
           </h3>
           <p className="text-gray-300 mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
-            Retry
+            Ongera Ugerageze
           </button>
         </div>
       </div>
@@ -149,7 +149,7 @@ const Hero = ({}: HeroProps) => {
               </div>
               {index === 0 && (
                 <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  TRENDING
+                  IBIGEZWEHO
                 </div>
               )}
             </div>
@@ -158,7 +158,7 @@ const Hero = ({}: HeroProps) => {
       </div>
 
       <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-        Trending Stories
+        Inkuru Zigezweho
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {topFeaturedArticles.slice(2, 6).map((article) => (
@@ -211,7 +211,7 @@ const Hero = ({}: HeroProps) => {
           to="/news"
           className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
         >
-          Explore More Stories
+          Reba Inkuru Nyinshi
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 ml-2"
@@ -230,4 +230,4 @@ const Hero = ({}: HeroProps) => {
   );
 };
 
-export default Hero;
+export default KinHero;
