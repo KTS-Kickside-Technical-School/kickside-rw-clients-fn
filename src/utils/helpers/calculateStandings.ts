@@ -1,6 +1,7 @@
-
 export interface StandingsTeam {
     team: string;
+    teamId?: string; // Added team ID for reference
+    logo?: string;   // Added logo URL
     P: number; // Played
     W: number; // Wins
     D: number; // Draws
@@ -15,43 +16,70 @@ export const calculateStandings = (matches: any[]): StandingsTeam[] => {
     const standings: Record<string, StandingsTeam> = {};
 
     matches.forEach((m) => {
-        if (m.status !== 'finished') return; // Only finished matches count
+        if (m.status !== 'finished') return;
 
-        const home = m.homeTeam.name;
-        const away = m.awayTeam.name;
-        const homeScore = m.homeScore;
-        const awayScore = m.awayScore;
+        const homeScore = Number(m.homeScore) || 0;
+        const awayScore = Number(m.awayScore) || 0;
 
-        if (!standings[home]) standings[home] = { team: home, P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0 };
-        if (!standings[away]) standings[away] = { team: away, P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0 };
+        if (!m.homeTeam?._id || !m.awayTeam?._id ||
+            isNaN(homeScore) || isNaN(awayScore)) {
+            return;
+        }
 
-        standings[home].P += 1;
-        standings[away].P += 1;
+        const homeId = m.homeTeam._id;
+        const awayId = m.awayTeam._id;
+        const homeName = m.homeTeam.name;
+        const awayName = m.awayTeam.name;
+        const homeLogo = m.homeTeam.logo;
+        const awayLogo = m.awayTeam.logo;
 
-        standings[home].GF += homeScore;
-        standings[home].GA += awayScore;
-        standings[away].GF += awayScore;
-        standings[away].GA += homeScore;
+        if (!standings[homeId]) {
+            standings[homeId] = {
+                team: homeName,
+                teamId: homeId,
+                logo: homeLogo,
+                P: 0, W: 0, D: 0, L: 0,
+                GF: 0, GA: 0, GD: 0, Pts: 0
+            };
+        }
+        if (!standings[awayId]) {
+            standings[awayId] = {
+                team: awayName,
+                teamId: awayId,
+                logo: awayLogo,
+                P: 0, W: 0, D: 0, L: 0,
+                GF: 0, GA: 0, GD: 0, Pts: 0
+            };
+        }
 
-        standings[home].GD = standings[home].GF - standings[home].GA;
-        standings[away].GD = standings[away].GF - standings[away].GA;
+        standings[homeId].P += 1;
+        standings[awayId].P += 1;
+
+        standings[homeId].GF += homeScore;
+        standings[homeId].GA += awayScore;
+        standings[awayId].GF += awayScore;
+        standings[awayId].GA += homeScore;
+
+        standings[homeId].GD = standings[homeId].GF - standings[homeId].GA;
+        standings[awayId].GD = standings[awayId].GF - standings[awayId].GA;
 
         if (homeScore > awayScore) {
-            standings[home].W += 1;
-            standings[away].L += 1;
-            standings[home].Pts += 3;
+            standings[homeId].W += 1;
+            standings[awayId].L += 1;
+            standings[homeId].Pts += 3;
         } else if (homeScore < awayScore) {
-            standings[away].W += 1;
-            standings[home].L += 1;
-            standings[away].Pts += 3;
+            standings[awayId].W += 1;
+            standings[homeId].L += 1;
+            standings[awayId].Pts += 3;
         } else {
-            standings[home].D += 1;
-            standings[away].D += 1;
-            standings[home].Pts += 1;
-            standings[away].Pts += 1;
+            standings[homeId].D += 1;
+            standings[awayId].D += 1;
+            standings[homeId].Pts += 1;
+            standings[awayId].Pts += 1;
         }
     });
 
+    // Sort by Points → Goal Difference → Goals For
     return Object.values(standings).sort(
         (a, b) => b.Pts - a.Pts || b.GD - a.GD || b.GF - a.GF
     );

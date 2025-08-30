@@ -37,7 +37,7 @@ const SeasonsList = () => {
           return (
             <Link
               key={tournament._id}
-              to={`/match-center/fixtures/${encodeURIComponent(
+              to={`/en/match-center/fixtures/${encodeURIComponent(
                 tournament.slug
               )}`}
               className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-colors ${

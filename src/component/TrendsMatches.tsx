@@ -206,7 +206,6 @@ const TrendsMatches = () => {
                           </div>
                           
 
-                          {/* Teams & Scores */}
                           <div className="flex-1 flex flex-col gap-1 ml-2">
                             <div className="flex justify-between items-center">
                               <div className="flex items-center gap-1">

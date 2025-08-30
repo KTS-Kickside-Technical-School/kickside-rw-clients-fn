@@ -10,6 +10,7 @@ import { formatTournamentsTime } from '../utils/helpers/tournamentsHelpers';
 import SeasonsList from '../component/matches/SeasonsList';
 import MatchCard from '../component/matches/MatchCard';
 import StandingsTable from '../component/matches/StandingTable';
+import MainTopKSAd from '../component/ads/MainTopKSAd';
 
 const SeasonFixtures = () => {
   const { seasonSlug } = useParams();
@@ -24,7 +25,7 @@ const SeasonFixtures = () => {
     if (showLoading) setLoading(true);
     try {
       const response = await getTournamentMatches(seasonSlug || '');
-      console.log(response);
+
       if (response?.status === 200) {
         setMatches(response.data.matches || []);
         setSeason(response.data.season || {});
@@ -51,7 +52,10 @@ const SeasonFixtures = () => {
 
   const today = new Date().toDateString();
   const fixtures = matches.filter(
-    (m: any) => m.status === 'scheduled' || m.status === 'in_progress'
+    (m: any) =>
+      m.status === 'scheduled' ||
+      m.status === 'in_progress' ||
+      m.status === 'postponed'
   );
   const results = matches.filter((m: any) => m.status === 'finished');
 
@@ -79,16 +83,17 @@ const SeasonFixtures = () => {
     <>
       <SEO
         mainData={{
-          title: `${compName} - Kickside`,
-          description: `Tournament details`,
+          title: `${compName} Match Results & Fixtures - Kickside News`,
+          description: `${compName} Match Results & Fixtures Tournament details. ${country} ${founded}, Watch live from KICKSIDE News`,
         }}
       />
+      <MainTopKSAd />
       <Header />
 
       <main className="max-w-7xl mx-auto p-4 px-6 min-h-screen">
         <div className="flex items-center mb-6 text-sm text-gray-600 space-x-2">
           <Link
-            to="/match-center"
+            to="/en/match-center"
             className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
           >
             Scores
@@ -206,15 +211,6 @@ const SeasonFixtures = () => {
                             No results today
                           </div>
                         )}
-                      </div>
-
-                      <div>
-                        <h3 className="font-semibold text-gray-800 text-sm mb-2">
-                          Standings
-                        </h3>
-                        <div className="bg-gray-50 rounded-xl p-6 text-center text-gray-400 text-sm">
-                          Standings coming soon
-                        </div>
                       </div>
                     </div>
                   )}

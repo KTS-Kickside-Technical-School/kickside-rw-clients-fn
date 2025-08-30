@@ -83,7 +83,7 @@ const MatchCenter = () => {
       <main className="max-w-7xl mx-auto p-4 sm:px-6">
         <div className="flex items-center mb-4 text-xs text-gray-600 space-x-2">
           <Link
-            to="/match-center"
+            to="/en/match-center"
             className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
           >
             Scores
