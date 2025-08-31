@@ -79,7 +79,6 @@ export const calculateStandings = (matches: any[]): StandingsTeam[] => {
         }
     });
 
-    // Sort by Points → Goal Difference → Goals For
     return Object.values(standings).sort(
         (a, b) => b.Pts - a.Pts || b.GD - a.GD || b.GF - a.GF
     );

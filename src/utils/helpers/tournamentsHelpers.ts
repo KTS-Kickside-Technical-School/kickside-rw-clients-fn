@@ -156,3 +156,20 @@ export const formatDateDisplay = (date: any) => {
     }
 };
 
+export const formatDateOnly = (date: string | Date) => {
+    const d = new Date(date);
+    return d.toLocaleDateString('en-US', {
+        day: 'numeric',
+        month: 'short',
+    });
+};
+
+export const formatTimeOnly = (date: string | Date, use24Hour: boolean = false) => {
+    const d = new Date(date);
+    return d.toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: !use24Hour
+    });
+    // Returns: "5:00 PM" (default) or "17:00" (if use24Hour = true)
+};
