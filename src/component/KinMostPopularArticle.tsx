@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { iItemArticle } from "../utils/types/Article";
 
-const MostPopular = () => {
+const KinMostPopular = () => {
   const [data, setData] = useState<iItemArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -20,7 +20,7 @@ const MostPopular = () => {
       const response = await getPopularArticles();
       if (response?.data?.articles?.length) {
         const data = response.data.articles.filter(
-          (article: any) => article.article.language === "english"
+          (article: any) => article.article.language === "kinyarwanda"
         );
         setData(data);
       } else {
@@ -41,8 +41,8 @@ const MostPopular = () => {
       {" "}
       <div className="flex justify-between items-center mb-4 text-white">
         <div className="flex flex-col items-start">
-          <h1 className="text-3xl font-bold">The KS</h1>
-          <h1 className="text-3xl font-bold">TOPS</h1>
+          <h1 className="text-3xl font-bold">IZAREBWE</h1>
+          <h1 className="text-3xl font-bold">CYANE</h1>
         </div>
         <BsGraphUpArrow className="text-5xl text-blue-700 w-10" />
       </div>
@@ -82,4 +82,4 @@ const MostPopular = () => {
   );
 };
 
-export default MostPopular;
+export default KinMostPopular;

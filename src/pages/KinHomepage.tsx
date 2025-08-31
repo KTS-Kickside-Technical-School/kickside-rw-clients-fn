@@ -3,15 +3,14 @@ import React from "react";
 import SEO from "../utils/SEO";
 import Footer from "../component/Footer";
 import NewsLetter from "../component/Newsletter";
-import Hero from "../component/clients/homepage/Hero";
-import MostPopular from "../component/MostPopularArticle";
 import AdvertisementSection from "../component/AdvertisementSection";
-import HomeLatestNews from "../component/HomeLatestNews";
 import HomeProductsCategories from "../component/HomeProductsCategories";
 import TrendsMatches from "../component/TrendsMatches";
 import KinHeader from "../component/KinHeader";
 import KinMainTopKSAd from "../component/ads/KinMainTopKSAd";
 import KinHero from "../component/clients/homepage/KinHero";
+import KinHomeLatestNews from "../component/KinHomeLatestNews";
+import KinMostPopular from "../component/KinMostPopularArticle";
 
 const KinHomepage: React.FC = () => {
   return (
@@ -41,7 +40,7 @@ const KinHomepage: React.FC = () => {
       <div className="max-w-7xl px-4 mx-auto w-full">
         <div className="flex flex-col lg:flex-row gap-6 w-full">
           <div className="w-full lg:w-1/5 xl:w-2/10">
-            <HomeLatestNews />
+            <KinHomeLatestNews />
           </div>
 
           <div className="w-full lg:w-3/5 xl:w-6/10">
@@ -50,7 +49,7 @@ const KinHomepage: React.FC = () => {
           </div>
 
           <div className="w-full lg:w-1/5 xl:w-2/10 ">
-            <MostPopular />
+            <KinMostPopular />
             <div className="">
               <AdvertisementSection />
             </div>

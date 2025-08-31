@@ -4,7 +4,7 @@ import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
 import { getLatestCustomizedArticles } from '../utils/requests/articlesRequest';
 
-const HomeLatestNews: React.FC = () => {
+const KinHomeLatestNews: React.FC = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -15,9 +15,9 @@ const HomeLatestNews: React.FC = () => {
       try {
         const res = await getLatestCustomizedArticles();
         if (res?.data) {
-          const data = res.data
-          .filter((article: iArticleType) => article.language === "english")
-          setArticles(data);
+            const data = res.data
+            .filter((article: iArticleType) => article.language === "kinyarwanda")
+            setArticles(data);
         }
       } catch (error) {
         console.error('Error fetching articles:', error);
@@ -32,7 +32,7 @@ const HomeLatestNews: React.FC = () => {
   return (
     <div className="w-full mt-4">
       <h1 className="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
-        Latest news
+        Amakuru Aheruka
       </h1>
 
       <div className="space-y-4">
@@ -86,4 +86,4 @@ const HomeLatestNews: React.FC = () => {
   );
 };
 
-export default HomeLatestNews;
+export default KinHomeLatestNews;
