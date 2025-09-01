@@ -1,9 +1,6 @@
 import React from "react";
 
 import SEO from "../utils/SEO";
-import Footer from "../component/Footer";
-import NewsLetter from "../component/Newsletter";
-import AdvertisementSection from "../component/AdvertisementSection";
 import HomeProductsCategories from "../component/HomeProductsCategories";
 import TrendsMatches from "../component/TrendsMatches";
 import KinHeader from "../component/KinHeader";
@@ -11,6 +8,9 @@ import KinMainTopKSAd from "../component/ads/KinMainTopKSAd";
 import KinHero from "../component/clients/homepage/KinHero";
 import KinHomeLatestNews from "../component/KinHomeLatestNews";
 import KinMostPopular from "../component/KinMostPopularArticle";
+import KinAdvertisementSection from "../component/KinAdvertisementSection";
+import KinNewsLetter from "../component/KinNewsletter";
+import KinFooter from "../component/KinFooter";
 
 const KinHomepage: React.FC = () => {
   return (
@@ -51,17 +51,17 @@ const KinHomepage: React.FC = () => {
           <div className="w-full lg:w-1/5 xl:w-2/10 ">
             <KinMostPopular />
             <div className="">
-              <AdvertisementSection />
+              <KinAdvertisementSection />
             </div>
           </div>
         </div>
       </div>
 
       <div className="mt-5">
-        <NewsLetter />
+        <KinNewsLetter />
       </div>
 
-      <Footer />
+      <KinFooter />
     </>
   );
 };
