@@ -17,6 +17,7 @@ const SeasonsList = ({ onTournamentSelect }: SeasonsListProps) => {
   const fetchData = async () => {
     try {
       const response = await getLatestSeasons();
+
       if (response.status === 200) {
         setTournaments(response.data);
         setFilteredTournaments(response.data);

@@ -64,7 +64,6 @@ const SeasonFixtures = () => {
       }
     };
 
-    // Listen for hash changes
     window.addEventListener('hashchange', handleHashChange);
 
     return () => {
