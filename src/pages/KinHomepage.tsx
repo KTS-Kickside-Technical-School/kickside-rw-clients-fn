@@ -1,7 +1,6 @@
 import React from "react";
 
 import SEO from "../utils/SEO";
-import HomeProductsCategories from "../component/HomeProductsCategories";
 import TrendsMatches from "../component/TrendsMatches";
 import KinHeader from "../component/KinHeader";
 import KinMainTopKSAd from "../component/ads/KinMainTopKSAd";
