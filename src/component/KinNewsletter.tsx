@@ -20,7 +20,7 @@ const KinNewsLetter: React.FC = () => {
       setEmailError('');
     } else if (!isValidEmail(email)) {
       setEmailValid(false);
-      setEmailError('Invalid email format');
+      setEmailError('imeli ntabwo yuzuye');
     } else {
       setEmailValid(true);
       setEmailError('');
@@ -32,13 +32,13 @@ const KinNewsLetter: React.FC = () => {
     setFormMessage(null);
 
     if (!email.trim()) {
-      setFormMessage({ text: 'Please enter an email address.', type: 'error' });
+      setFormMessage({ text: 'Andika emeli yawe.', type: 'error' });
       return;
     }
 
     if (!isValidEmail(email)) {
       setFormMessage({
-        text: 'Please enter a valid email address.',
+        text: 'Andika emeli yawe ya nyayo.',
         type: 'error',
       });
       return;
@@ -49,18 +49,18 @@ const KinNewsLetter: React.FC = () => {
       const response = await subscribeToNewsLetter(email);
 
       if (response.status !== 201) {
-        throw new Error(response.message || 'Subscription failed');
+        throw new Error(response.message || 'Kwiyandikisha ntabwo bikunze');
       }
 
       setFormMessage({
-        text: 'Successfully subscribed to our newsletter!',
+        text: 'Kwiyandikisha byagenze neza!',
         type: 'success',
       });
       setEmail('');
     } catch (err) {
-      console.error('Error subscribing to newsletter:', err);
+      console.error('Habayemo ikibazo mu kwiyandikisha:', err);
       setFormMessage({
-        text: 'Subscription failed',
+        text: 'Kwiyandikisha ntabwo bikunze',
         type: 'error',
       });
     } finally {
@@ -98,7 +98,7 @@ const KinNewsLetter: React.FC = () => {
             <div className="w-full sm:w-2/3">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="andika emeli yawe"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={`w-full px-4 py-3 rounded-md bg-white text-gray-800 focus:outline-none transition-all border ${
@@ -122,7 +122,7 @@ const KinNewsLetter: React.FC = () => {
               className="w-full sm:w-1/3 px-6 py-3 bg-white text-blue-600 font-semibold hover:bg-gray-100 transition-all focus:ring-2 focus:ring-blue-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
               disabled={isLoading || !email.trim()}
             >
-              {isLoading ? 'Subscribing...' : 'Subscribe'}
+              {isLoading ? '...tegereza' : 'Iyandikishe'}
             </button>
           </form>
         </div>

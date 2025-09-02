@@ -20,7 +20,7 @@ const KinHomeLatestNews: React.FC = () => {
             setArticles(data);
         }
       } catch (error) {
-        console.error('Error fetching articles:', error);
+        console.error('habayemo ikibazo mukuzna inkuru:', error);
       } finally {
         setLoading(false);
       }

@@ -28,7 +28,7 @@ const KinMostPopular = () => {
       }
     } catch (error) {
       setHasError(true);
-      console.error("Error fetching popular articles:", error);
+      console.error("Habayemo ikibazo mukuzana inkuru:", error);
     } finally {
       setIsLoading(false);
     }

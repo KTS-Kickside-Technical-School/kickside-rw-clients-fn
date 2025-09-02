@@ -21,16 +21,16 @@ const KinHero = ({}: KinHeroProps) => {
         const res = await getTopFeaturedArticles();
         if (res?.status === 200) {
           const topFeaturedArticles = res.data.articles
-          .filter((article: iArticleType) => article.language === "english")
+          .filter((article: iArticleType) => article.language === "kinyarwanda")
           .slice(0, 6);
         
         setTopFeaturedArticles(topFeaturedArticles);
         } else {
-          setError('Failed to load articles. Please try again later.');
+          setError('ntabwo inkuru zabonetse,');
         }
       } catch (error) {
-        console.error('Error fetching top featured articles:', error);
-        setError('An error occurred while loading articles.');
+        console.error('habayemo ikibazo mukuzana inkuru:', error);
+        setError('habayemo ikibazo mukuzana unkuru.');
       } finally {
         setLoading(false);
       }
