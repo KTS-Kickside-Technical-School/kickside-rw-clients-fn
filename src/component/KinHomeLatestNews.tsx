@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
 import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
 import { getLatestCustomizedArticles } from '../utils/requests/articlesRequest';
