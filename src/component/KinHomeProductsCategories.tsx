@@ -18,23 +18,28 @@ const KinHomeProductsCategories = () => {
     const fetchArticles = async () => {
       setLoading(true);
       try {
-        const res = await getTOpWeeklyArticlesByCategories();
-
+        const res = await getTOpWeeklyArticlesByCategories('kinyarwanda');
+        console.log(res);
         if (res.status === 200) {
           setData(res.data || {});
-          const allData:CategoryArticles =res.data;
+          const allData: CategoryArticles = res.data;
           const filteredData = Object.fromEntries(
-            Object.entries(allData).map(([category, { weeklyTop, otherArticles }]) => [
-              category,
-              {
-                weeklyTop: weeklyTop.filter(article => article.language === "kinyarwanda"),
-                otherArticles: otherArticles.filter(article => article.language === "kinyarwanda"),
-              },
-            ])
+            Object.entries(allData).map(
+              ([category, { weeklyTop, otherArticles }]) => [
+                category,
+                {
+                  weeklyTop: weeklyTop.filter(
+                    (article) => article.language === 'kinyarwanda'
+                  ),
+                  otherArticles: otherArticles.filter(
+                    (article) => article.language === 'kinyarwanda'
+                  ),
+                },
+              ]
+            )
           );
-          
-          setData(filteredData|| {});
-          
+
+          setData(filteredData || {});
         }
       } catch (error) {
         console.error('Habayemo ikibazo mukuzana amakuru:', error);
@@ -127,7 +132,7 @@ const KinHomeProductsCategories = () => {
                     to={`/author/${article.author?.username}`}
                     className="text-gray-600 text-sm"
                   >
-                    By {article.author.firstName} {article.author.lastName}
+                    {article.author.firstName} {article.author.lastName}
                   </Link>
                 </div>
               </div>

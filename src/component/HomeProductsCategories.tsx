@@ -18,25 +18,29 @@ const HomeProductsCategories = () => {
     const fetchArticles = async () => {
       setLoading(true);
       try {
-        const res = await getTOpWeeklyArticlesByCategories();
+        const res = await getTOpWeeklyArticlesByCategories('english');
 
         if (res.status === 200) {
           setData(res.data || {});
-          console.log("home product categories",res.data);
-          const allData:CategoryArticles =res.data;
+          console.log('home product categories', res.data);
+          const allData: CategoryArticles = res.data;
           const filteredData = Object.fromEntries(
-            Object.entries(allData).map(([category, { weeklyTop, otherArticles }]) => [
-              category,
-              {
-                weeklyTop: weeklyTop.filter(article => article.language === "english"),
-                otherArticles: otherArticles.filter(article => article.language === "english"),
-              },
-            ])
+            Object.entries(allData).map(
+              ([category, { weeklyTop, otherArticles }]) => [
+                category,
+                {
+                  weeklyTop: weeklyTop.filter(
+                    (article) => article.language === 'english'
+                  ),
+                  otherArticles: otherArticles.filter(
+                    (article) => article.language === 'english'
+                  ),
+                },
+              ]
+            )
           );
-          
-          setData(filteredData|| {});
-          
 
+          setData(filteredData || {});
         }
       } catch (error) {
         console.error('Error fetching articles:', error);

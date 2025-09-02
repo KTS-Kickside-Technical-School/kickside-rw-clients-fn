@@ -18,14 +18,10 @@ const KinHero = ({}: KinHeroProps) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await getTopFeaturedArticles();
+        const res = await getTopFeaturedArticles('kinyarwanda');
         console.log(res);
         if (res?.status === 200) {
-          const topFeaturedArticles = res.data.articles
-            .filter(
-              (article: iArticleType) => article.language === 'kinyarwanda'
-            )
-            .slice(0, 6);
+          const topFeaturedArticles = res.data.articles;
 
           setTopFeaturedArticles(topFeaturedArticles);
         } else {
@@ -214,7 +210,7 @@ const KinHero = ({}: KinHeroProps) => {
           to="/news"
           className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
         >
-          Reba Inkuru Nyinshi
+          Izindi nkuru
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 ml-2"

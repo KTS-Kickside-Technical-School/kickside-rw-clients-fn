@@ -3,6 +3,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { iArticleType } from '../utils/types/Article';
 import { Link } from 'react-router-dom';
 import { getLatestCustomizedArticles } from '../utils/requests/articlesRequest';
+import { formatDistanceToNowKinyarwanda } from '../utils/helpers/articleHelpers';
 
 const KinHomeLatestNews: React.FC = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
@@ -15,9 +16,10 @@ const KinHomeLatestNews: React.FC = () => {
       try {
         const res = await getLatestCustomizedArticles();
         if (res?.data) {
-            const data = res.data
-            .filter((article: iArticleType) => article.language === "kinyarwanda")
-            setArticles(data);
+          const data = res.data.filter(
+            (article: iArticleType) => article.language === 'kinyarwanda'
+          );
+          setArticles(data);
         }
       } catch (error) {
         console.error('habayemo ikibazo mukuzna inkuru:', error);
@@ -32,7 +34,7 @@ const KinHomeLatestNews: React.FC = () => {
   return (
     <div className="w-full mt-4">
       <h1 className="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
-        Amakuru Aheruka
+        Inkuru ziheruka{' '}
       </h1>
 
       <div className="space-y-4">
@@ -73,9 +75,7 @@ const KinHomeLatestNews: React.FC = () => {
                       {item.title}
                     </h2>
                     <p className="text-xs text-gray-500 mt-1">
-                      {formatDistanceToNow(new Date(item.createdAt), {
-                        addSuffix: true,
-                      })}
+                      {formatDistanceToNowKinyarwanda(new Date(item.createdAt))}
                     </p>
                   </div>
                 </div>

@@ -18,13 +18,11 @@ const Hero = ({}: HeroProps) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await getTopFeaturedArticles();
+        const res = await getTopFeaturedArticles('english');
         if (res?.status === 200) {
-          const topFeaturedArticles = res.data.articles
-          .filter((article: iArticleType) => article.language === "english")
-          .slice(0, 6);
-        
-        setTopFeaturedArticles(topFeaturedArticles);
+          const topFeaturedArticles = res.data.articles;
+
+          setTopFeaturedArticles(topFeaturedArticles);
         } else {
           setError('Failed to load articles. Please try again later.');
         }

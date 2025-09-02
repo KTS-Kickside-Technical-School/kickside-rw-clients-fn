@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import MainArticles from '../component/MainArticles';
-import Header from '../component/Header';
 import LatestNews from '../component/LatestByCategory';
 import Footer from '../component/Footer';
 import { useParams } from 'react-router-dom';
@@ -13,8 +12,9 @@ import NewsLetter from '../component/Newsletter';
 import { iArticleType } from '../utils/types/Article';
 import SEO from '../utils/SEO';
 import MainTopKSAd from '../component/ads/MainTopKSAd';
+import KinHeader from '../component/KinHeader';
 
-const CategoryPage: React.FC = () => {
+const KinCategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
   const [articles, setArticles] = useState<iArticleType[]>([]);
   const [publishedArticles, setPublishedArticles] = useState<iArticleType[]>(
@@ -62,20 +62,23 @@ const CategoryPage: React.FC = () => {
     <>
       <SEO
         mainData={{
-          title: `All Trending ${categoryName} - Kickside News`,
+          title: `${categoryName}, Amakuru agezweho, inkuru zishyushye zijyanya na ${categoryName} = Kickside News`,
           type: 'article',
         }}
         canonicalUrl={`https://www.kickside.rw/category/${categoryName}`}
       />
       <MainTopKSAd />
-      <Header />
+      <KinHeader />
       <div className="w-full px-4 mx-auto max-w-7xl">
         <div className="mx-auto">
-          <MainArticles
-            loading={loading}
-            articles={articles.slice(0, 2)}
-            title={`Trending in ${categoryName}`}
-          />
+          {articles.length > 0 && (
+            <MainArticles
+              loading={loading}
+              articles={articles.slice(0, 2)}
+              title={`${categoryName} `}
+            />
+          )}
+
           {articles.length > 4 && (
             <SubMainArticles
               title={''}
@@ -86,14 +89,14 @@ const CategoryPage: React.FC = () => {
           <div className="px-4">
             {articles.length > 12 && (
               <LatestNews
-                title={`Latest in ${categoryName}`}
+                title={`Ibigezweho ${categoryName}`}
                 articles={articles.slice(6, 13)}
                 loading={loading}
               />
             )}
             {articles.length <= 0 && !loading && (
               <LatestNews
-                title={`Latest articles`}
+                title={`Inkuru ziheruka`}
                 articles={publishedArticles.slice(0, 20)}
                 loading={loading}
               />
@@ -123,4 +126,4 @@ const CategoryPage: React.FC = () => {
   );
 };
 
-export default CategoryPage;
+export default KinCategoryPage;

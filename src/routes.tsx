@@ -14,6 +14,9 @@ import KinHomepage from './pages/KinHomepage';
 import KinNotfound from './pages/KinNotfound';
 import MatchDetails from './pages/MatchDetails';
 import MatchCenterLayout from './component/matches/MatchCenterLayout';
+import KinNews from './pages/KinNews';
+import KinArticleDetails from './pages/KinArticleDetails';
+import KinCategoryPage from './pages/KinCategoryPage';
 
 const AppRouter = () => {
   return (
@@ -39,19 +42,16 @@ const AppRouter = () => {
 
       <Route path="/">
         <Route index element={<KinHomepage />} />
-        {/* <Route path="category/:categoryName" element={<CategoryPage />} />
-        <Route path="contactus" element={<ContactUs />} />
-        <Route path="author/:username" element={<AuthorProfile />} />
-        <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} />
+        <Route path="category/:categoryName" element={<KinCategoryPage />} />
+        {/* <Route path="contactus" element={<ContactUs />} /> */}
+        {/* <Route path="author/:username" element={<AuthorProfile />} /> */}
+        {/* <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} /> */}
         <Route path="news">
-          <Route index element={<News />} />
-          <Route path="search" element={<SearchResults />} />
-          <Route path=":slug" element={<ArticleDetails />} />
+          <Route index element={<KinNews />} />
+          {/* <Route path="search" element={<SearchResults />} /> */}
+          <Route path=":slug" element={<KinArticleDetails />} />
         </Route>
-        <Route path="match-center">
-          <Route index element={<MatchCenter />} />
-          <Route path="fixtures/:seasonSlug" element={<SeasonFixtures />} />
-        </Route> */}
+
         <Route path="*" element={<KinNotfound />} />
       </Route>
     </Routes>

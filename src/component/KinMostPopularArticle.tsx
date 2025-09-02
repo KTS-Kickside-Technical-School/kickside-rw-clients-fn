@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { BsGraphUpArrow } from "react-icons/bs";
-import { getPopularArticles } from "../utils/requests/articlesRequest";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { iItemArticle } from "../utils/types/Article";
+import { useEffect, useState } from 'react';
+import { BsGraphUpArrow } from 'react-icons/bs';
+import { getPopularArticles } from '../utils/requests/articlesRequest';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { iItemArticle } from '../utils/types/Article';
 
 const KinMostPopular = () => {
   const [data, setData] = useState<iItemArticle[]>([]);
@@ -17,18 +17,16 @@ const KinMostPopular = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await getPopularArticles();
+      const response = await getPopularArticles('kinyarwanda');
       if (response?.data?.articles?.length) {
-        const data = response.data.articles.filter(
-          (article: any) => article.article.language === "kinyarwanda"
-        );
+        const data = response.data.articles;
         setData(data);
       } else {
         setHasError(true);
       }
     } catch (error) {
       setHasError(true);
-      console.error("Habayemo ikibazo mukuzana inkuru:", error);
+      console.error('Habayemo ikibazo mukuzana inkuru:', error);
     } finally {
       setIsLoading(false);
     }
@@ -37,11 +35,11 @@ const KinMostPopular = () => {
   if (hasError || (!isLoading && data.length === 0)) return null;
 
   return (
-    <div className="bg-[#14D163] p-4 mt-8 rounded shadow w-full">
-      {" "}
+    <div className="bg-blue-500 p-4 mt-8 rounded shadow w-full">
+      {' '}
       <div className="flex justify-between items-center mb-4 text-white">
         <div className="flex flex-col items-start">
-          <h1 className="text-3xl font-bold">IZAREBWE</h1>
+          <h1 className="text-3xl font-bold">Izikunzwe</h1>
           <h1 className="text-3xl font-bold">CYANE</h1>
         </div>
         <BsGraphUpArrow className="text-5xl text-blue-700 w-10" />
