@@ -19,18 +19,21 @@ const KinHero = ({}: KinHeroProps) => {
       setError(null);
       try {
         const res = await getTopFeaturedArticles();
+        console.log(res);
         if (res?.status === 200) {
           const topFeaturedArticles = res.data.articles
-          .filter((article: iArticleType) => article.language === "kinyarwanda")
-          .slice(0, 6);
-        
-        setTopFeaturedArticles(topFeaturedArticles);
+            .filter(
+              (article: iArticleType) => article.language === 'kinyarwanda'
+            )
+            .slice(0, 6);
+
+          setTopFeaturedArticles(topFeaturedArticles);
         } else {
-          setError('ntabwo inkuru zabonetse,');
+          setError('Ntabwo inkuru zabonetse,');
         }
       } catch (error) {
-        console.error('habayemo ikibazo mukuzana inkuru:', error);
-        setError('habayemo ikibazo mukuzana unkuru.');
+        console.error('Habayemo ikibazo mukuzana inkuru:', error);
+        setError('Habayemo ikibazo mukuzana unkuru.');
       } finally {
         setLoading(false);
       }
