@@ -101,7 +101,7 @@ const Hero = ({}: HeroProps) => {
         {topFeaturedArticles.slice(0, 2).map((article, index) => (
           <div
             key={article._id}
-            onClick={() => navigate(`/news/${article.slug}`)}
+            onClick={() => navigate(`/en/news/${article.slug}`)}
             className={`flex-1 relative group cursor-pointer rounded-xl overflow-hidden transition-all hover:shadow-lg ${
               index === 0
                 ? 'bg-blue-900/10 border border-blue-800/50'
@@ -164,7 +164,7 @@ const Hero = ({}: HeroProps) => {
         {topFeaturedArticles.slice(2, 6).map((article) => (
           <div
             key={article._id}
-            onClick={() => navigate(`news/${article.slug}`)}
+            onClick={() => navigate(`/en/news/${article.slug}`)}
             className="group cursor-pointer"
           >
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3 bg-blue-900/10 border border-blue-800/30">
@@ -208,7 +208,7 @@ const Hero = ({}: HeroProps) => {
 
       <div className="text-center mb-12">
         <Link
-          to="news"
+          to="/en/news"
           className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
         >
           Explore More Stories

@@ -52,7 +52,7 @@ const HomeLatestNews: React.FC = () => {
             ))
           : articles?.map((item, index) => (
               <Link
-                to={`/news/${item.slug}`}
+                to={`/en/news/${item.slug}`}
                 key={item._id || index}
                 className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
               >

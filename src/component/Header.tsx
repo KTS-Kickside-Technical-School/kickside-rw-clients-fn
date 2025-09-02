@@ -119,9 +119,9 @@ const Header = () => {
                 (cat) => (
                   <Link
                     key={cat}
-                    to={`/category/${cat}`}
+                    to={`/en/category/${cat}`}
                     className={`block px-3 py-2 rounded-md text-lg transition ${
-                      isActiveLink(`/category/${cat}`)
+                      isActiveLink(`/en/category/${cat}`)
                         ? 'bg-blue-600 text-white font-semibold'
                         : 'text-gray-300 hover:bg-blue-500 hover:text-white'
                     }`}
@@ -132,7 +132,7 @@ const Header = () => {
                 )
               )}
               <Link
-                to="/match-center"
+                to="/en/match-center"
                 className={`block px-3 py-2 rounded-md text-lg transition ${
                   isActiveLink('/match-center')
                     ? 'bg-blue-600 text-white font-semibold'

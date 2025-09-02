@@ -11,6 +11,7 @@ import KinMostPopular from "../component/KinMostPopularArticle";
 import KinAdvertisementSection from "../component/KinAdvertisementSection";
 import KinNewsLetter from "../component/KinNewsletter";
 import KinFooter from "../component/KinFooter";
+import KinHomeProductsCategories from "../component/KinHomeProductsCategories";
 
 const KinHomepage: React.FC = () => {
   return (
@@ -45,7 +46,7 @@ const KinHomepage: React.FC = () => {
 
           <div className="w-full lg:w-3/5 xl:w-6/10">
             <TrendsMatches />
-            <HomeProductsCategories />
+            <KinHomeProductsCategories />
           </div>
 
           <div className="w-full lg:w-1/5 xl:w-2/10 ">

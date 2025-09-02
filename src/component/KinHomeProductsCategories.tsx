@@ -10,7 +10,7 @@ interface CategoryArticles {
   };
 }
 
-const HomeProductsCategories = () => {
+const KinHomeProductsCategories = () => {
   const [data, setData] = useState<CategoryArticles>({});
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -22,24 +22,22 @@ const HomeProductsCategories = () => {
 
         if (res.status === 200) {
           setData(res.data || {});
-          console.log("home product categories",res.data);
           const allData:CategoryArticles =res.data;
           const filteredData = Object.fromEntries(
             Object.entries(allData).map(([category, { weeklyTop, otherArticles }]) => [
               category,
               {
-                weeklyTop: weeklyTop.filter(article => article.language === "english"),
-                otherArticles: otherArticles.filter(article => article.language === "english"),
+                weeklyTop: weeklyTop.filter(article => article.language === "kinyarwanda"),
+                otherArticles: otherArticles.filter(article => article.language === "kinyarwanda"),
               },
             ])
           );
           
           setData(filteredData|| {});
           
-
         }
       } catch (error) {
-        console.error('Error fetching articles:', error);
+        console.error('Habayemo ikibazo mukuzana amakuru:', error);
       } finally {
         setLoading(false);
       }
@@ -101,7 +99,7 @@ const HomeProductsCategories = () => {
                 className="border rounded-lg overflow-hidden shadow-md"
               >
                 <Link
-                  to={`/en/news/${article.slug}`}
+                  to={`/news/${article.slug}`}
                   className="aspect-[4/3] rounded-xl overflow-hidden mb-3"
                 >
                   <img
@@ -112,21 +110,21 @@ const HomeProductsCategories = () => {
                 </Link>
                 <div className="p-4">
                   <Link
-                    to={`/en/category/${article.category}`}
+                    to={`/category/${article.category}`}
                     className="text-sm text-blue-600 font-medium"
                   >
                     {article.category}
                   </Link>
                   <h3>
                     <Link
-                      to={`/en/news/${article.slug}`}
+                      to={`/news/${article.slug}`}
                       className="text-lg font-bold my-2"
                     >
                       {article.title}
                     </Link>
                   </h3>
                   <Link
-                    to={`/en/author/${article.author?.username}`}
+                    to={`/author/${article.author?.username}`}
                     className="text-gray-600 text-sm"
                   >
                     By {article.author.firstName} {article.author.lastName}
@@ -144,7 +142,7 @@ const HomeProductsCategories = () => {
               >
                 <h4 className="font-semibold text-md mb-2">
                   <Link
-                    to={`/en/news/${article.slug}`}
+                    to={`/news/${article.slug}`}
                     className="text-lg font-bold my-2"
                   >
                     {article.title}
@@ -164,4 +162,4 @@ const HomeProductsCategories = () => {
   );
 };
 
-export default HomeProductsCategories;
+export default KinHomeProductsCategories;
