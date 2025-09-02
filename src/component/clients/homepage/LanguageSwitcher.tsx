@@ -39,26 +39,24 @@ const LanguageSwitcher: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const currentLangData = languages.find(
-    (lang) => lang.value === currentLanguage
-  );
-
   return (
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         type="button"
-        className="inline-flex items-center justify-between w-52 px-4 py-3 text-sm font-medium bg-white border border-gray-200 rounded-xl shadow-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200"
+        className="inline-flex items-center justify-between w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-offset-1 transition-all duration-150 md:px-4 md:py-2.5 md:rounded-xl md:w-48 lg:w-52"
         id="language-menu"
         aria-expanded={isOpen}
         aria-haspopup="true"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center">
-          <Globe className="w-4 h-4 mr-2 text-gray-500" />
-          <span className="text-gray-700">{currentLangData?.label}</span>
+          <Globe className="w-3.5 h-3.5 mr-1.5 text-gray-500 md:w-4 md:h-4 md:mr-2" />
+          <span className="text-gray-700 text-xs md:text-sm">
+            {currentLanguage === 'eng' ? 'ENG' : 'KIN'}
+          </span>
         </div>
         <ChevronDown
-          className={`w-4 h-4 ml-2 text-gray-400 transition-transform duration-200 ${
+          className={`w-3.5 h-3.5 ml-1 text-gray-400 transition-transform duration-150 md:w-4 md:h-4 md:ml-2 ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
@@ -66,16 +64,16 @@ const LanguageSwitcher: React.FC = () => {
 
       {isOpen && (
         <div
-          className="absolute right-0 z-50 w-56 mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-opacity duration-200"
+          className="absolute right-0 z-50 w-48 mt-1 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-opacity duration-150 md:w-56 md:rounded-xl md:mt-2"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="language-menu"
         >
-          <div className="py-2">
+          <div className="py-1 md:py-2">
             {languages.map((language) => (
               <button
                 key={language.value}
-                className={`flex items-center w-full px-4 py-3 text-sm text-left transition-colors duration-150 ${
+                className={`flex items-center w-full px-3 py-2 text-xs text-left transition-colors duration-150 md:px-4 md:py-2.5 md:text-sm ${
                   currentLanguage === language.value
                     ? 'bg-blue-50 text-blue-700'
                     : 'text-gray-700 hover:bg-gray-50'
@@ -83,10 +81,10 @@ const LanguageSwitcher: React.FC = () => {
                 role="menuitem"
                 onClick={() => handleLanguageChange(language.value)}
               >
-                <span className="text-lg mr-3">{language.flag}</span>
-                <span className="flex-1">{language.label}</span>
+                <span className="text-base mr-2 md:text-lg md:mr-3">{language.flag}</span>
+                <span className="flex-1">{language.value === 'eng' ? 'English' : 'Kinyarwanda'}</span>
                 {currentLanguage === language.value && (
-                  <span className="ml-2 text-blue-500">✓</span>
+                  <span className="ml-1 text-blue-500 text-xs md:ml-2 md:text-sm">✓</span>
                 )}
               </button>
             ))}

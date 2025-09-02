@@ -44,3 +44,13 @@ export const getTournamentMatches = async (slug: string) => {
         return handleError(error);
     }
 };
+
+export const getSingleMatch = async (slug: string) => {
+    try {
+        const encodedSlug = encodeURIComponent(slug);
+        const response = await axiosInstance.get(`/api/tr/full-match/${encodedSlug}`);
+        return response.data;
+    } catch (error) {
+        return handleError(error);
+    }
+}

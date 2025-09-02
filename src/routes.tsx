@@ -12,6 +12,8 @@ import MatchCenter from './pages/MatchCenter';
 import SeasonFixtures from './pages/SeasonFixtures';
 import KinHomepage from './pages/KinHomepage';
 import KinNotfound from './pages/KinNotfound';
+import MatchDetails from './pages/MatchDetails';
+import MatchCenterLayout from './component/matches/MatchCenterLayout';
 
 const AppRouter = () => {
   return (
@@ -27,9 +29,10 @@ const AppRouter = () => {
           <Route path="search" element={<SearchResults />} />
           <Route path=":slug" element={<ArticleDetails />} />
         </Route>
-        <Route path="match-center">
+        <Route element={<MatchCenterLayout />} path="match-center">
           <Route index element={<MatchCenter />} />
           <Route path="fixtures/:seasonSlug" element={<SeasonFixtures />} />
+          <Route path="match-details/:slug" element={<MatchDetails />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Route>

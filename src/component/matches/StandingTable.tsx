@@ -22,13 +22,11 @@ const StandingsTable: React.FC<StandingsTableProps> = ({
 }) => {
   let standings: StandingsTeam[] = calculateStandings(matches);
 
-  // Map teamId -> team object
   const teamIdToTeam: Record<string, Team> = {};
   allTeams.forEach((t) => {
     teamIdToTeam[t._id] = t;
   });
 
-  // Include missing teams with zero stats
   const playedTeams = standings.map((t) => t.team);
   const missingTeams = allTeams
     .filter((t) => !playedTeams.includes(t.name))
@@ -47,7 +45,6 @@ const StandingsTable: React.FC<StandingsTableProps> = ({
 
   standings = [...standings, ...missingTeams];
 
-  // Sort by points, GD, then alphabetically
   standings.sort((a, b) => {
     if (b.Pts !== a.Pts) return b.Pts - a.Pts;
     if (b.GD !== a.GD) return b.GD - a.GD;
