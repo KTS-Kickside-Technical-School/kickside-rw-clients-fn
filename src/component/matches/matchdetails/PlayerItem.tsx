@@ -1,5 +1,4 @@
 const PlayerItem = ({ player, isHomeTeam }: any) => {
-  console.log(player.jerseyNumber);
   return (
     <div
       className={`flex items-center py-2 px-3 rounded-lg hover:bg-gray-50 ${

@@ -1,8 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
-import AdvertisementSection from '../component/AdvertisementSection';
 import Footer from '../component/Footer';
 import Header from '../component/Header';
-import MostPopular from '../component/MostPopularArticle';
 import SEO from '../utils/SEO';
 import { iArticleType } from '../utils/types/Article';
 import { getUserSearch } from '../utils/requests/articlesRequest';

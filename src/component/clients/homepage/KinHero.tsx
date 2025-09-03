@@ -20,7 +20,6 @@ const KinHero = ({}: KinHeroProps) => {
       setError(null);
       try {
         const res = await getTopFeaturedArticles('kinyarwanda');
-        console.log(res);
         if (res?.status === 200) {
           const topFeaturedArticles = res.data.articles;
 

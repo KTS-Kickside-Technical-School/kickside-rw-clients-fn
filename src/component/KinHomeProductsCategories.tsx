@@ -19,7 +19,6 @@ const KinHomeProductsCategories = () => {
       setLoading(true);
       try {
         const res = await getTOpWeeklyArticlesByCategories('kinyarwanda');
-        console.log(res);
         if (res.status === 200) {
           setData(res.data || {});
           const allData: CategoryArticles = res.data;

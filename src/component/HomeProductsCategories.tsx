@@ -22,7 +22,6 @@ const HomeProductsCategories = () => {
 
         if (res.status === 200) {
           setData(res.data || {});
-          console.log('home product categories', res.data);
           const allData: CategoryArticles = res.data;
           const filteredData = Object.fromEntries(
             Object.entries(allData).map(

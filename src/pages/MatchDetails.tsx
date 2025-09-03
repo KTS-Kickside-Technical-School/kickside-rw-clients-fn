@@ -36,7 +36,6 @@ const MatchDetails = () => {
         setMatch(response.data.match || {});
         setEvents(response.data.matchActivities || []);
         setPlayers(response.data.players || {});
-        console.log(players);
       } else {
         throw new Error('Failed to fetch data');
       }

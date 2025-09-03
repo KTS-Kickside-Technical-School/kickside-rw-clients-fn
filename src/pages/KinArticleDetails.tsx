@@ -56,7 +56,6 @@ const KinArticleDetails: React.FC = () => {
       try {
         const response = await getSingleArticle(slug);
         setArticle(response.data.article);
-        console.log(response.data.article);
         setComments(response.data.comments);
         setArticles(response.data.related);
       } catch (err) {

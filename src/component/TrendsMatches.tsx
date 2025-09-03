@@ -26,7 +26,6 @@ const TrendsMatches = () => {
     const fetchData = async () => {
       try {
         const response = await getHomepageMatches();
-        console.log(response);
         if (response.status === 200) {
           setTournaments(response.data);
 
