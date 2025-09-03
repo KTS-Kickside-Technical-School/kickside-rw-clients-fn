@@ -17,6 +17,7 @@ import MatchCenterLayout from './component/matches/MatchCenterLayout';
 import KinNews from './pages/KinNews';
 import KinArticleDetails from './pages/KinArticleDetails';
 import KinCategoryPage from './pages/KinCategoryPage';
+import KinAuthorsProfile from './pages/KinAuthorsProfile';
 
 const AppRouter = () => {
   return (
@@ -44,7 +45,7 @@ const AppRouter = () => {
         <Route index element={<KinHomepage />} />
         <Route path="category/:categoryName" element={<KinCategoryPage />} />
         {/* <Route path="contactus" element={<ContactUs />} /> */}
-        {/* <Route path="author/:username" element={<AuthorProfile />} /> */}
+        <Route path="author/:username" element={<KinAuthorsProfile />} />
         {/* <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} /> */}
         <Route path="news">
           <Route index element={<KinNews />} />

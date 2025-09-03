@@ -67,7 +67,7 @@ const MostPopular = () => {
             >
               <span className="inline-block w-4 h-2 bg-white mr-2 mt-1"></span>
               <Link
-                to={`/news/${item.article.slug}`}
+                to={`/en/news/${item.article.slug}`}
                 className="text-white hover:underline text-md line-clamp-3"
               >
                 {item.article.title}

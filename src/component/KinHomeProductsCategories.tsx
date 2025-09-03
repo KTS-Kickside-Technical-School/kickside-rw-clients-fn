@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getTOpWeeklyArticlesByCategories } from '../utils/requests/articlesRequest';
 import { Link } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
 import { formatDistanceToNowKinyarwanda } from '../utils/helpers/articleHelpers';
 
 interface CategoryArticles {

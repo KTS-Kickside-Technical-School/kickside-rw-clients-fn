@@ -56,6 +56,7 @@ const ArticleDetails: React.FC = () => {
       try {
         const response = await getSingleArticle(slug);
         setArticle(response.data.article);
+        console.log(response.data.article);
         setComments(response.data.comments);
         setArticles(response.data.related);
       } catch (err) {
@@ -298,7 +299,7 @@ const ArticleDetails: React.FC = () => {
                 {article?.author?.bio || 'Passionate journalist'}
               </div>
               <Link
-                to={`/author/${article?.author?.username}`}
+                to={`/en/author/${article?.author?.username}`}
                 className="font-bold text-grayac text-sm"
               >
                 View profile

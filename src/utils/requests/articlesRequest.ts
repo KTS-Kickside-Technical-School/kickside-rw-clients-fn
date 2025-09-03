@@ -67,9 +67,9 @@ export const postComment = async (data: iComment) => {
 };
 
 
-export const getAuthorsProfile = async (username: string) => {
+export const getAuthorsProfile = async (username: string, language: any) => {
   try {
-    const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}`);
+    const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}?language=${language}`);
     return response.data
   } catch (error) {
     return handleError(error)

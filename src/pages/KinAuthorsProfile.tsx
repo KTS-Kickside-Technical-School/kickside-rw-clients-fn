@@ -6,8 +6,6 @@ import Header from '../component/Header';
 import Footer from '../component/Footer';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
-import AdvertisementSection from '../component/AdvertisementSection';
-import MostPopular from '../component/MostPopularArticle';
 import { toast } from 'react-toastify';
 import { getAuthorsProfile } from '../utils/requests/articlesRequest';
 import Avatar from '/avatar.svg';
@@ -18,8 +16,10 @@ import MainTopKSAd from '../component/ads/MainTopKSAd';
 import { FiHome } from 'react-icons/fi';
 import { iAuthor } from '../utils/types/User';
 import { iArticleType } from '../utils/types/Article';
+import KinAdvertisementSection from '../component/KinAdvertisementSection';
+import KinMostPopular from '../component/KinMostPopularArticle';
 
-const AuthorProfile: React.FC = () => {
+const KinAuthorsProfile: React.FC = () => {
   const { username } = useParams<{ username: string }>();
   const [loading, setLoading] = useState(true);
   const [author, setAuthor] = useState<iAuthor | null>(null);
@@ -27,13 +27,13 @@ const AuthorProfile: React.FC = () => {
   const [otherJournalists, setOtherJournalists] = useState<iAuthor[]>([]);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const articlesPerPage = 10;
+  const articlesPerPage = 50;
 
   useEffect(() => {
     const fetchAuthorProfile = async () => {
       try {
         setLoading(true);
-        const response = await getAuthorsProfile(username || '', 'english');
+        const response = await getAuthorsProfile(username || '', 'kinyarwanda');
         if (response.status === 200) {
           setAuthor(response.data.author);
           setArticles(response.data.articles);
@@ -145,7 +145,7 @@ const AuthorProfile: React.FC = () => {
                   )}
                   <div className="text-gray-700 italic flex items-center">
                     <PiArticleNyTimes className="mr-2" />
-                    {articles.length} articles published
+                    Nanditse inkuru {articles.length}
                   </div>
                 </div>
               </div>
@@ -154,7 +154,7 @@ const AuthorProfile: React.FC = () => {
                   {currentArticles.length > 0 && (
                     <div>
                       <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        My Articles
+                        Inkuru nanditse
                       </h2>
                       <div className="space-y-4">
                         {loading
@@ -251,8 +251,8 @@ const AuthorProfile: React.FC = () => {
                 </div>
                 <aside className="w-full lg:w-1/4 space-y-6">
                   {' '}
-                  <AdvertisementSection />
-                  <MostPopular />
+                  <KinAdvertisementSection />
+                  <KinMostPopular />
                 </aside>
               </section>
             </>
@@ -264,4 +264,4 @@ const AuthorProfile: React.FC = () => {
   );
 };
 
-export default AuthorProfile;
+export default KinAuthorsProfile;
