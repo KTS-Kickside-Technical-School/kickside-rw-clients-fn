@@ -9,8 +9,10 @@ import { getUserSearch } from '../utils/requests/articlesRequest';
 import { useEffect, useState, useMemo } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import MainTopKSAd from '../component/ads/MainTopKSAd';
+import KinAdvertisementSection from '../component/KinAdvertisementSection';
+import KinMostPopular from '../component/KinMostPopularArticle';
 
-const SearchResults = () => {
+const KinSearchResults = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -25,7 +27,7 @@ const SearchResults = () => {
   const fetchArticles = async (page: number) => {
     setLoading(true);
     try {
-      const res = await getUserSearch(query, page, 30, 'english');
+      const res = await getUserSearch(query, page, 30,"kinyarwanda");
       setArticles(res?.articles || []);
       setTotalPages(res?.totalPages || 1);
       setCurrentPage(res?.page || 1);
@@ -49,7 +51,7 @@ const SearchResults = () => {
     <>
       <SEO
         mainData={{
-          title: `Search results for ${query} | Kickside Rw News`,
+          title: `Inkuru bijyanye na ${query} - Kickside Rw News`,
           description:
             'Kickside is Rwanda’s leading digital newspaper covering tech, sports, entertainment, and business.',
           author: 'Kickside Rwanda',
@@ -67,7 +69,7 @@ const SearchResults = () => {
           <div className="w-full lg:w-4/5 xl:w-8/10">
             <div className="w-full mt-4">
               <h1 className="text-2xl md:text-3xl font-bold text-blue-600 mb-4">
-                Search results for "{query || 'All articles'}"
+                Inkuru bijyanye na "{query || 'All articles'}"
               </h1>
 
               <div className="space-y-4">
@@ -119,13 +121,13 @@ const SearchResults = () => {
               </div>
 
               {totalPages > 1 && (
-                <div className="flex justify-center mt-6 space-x-2">
+                <div className="flex justify-center mt-6 space-x-2 pb-6">
                   <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
                   >
-                    Prev
+                    Ibibanza
                   </button>
                   {Array.from({ length: totalPages }, (_, idx) => (
                     <button
@@ -145,7 +147,7 @@ const SearchResults = () => {
                     disabled={currentPage === totalPages}
                     className="px-3 py-1 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 disabled:opacity-50"
                   >
-                    Next
+                    Ibikurikira
                   </button>
                 </div>
               )}
@@ -153,8 +155,8 @@ const SearchResults = () => {
           </div>
 
           <div className="w-full lg:w-1/5 xl:w-2/10 mb-4">
-            <MostPopular />
-            <AdvertisementSection />
+            <KinMostPopular />
+            <KinAdvertisementSection />
           </div>
         </div>
       </div>
@@ -163,4 +165,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default KinSearchResults;

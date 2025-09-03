@@ -120,9 +120,9 @@ export const getTOpWeeklyArticlesByCategories = async (language: any) => {
   }
 }
 
-export const getUserSearch = async (query: string, page = 1, limit = 35) => {
+export const getUserSearch = async (query: string, page = 1, limit = 35, language: any) => {
   try {
-    const response = await axiosInstance.get(`/api/articles/user-search?query=${query}&page=${page}&limit=${limit}`);
+    const response = await axiosInstance.get(`/api/articles/user-search?query=${query}&page=${page}&limit=${limit}&language=${language}`);
     return response.data
   } catch (error) {
     return handleError(error)

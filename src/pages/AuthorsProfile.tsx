@@ -87,7 +87,7 @@ const AuthorProfile: React.FC = () => {
                 your fault, our bad.
               </p>
               <Link
-                to={'/'}
+                to={'/en'}
                 className="flex items-center px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition"
               >
                 <FiHome className="mr-2" />

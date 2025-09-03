@@ -80,18 +80,18 @@ const KinAuthorsProfile: React.FC = () => {
             <div className="flex flex-col items-center justify-center min-h-[700px] bg-gray-100">
               <h1 className="text-6xl font-bold text-indigo-500 mb-4">404</h1>
               <h2 className="text-2xl font-semibold text-gray-700 mb-4">
-                Oops! Missing profile
+                Oops! Umwanditsi ntiyabonetse
               </h2>
               <p className="text-gray-500 mb-6 text-center max-w-md">
-                The author you are looking is not found. Don't worry it's not
-                your fault, our bad.
+                Umwanditsi mwashaka ntago yabonetse, niba ubutumwa buje
+                kubw'ikosa mwahamagara ubufasha.
               </p>
               <Link
                 to={'/'}
                 className="flex items-center px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition"
               >
                 <FiHome className="mr-2" />
-                Go to Homepage
+                Subira ahabanza
               </Link>
             </div>
           ) : (

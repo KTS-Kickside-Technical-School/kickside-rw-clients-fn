@@ -18,6 +18,7 @@ import KinNews from './pages/KinNews';
 import KinArticleDetails from './pages/KinArticleDetails';
 import KinCategoryPage from './pages/KinCategoryPage';
 import KinAuthorsProfile from './pages/KinAuthorsProfile';
+import KinSearchResults from './pages/KinSearchResults';
 
 const AppRouter = () => {
   return (
@@ -49,7 +50,7 @@ const AppRouter = () => {
         {/* <Route path="unsubscribe/:email/:token" element={<Unsubscribe />} /> */}
         <Route path="news">
           <Route index element={<KinNews />} />
-          {/* <Route path="search" element={<SearchResults />} /> */}
+          <Route path="search" element={<KinSearchResults />} />
           <Route path=":slug" element={<KinArticleDetails />} />
         </Route>
 
