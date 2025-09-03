@@ -27,10 +27,7 @@ const CategoryPage: React.FC = () => {
       try {
         setLoading(true);
         if (categoryName) {
-          const response = await getArticlesByCategory(
-            categoryName,
-            'kinyarwanda'
-          );
+          const response = await getArticlesByCategory(categoryName, 'english');
           setArticles(response?.data?.articles || []);
         }
       } catch (error) {
@@ -76,7 +73,7 @@ const CategoryPage: React.FC = () => {
             articles={articles.slice(0, 2)}
             title={`Trending in ${categoryName}`}
           />
-          {articles.length > 4 && (
+          {articles.length > 0 && (
             <SubMainArticles
               title={''}
               loading={loading}

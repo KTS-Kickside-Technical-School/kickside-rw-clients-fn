@@ -9,10 +9,10 @@ interface MainArticlesProps {
 }
 
 const MainArticles = ({ loading, articles, title }: MainArticlesProps) => {
+
   const renderSkeleton = () => (
     <div className="flex flex-col lg:flex-row gap-6 w-full">
-      <div className="flex-1 w-full aspect-[16/9] lg:aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden animate-pulse">
-      </div>
+      <div className="flex-1 w-full aspect-[16/9] lg:aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden animate-pulse"></div>
 
       <div className="hidden lg:flex flex-col w-full lg:w-1/3 aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden animate-pulse">
         <div className="h-2/3 bg-gray-300"></div>
