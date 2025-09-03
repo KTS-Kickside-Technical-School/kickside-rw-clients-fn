@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { iItemArticle } from '../utils/types/Article';
 
-const MostPopular = () => {
+const KinMostPopular = () => {
   const [data, setData] = useState<iItemArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -17,7 +17,7 @@ const MostPopular = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      const response = await getPopularArticles('english');
+      const response = await getPopularArticles('kinyarwanda');
       if (response?.data?.articles?.length) {
         const data = response.data.articles;
         setData(data);
@@ -26,7 +26,7 @@ const MostPopular = () => {
       }
     } catch (error) {
       setHasError(true);
-      console.error('Error fetching popular articles:', error);
+      console.error('Habayemo ikibazo mukuzana inkuru:', error);
     } finally {
       setIsLoading(false);
     }
@@ -39,8 +39,8 @@ const MostPopular = () => {
       {' '}
       <div className="flex justify-between items-center mb-4 text-white">
         <div className="flex flex-col items-start">
-          <h1 className="text-3xl font-bold">The KS</h1>
-          <h1 className="text-3xl font-bold">TOPS</h1>
+          <h1 className="text-3xl font-bold">Izikunzwe</h1>
+          <h1 className="text-3xl font-bold">CYANE</h1>
         </div>
         <BsGraphUpArrow className="text-5xl text-blue-700 w-10" />
       </div>
@@ -67,7 +67,7 @@ const MostPopular = () => {
             >
               <span className="inline-block w-4 h-2 bg-white mr-2 mt-1"></span>
               <Link
-                to={`/en/news/${item.article.slug}`}
+                to={`/news/${item.article.slug}`}
                 className="text-white hover:underline text-md line-clamp-3"
               >
                 {item.article.title}
@@ -80,4 +80,4 @@ const MostPopular = () => {
   );
 };
 
-export default MostPopular;
+export default KinMostPopular;

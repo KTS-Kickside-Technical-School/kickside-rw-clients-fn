@@ -3,9 +3,10 @@ import { iArticleType } from '../../../utils/types/Article';
 import { getTopFeaturedArticles } from '../../../utils/requests/articlesRequest';
 import { Link, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowKinyarwanda } from '../../../utils/helpers/articleHelpers';
 
-interface HeroProps {}
-const Hero = ({}: HeroProps) => {
+interface KinHeroProps {}
+const KinHero = ({}: KinHeroProps) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -18,17 +19,17 @@ const Hero = ({}: HeroProps) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await getTopFeaturedArticles('english');
+        const res = await getTopFeaturedArticles('kinyarwanda');
         if (res?.status === 200) {
           const topFeaturedArticles = res.data.articles;
 
           setTopFeaturedArticles(topFeaturedArticles);
         } else {
-          setError('Failed to load articles. Please try again later.');
+          setError('Ntabwo inkuru zabonetse,');
         }
       } catch (error) {
-        console.error('Error fetching top featured articles:', error);
-        setError('An error occurred while loading articles.');
+        console.error('Habayemo ikibazo mukuzana inkuru:', error);
+        setError('Habayemo ikibazo mukuzana unkuru.');
       } finally {
         setLoading(false);
       }
@@ -79,14 +80,14 @@ const Hero = ({}: HeroProps) => {
       <div className="w-full px-4 mx-auto max-w-7xl py-12 text-center">
         <div className="bg-blue-900/20 p-6 rounded-xl border border-blue-800">
           <h3 className="text-xl font-bold text-white mb-3">
-            Oops! Something went wrong
+            Oops! Habyeho ikibazo
           </h3>
           <p className="text-gray-300 mb-4">{error}</p>
           <button
             onClick={() => window.location.reload()}
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
           >
-            Retry
+            Ongera Ugerageze
           </button>
         </div>
       </div>
@@ -99,7 +100,7 @@ const Hero = ({}: HeroProps) => {
         {topFeaturedArticles.slice(0, 2).map((article, index) => (
           <div
             key={article._id}
-            onClick={() => navigate(`/en/news/${article.slug}`)}
+            onClick={() => navigate(`/news/${article.slug}`)}
             className={`flex-1 relative group cursor-pointer rounded-xl overflow-hidden transition-all hover:shadow-lg ${
               index === 0
                 ? 'bg-blue-900/10 border border-blue-800/50'
@@ -138,16 +139,16 @@ const Hero = ({}: HeroProps) => {
                   {article.createdAt && <span className="mx-2">•</span>}
                   {article.createdAt && (
                     <span>
-                      {formatDistanceToNow(new Date(article.createdAt), {
-                        addSuffix: true,
-                      })}
+                      {formatDistanceToNowKinyarwanda(
+                        new Date(article.createdAt)
+                      )}
                     </span>
                   )}
                 </div>
               </div>
               {index === 0 && (
                 <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
-                  TRENDING
+                  IBIGEZWEHO
                 </div>
               )}
             </div>
@@ -156,13 +157,13 @@ const Hero = ({}: HeroProps) => {
       </div>
 
       <h2 className="text-2xl font-bold text-white mb-6 flex items-center">
-        Trending Stories
+        Inkuru Zigezweho
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {topFeaturedArticles.slice(2, 6).map((article) => (
           <div
             key={article._id}
-            onClick={() => navigate(`/en/news/${article.slug}`)}
+            onClick={() => navigate(`/news/${article.slug}`)}
             className="group cursor-pointer"
           >
             <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-3 bg-blue-900/10 border border-blue-800/30">
@@ -206,10 +207,10 @@ const Hero = ({}: HeroProps) => {
 
       <div className="text-center mb-12">
         <Link
-          to="/en/news"
+          to="/news"
           className="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
         >
-          Explore More Stories
+          Izindi nkuru
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 ml-2"
@@ -228,4 +229,4 @@ const Hero = ({}: HeroProps) => {
   );
 };
 
-export default Hero;
+export default KinHero;

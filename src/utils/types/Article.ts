@@ -10,6 +10,7 @@ export interface iArticleType {
     createdAt: string;
     updatedAt: string;
     status: string;
+    language:string;
     isEditable: boolean;
     views: number;
     slug: string;

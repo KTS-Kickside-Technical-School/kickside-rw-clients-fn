@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHomepageMatches } from '../utils/requests/tournamentsRequest';
-import {
-  formatTournamentsTime,
-} from '../utils/helpers/tournamentsHelpers';
+import { formatTournamentsTime } from '../utils/helpers/tournamentsHelpers';
 import {
   FaCircle,
   FaExclamationTriangle,
@@ -16,6 +14,7 @@ import {
   FaChevronDown,
   FaChevronUp,
 } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const TrendsMatches = () => {
   const [tournaments, setTournaments] = useState<any[]>([]);
@@ -27,7 +26,6 @@ const TrendsMatches = () => {
     const fetchData = async () => {
       try {
         const response = await getHomepageMatches();
-        console.log(response);
         if (response.status === 200) {
           setTournaments(response.data);
 
@@ -92,7 +90,7 @@ const TrendsMatches = () => {
       case 'halftime':
         return 'HT';
       case 'scheduled':
-        return ''; // Empty for scheduled matches
+        return '';
       default:
         return status?.replace('_', ' ')?.toUpperCase();
     }
@@ -135,10 +133,51 @@ const TrendsMatches = () => {
     <div className="w-full py-6 bg-gradient-to-b from-primary-50 via-white to-white">
       <div className="max-w-4xl mx-auto px-4">
         <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-primary-200">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-xl font-bold text-primary-700">
-              Matches & Fixtures
-            </h1>
+          <div className="flex justify-between items-center mb-6 p-4 bg-white  rounded-xl border border-blue-100">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <svg
+                  className="w-6 h-6 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-800">
+                  Matches & Fixtures
+                </h1>
+                <p className="text-sm text-gray-600 mt-1">
+                  Live scores and upcoming games
+                </p>
+              </div>
+            </div>
+            <Link
+              to="/en/match-center"
+              className="flex items-center gap-2 px-4 py-2 bg-white text-blue-600 rounded-lg border border-blue-200 hover:bg-blue-50 hover:text-blue-700 transition-all duration-200 hover:shadow-sm font-medium"
+            >
+              View All
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
           </div>
 
           <div className="space-y-3">
@@ -152,8 +191,12 @@ const TrendsMatches = () => {
                   onClick={() => toggleTournament(tournament.tournamentName)}
                 >
                   <div className="flex items-center gap-2">
+                    {/* Use tournament logo from either tournamentSeason or main tournament */}
                     <img
-                      src={tournament.tournament.logo}
+                      src={
+                        tournament.tournament?.logo ||
+                        tournament.tournamentSeason?.logo
+                      }
                       alt={tournament.tournamentName}
                       className="w-6 h-6 rounded-full object-cover border border-white"
                     />
@@ -204,7 +247,6 @@ const TrendsMatches = () => {
                               match.status === 'scheduled'
                             )}
                           </div>
-                          
 
                           <div className="flex-1 flex flex-col gap-1 ml-2">
                             <div className="flex justify-between items-center">

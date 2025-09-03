@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getTOpWeeklyArticlesByCategories } from '../utils/requests/articlesRequest';
 import { Link } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowKinyarwanda } from '../utils/helpers/articleHelpers';
 
 interface CategoryArticles {
   [category: string]: {
@@ -10,7 +10,7 @@ interface CategoryArticles {
   };
 }
 
-const HomeProductsCategories = () => {
+const KinHomeProductsCategories = () => {
   const [data, setData] = useState<CategoryArticles>({});
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -18,8 +18,7 @@ const HomeProductsCategories = () => {
     const fetchArticles = async () => {
       setLoading(true);
       try {
-        const res = await getTOpWeeklyArticlesByCategories('english');
-
+        const res = await getTOpWeeklyArticlesByCategories('kinyarwanda');
         if (res.status === 200) {
           setData(res.data || {});
           const allData: CategoryArticles = res.data;
@@ -29,10 +28,10 @@ const HomeProductsCategories = () => {
                 category,
                 {
                   weeklyTop: weeklyTop.filter(
-                    (article) => article.language === 'english'
+                    (article) => article.language === 'kinyarwanda'
                   ),
                   otherArticles: otherArticles.filter(
-                    (article) => article.language === 'english'
+                    (article) => article.language === 'kinyarwanda'
                   ),
                 },
               ]
@@ -42,7 +41,7 @@ const HomeProductsCategories = () => {
           setData(filteredData || {});
         }
       } catch (error) {
-        console.error('Error fetching articles:', error);
+        console.error('Habayemo ikibazo mukuzana amakuru:', error);
       } finally {
         setLoading(false);
       }
@@ -104,7 +103,7 @@ const HomeProductsCategories = () => {
                 className="border rounded-lg overflow-hidden shadow-md"
               >
                 <Link
-                  to={`/en/news/${article.slug}`}
+                  to={`/news/${article.slug}`}
                   className="aspect-[4/3] rounded-xl overflow-hidden mb-3"
                 >
                   <img
@@ -115,24 +114,24 @@ const HomeProductsCategories = () => {
                 </Link>
                 <div className="p-4">
                   <Link
-                    to={`/en/category/${article.category}`}
+                    to={`/category/${article.category}`}
                     className="text-sm text-blue-600 font-medium"
                   >
                     {article.category}
                   </Link>
                   <h3>
                     <Link
-                      to={`/en/news/${article.slug}`}
+                      to={`/news/${article.slug}`}
                       className="text-lg font-bold my-2"
                     >
                       {article.title}
                     </Link>
                   </h3>
                   <Link
-                    to={`/en/author/${article.author?.username}`}
+                    to={`/author/${article.author?.username}`}
                     className="text-gray-600 text-sm"
                   >
-                    By {article.author.firstName} {article.author.lastName}
+                    {article.author.firstName} {article.author.lastName}
                   </Link>
                 </div>
               </div>
@@ -147,16 +146,14 @@ const HomeProductsCategories = () => {
               >
                 <h4 className="font-semibold text-md mb-2">
                   <Link
-                    to={`/en/news/${article.slug}`}
+                    to={`/news/${article.slug}`}
                     className="text-lg font-bold my-2"
                   >
                     {article.title}
                   </Link>
                 </h4>
                 <p className="text-gray-500 text-sm">
-                  {formatDistanceToNow(
-                    new Date(article.createdAt).toLocaleDateString()
-                  )}
+                  {formatDistanceToNowKinyarwanda(new Date(article.createdAt))}
                 </p>
               </div>
             ))}
@@ -167,4 +164,4 @@ const HomeProductsCategories = () => {
   );
 };
 
-export default HomeProductsCategories;
+export default KinHomeProductsCategories;

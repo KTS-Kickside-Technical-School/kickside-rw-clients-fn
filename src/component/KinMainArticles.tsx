@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { iArticleType } from '../utils/types/Article';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowKinyarwanda } from '../utils/helpers/articleHelpers';
 
 interface MainArticlesProps {
   loading: boolean;
@@ -8,10 +8,11 @@ interface MainArticlesProps {
   title: string;
 }
 
-const MainArticles = ({ loading, articles, title }: MainArticlesProps) => {
+const KinMainArticles = ({ loading, articles, title }: MainArticlesProps) => {
   const renderSkeleton = () => (
     <div className="flex flex-col lg:flex-row gap-6 w-full">
       <div className="flex-1 w-full aspect-[16/9] lg:aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden animate-pulse"></div>
+
       <div className="hidden lg:flex flex-col w-full lg:w-1/3 aspect-[4/3] bg-gray-200 rounded-xl overflow-hidden animate-pulse">
         <div className="h-2/3 bg-gray-300"></div>
         <div className="p-4 flex-1">
@@ -58,9 +59,9 @@ const MainArticles = ({ loading, articles, title }: MainArticlesProps) => {
                     {articles[0].author?.lastName}
                   </Link>
                   {' · '}
-                  {formatDistanceToNow(new Date(articles[0].createdAt), {
-                    addSuffix: true,
-                  })}
+                  {formatDistanceToNowKinyarwanda(
+                    new Date(articles[0]?.createdAt)
+                  )}
                 </p>
               </div>
             </Link>
@@ -100,9 +101,7 @@ const MainArticles = ({ loading, articles, title }: MainArticlesProps) => {
                 {articles[1].author?.firstName} {articles[1].author?.lastName}
               </Link>
               {' · '}
-              {formatDistanceToNow(new Date(articles[1].createdAt), {
-                addSuffix: true,
-              })}
+              {formatDistanceToNowKinyarwanda(new Date(articles[1]?.createdAt))}
             </p>
           </div>
         </div>
@@ -122,4 +121,4 @@ const MainArticles = ({ loading, articles, title }: MainArticlesProps) => {
   );
 };
 
-export default MainArticles;
+export default KinMainArticles;

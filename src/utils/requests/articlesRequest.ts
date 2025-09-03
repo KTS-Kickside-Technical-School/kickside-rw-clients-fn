@@ -67,19 +67,19 @@ export const postComment = async (data: iComment) => {
 };
 
 
-export const getAuthorsProfile = async (username: string) => {
+export const getAuthorsProfile = async (username: string, language: any) => {
   try {
-    const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}`);
+    const response = await axiosInstance.get(`/api/articles/get-author-profile/${username}?language=${language}`);
     return response.data
   } catch (error) {
     return handleError(error)
   }
 }
 
-export const getArticlesByCategory = async (category: string) => {
+export const getArticlesByCategory = async (category: string, language: any) => {
   try {
     const response = await axiosInstance.get(
-      `api/articles/get-articles-by-category/${category}`
+      `api/articles/get-articles-by-category/${category}?language=${language}`
     );
 
     return response.data;
@@ -90,36 +90,39 @@ export const getArticlesByCategory = async (category: string) => {
 
 
 
-export const getPopularArticles = async () => {
+export const getPopularArticles = async (language: any) => {
   try {
-    const response = await axiosInstance.get("/api/articles/get-popular-articles");
+    const response = await axiosInstance.get(`/api/articles/get-popular-articles?language=${language}`);
     return response.data
   } catch (error) {
     return handleError(error)
   }
 }
 
-export const getTopFeaturedArticles = async () => {
+export const getTopFeaturedArticles = async (language = "") => {
   try {
-    const response = await axiosInstance.get("/api/articles/get-top-featured-articles");
+    const response = await axiosInstance.get(`/api/articles/get-top-featured-articles/?language=${language}`);
+
     return response.data
   } catch (error) {
     return handleError(error)
   }
 }
 
-export const getTOpWeeklyArticlesByCategories = async () => {
+export const getTOpWeeklyArticlesByCategories = async (language: any) => {
   try {
-    const response = await axiosInstance.get("/api/articles/get-top-weekly-categories");
+
+    const response = await axiosInstance.get(`/api/articles/get-top-weekly-categories?language=${language}`);
     return response.data
+
   } catch (error) {
     return handleError(error)
   }
 }
 
-export const getUserSearch = async (query: string, page = 1, limit = 35) => {
+export const getUserSearch = async (query: string, page = 1, limit = 35, language: any) => {
   try {
-    const response = await axiosInstance.get(`/api/articles/user-search?query=${query}&page=${page}&limit=${limit}`);
+    const response = await axiosInstance.get(`/api/articles/user-search?query=${query}&page=${page}&limit=${limit}&language=${language}`);
     return response.data
   } catch (error) {
     return handleError(error)

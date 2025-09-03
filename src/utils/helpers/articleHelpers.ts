@@ -49,3 +49,40 @@ export const getGreeting = (name: string) => {
         return `Good evening, ${name}!`;
     }
 };
+
+export const formatDistanceToNowKinyarwanda = (date: Date): string => {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (diffInSeconds < 60) {
+        return `Hashize amasogonda ${diffInSeconds} `;
+    }
+
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) {
+        return `Hashize iminota ${diffInMinutes} `;
+    }
+
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) {
+        return `Hashize amasaha ${diffInHours} `;
+    }
+
+    const diffInDays = Math.floor(diffInHours / 24);
+    if (diffInDays < 7) {
+        return `Hashize iminsi ${diffInDays} `;
+    }
+
+    const diffInWeeks = Math.floor(diffInDays / 7);
+    if (diffInWeeks < 4) {
+        return `Hashize ibyumweru ${diffInWeeks} `;
+    }
+
+    const diffInMonths = Math.floor(diffInDays / 30);
+    if (diffInMonths < 12) {
+        return `Hashize amezi ${diffInMonths} `;
+    }
+
+    const diffInYears = Math.floor(diffInMonths / 12);
+    return `Hashize imyaka ${diffInYears} `;
+};

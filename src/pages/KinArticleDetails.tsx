@@ -5,8 +5,6 @@ import {
   postComment,
 } from '../utils/requests/articlesRequest';
 import SEO from '../utils/SEO';
-import Header from '../component/Header';
-import AdvertisementSection from '../component/AdvertisementSection';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Footer from '../component/Footer';
@@ -14,12 +12,14 @@ import { iArticleType } from '../utils/types/Article';
 import RelatedArticles from '../component/RelatedArticles';
 import { formatDateTime } from '../utils/helpers/articleHelpers';
 import Avatar from '/avatar.svg';
-import NewsLetter from '../component/Newsletter';
 import MainTopKSAd from '../component/ads/MainTopKSAd';
-import MostPopular from '../component/MostPopularArticle';
 import { FaInstagram, FaLinkedin, FaWhatsapp } from 'react-icons/fa';
 import XIcon from '../icons/X';
 import { iComment } from '../utils/types/commentType';
+import KinAdvertisementSection from '../component/KinAdvertisementSection';
+import KinMostPopular from '../component/KinMostPopularArticle';
+import KinHeader from '../component/KinHeader';
+import KinNewsLetter from '../component/KinNewsletter';
 
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
@@ -32,7 +32,7 @@ const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString(undefined, options);
 };
 
-const ArticleDetails: React.FC = () => {
+const KinArticleDetails: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<iArticleType | null>(null);
   const [articles, setArticles] = useState<iArticleType[]>([]);
@@ -56,12 +56,11 @@ const ArticleDetails: React.FC = () => {
       try {
         const response = await getSingleArticle(slug);
         setArticle(response.data.article);
-
         setComments(response.data.comments);
         setArticles(response.data.related);
       } catch (err) {
         console.error('Error fetching the article:', err);
-        setError('Failed to load the article. Please try again later.');
+        setError('Inkuru ntizibashije kuboneka, mwongere mugerageze mukanya.');
       } finally {
         setIsLoading(false);
       }
@@ -99,12 +98,12 @@ const ArticleDetails: React.FC = () => {
           </div>
 
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Articles Currently Unavailable
+            Inkuru ntibashije kuboneka{' '}
           </h3>
 
           <p className="text-gray-600 mb-6">
-            We're unable to load the articles at this moment. Please try again
-            later.
+            Ntago tubashije kubona inkuru mwashakaga, mwongere mugeregeze
+            mukanya{' '}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -112,20 +111,20 @@ const ArticleDetails: React.FC = () => {
               onClick={() => window.location.reload()}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              Refresh Page
+              Subiramo{' '}
             </button>
 
             <a
               href="/news"
               className="px-4 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors text-center"
             >
-              View All Articles
+              Izindi nkuru{' '}
             </a>
           </div>
         </div>
 
         <div className="mt-8 text-sm text-gray-500">
-          <p>If the problem persists, please contact our support team.</p>
+          <p>Ikibazo nigikomeza mwahamagara ubufasha.</p>
         </div>
       </div>
     );
@@ -175,7 +174,7 @@ const ArticleDetails: React.FC = () => {
 
       <MainTopKSAd />
 
-      <Header />
+      <KinHeader />
       <div className="w-full px-4 mx-auto max-w-7xl">
         <div className="py-6 flex flex-col lg:flex-row w-full min-h-[40vh] items-center gap-8 px-4">
           {isLoading ? (
@@ -202,7 +201,7 @@ const ArticleDetails: React.FC = () => {
                   {article?.title}
                 </h1>
                 <span className="mt-3">
-                  Written by {article?.author?.firstName || 'Unknown'}{' '}
+                  Yanditswe na {article?.author?.firstName || 'Unknown'}{' '}
                   {article?.author?.lastName || 'Author'} on{' '}
                   {formatDate(article?.createdAt || '')}
                 </span>
@@ -299,24 +298,24 @@ const ArticleDetails: React.FC = () => {
                 {article?.author?.bio || 'Passionate journalist'}
               </div>
               <Link
-                to={`/en/author/${article?.author?.username}`}
+                to={`/author/${article?.author?.username}`}
                 className="font-bold text-grayac text-sm"
               >
-                View profile
+                Reba umwirondoro
               </Link>
             </div>
           </div>
 
           <aside className="w-full lg:w-1/3">
-            <AdvertisementSection />
-            <MostPopular />
+            <KinAdvertisementSection />
+            <KinMostPopular />
           </aside>
         </div>
         <div className="flex flex-col w-full gap-8 px-4">
-          <AdvertisementSection />
+          <KinAdvertisementSection />
           <div className="bg-gray-100 rounded-lg mt-6">
             <h2 className="text-2xl font-semibold border-b-2 border-dark pb-2 mb-4">
-              Conversation
+              Ibitekerezo
             </h2>
             {isCommentsLoading ? (
               <Skeleton count={3} className="h-8 mb-4" />
@@ -348,7 +347,7 @@ const ArticleDetails: React.FC = () => {
                   />
                 </svg>
                 <p className="text-gray-700 text-lg">
-                  No comments yet. Be the first to comment!
+                  Nta bitekerezo birajyaho! Ba uwambere.
                 </p>
               </div>
             )}
@@ -370,7 +369,7 @@ const ArticleDetails: React.FC = () => {
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Write your comment..."
+                placeholder="Andika igitekerezo cyawe..."
                 className="w-full p-3 border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows={4}
                 required
@@ -380,7 +379,7 @@ const ArticleDetails: React.FC = () => {
                 className="px-6 float-right py-2 bg-blue-500 text-white hover:bg-blue-600"
                 disabled={isCommentsLoading}
               >
-                {isCommentsLoading ? 'Posting...' : 'Post Comment'}
+                {isCommentsLoading ? 'Biri gukorwa...' : 'Ohereza '}
               </button>
             </form>
           </div>
@@ -388,15 +387,15 @@ const ArticleDetails: React.FC = () => {
             {isLoading ? (
               <Skeleton count={3} className="h-6 mb-4" />
             ) : (
-              <RelatedArticles title="Related Articles" articles={articles} />
+              <RelatedArticles title="Inkuru  Bijyanye" articles={articles} />
             )}
           </div>
         </div>
       </div>
-      <NewsLetter />
+      <KinNewsLetter />
       <Footer />
     </>
   );
 };
 
-export default ArticleDetails;
+export default KinArticleDetails;

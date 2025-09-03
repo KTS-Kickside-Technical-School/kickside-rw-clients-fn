@@ -8,7 +8,7 @@ interface RelatedArticlesProps {
   seeMore?: boolean;
 }
 
-const RelatedArticles = ({
+const KinRelatedArticles = ({
   title,
   articles,
   seeMore = false,
@@ -19,10 +19,10 @@ const RelatedArticles = ({
         <h1 className="text-3xl font-bold text-gray-800">{title}</h1>
         {seeMore !== false && (
           <Link
-            to="/en/news"
+            to="/news"
             className="inline-block px-6 py-2 text-sm font-semibold text-white bg-blue-600 rounded-lg shadow-md transition-all duration-300 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
-            See More
+            Reba ibindi
           </Link>
         )}
       </div>
@@ -76,4 +76,4 @@ const RelatedArticles = ({
   );
 };
 
-export default RelatedArticles;
+export default KinRelatedArticles;
