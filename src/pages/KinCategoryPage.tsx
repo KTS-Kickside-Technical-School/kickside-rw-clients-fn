@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import MainArticles from '../component/MainArticles';
 import LatestNews from '../component/LatestByCategory';
 import Footer from '../component/Footer';
 import { useParams } from 'react-router-dom';
@@ -7,12 +6,13 @@ import {
   getArticlesByCategory,
   getPublishedArticles,
 } from '../utils/requests/articlesRequest';
-import SubMainArticles from '../component/SubMainArticles';
 import NewsLetter from '../component/Newsletter';
 import { iArticleType } from '../utils/types/Article';
 import SEO from '../utils/SEO';
 import MainTopKSAd from '../component/ads/MainTopKSAd';
 import KinHeader from '../component/KinHeader';
+import KinSubMainArticles from '../component/KinSubMainArticles';
+import KinMainArticles from '../component/KinMainArticles';
 
 const KinCategoryPage: React.FC = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
@@ -72,7 +72,7 @@ const KinCategoryPage: React.FC = () => {
       <div className="w-full px-4 mx-auto max-w-7xl">
         <div className="mx-auto">
           {articles.length > 0 && (
-            <MainArticles
+            <KinMainArticles
               loading={loading}
               articles={articles.slice(0, 2)}
               title={`${categoryName} `}
@@ -80,7 +80,7 @@ const KinCategoryPage: React.FC = () => {
           )}
 
           {articles.length > 4 && (
-            <SubMainArticles
+            <KinSubMainArticles
               title={''}
               loading={loading}
               articles={articles.slice(2, 5)}
@@ -108,12 +108,12 @@ const KinCategoryPage: React.FC = () => {
       {articles.length > 18 && (
         <div className="w-full md:w-[80%] m-auto text-white">
           <div className="container mx-auto px-4">
-            <MainArticles
+            <KinMainArticles
               loading={loading}
               articles={articles.slice(13, 15)}
               title={`You may also like`}
             />
-            <SubMainArticles
+            <KinSubMainArticles
               title={''}
               loading={loading}
               articles={articles.slice(15, 18)}

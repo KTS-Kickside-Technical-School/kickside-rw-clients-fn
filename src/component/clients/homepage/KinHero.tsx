@@ -3,6 +3,7 @@ import { iArticleType } from '../../../utils/types/Article';
 import { getTopFeaturedArticles } from '../../../utils/requests/articlesRequest';
 import { Link, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowKinyarwanda } from '../../../utils/helpers/articleHelpers';
 
 interface KinHeroProps {}
 const KinHero = ({}: KinHeroProps) => {
@@ -139,9 +140,9 @@ const KinHero = ({}: KinHeroProps) => {
                   {article.createdAt && <span className="mx-2">•</span>}
                   {article.createdAt && (
                     <span>
-                      {formatDistanceToNow(new Date(article.createdAt), {
-                        addSuffix: true,
-                      })}
+                      {formatDistanceToNowKinyarwanda(
+                        new Date(article.createdAt)
+                      )}
                     </span>
                   )}
                 </div>

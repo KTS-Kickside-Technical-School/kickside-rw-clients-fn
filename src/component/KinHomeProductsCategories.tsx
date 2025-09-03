@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getTOpWeeklyArticlesByCategories } from '../utils/requests/articlesRequest';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowKinyarwanda } from '../utils/helpers/articleHelpers';
 
 interface CategoryArticles {
   [category: string]: {
@@ -154,9 +155,7 @@ const KinHomeProductsCategories = () => {
                   </Link>
                 </h4>
                 <p className="text-gray-500 text-sm">
-                  {formatDistanceToNow(
-                    new Date(article.createdAt).toLocaleDateString()
-                  )}
+                  {formatDistanceToNowKinyarwanda(new Date(article.createdAt))}
                 </p>
               </div>
             ))}
