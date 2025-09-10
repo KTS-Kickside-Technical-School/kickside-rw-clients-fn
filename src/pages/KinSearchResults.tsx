@@ -1,14 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
 import Footer from '../component/Footer';
-import Header from '../component/Header';
 import SEO from '../utils/SEO';
 import { iArticleType } from '../utils/types/Article';
 import { getUserSearch } from '../utils/requests/articlesRequest';
 import { useEffect, useState, useMemo } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import MainTopKSAd from '../component/ads/MainTopKSAd';
 import KinAdvertisementSection from '../component/KinAdvertisementSection';
 import KinMostPopular from '../component/KinMostPopularArticle';
+import KinHeader from '../component/KinHeader';
+import KinMainTopKSAd from '../component/ads/KinMainTopKSAd';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 const KinSearchResults = () => {
   const [articles, setArticles] = useState<iArticleType[]>([]);
@@ -25,7 +26,7 @@ const KinSearchResults = () => {
   const fetchArticles = async (page: number) => {
     setLoading(true);
     try {
-      const res = await getUserSearch(query, page, 30,"kinyarwanda");
+      const res = await getUserSearch(query, page, 30, 'kinyarwanda');
       setArticles(res?.articles || []);
       setTotalPages(res?.totalPages || 1);
       setCurrentPage(res?.page || 1);
@@ -58,9 +59,9 @@ const KinSearchResults = () => {
           type: 'website',
         }}
       />
-      <MainTopKSAd />
+      <KinMainTopKSAd />
       <div className=" pb-5">
-        <Header />
+        <KinHeader />
       </div>
       <div className="max-w-7xl px-4 mx-auto w-full">
         <div className="flex flex-col lg:flex-row gap-6 w-full">
@@ -71,51 +72,74 @@ const KinSearchResults = () => {
               </h1>
 
               <div className="space-y-4">
-                {loading
-                  ? Array.from({ length: 10 }).map((_, index) => (
-                      <div
-                        key={index}
-                        className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
-                      >
-                        <div className="w-24 h-16 bg-gray-200 rounded mr-3 flex-shrink-0"></div>
+                {loading ? (
+                  Array.from({ length: 10 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
+                    >
+                      <div className="w-24 h-16 bg-gray-200 rounded mr-3 flex-shrink-0"></div>
+                      <div className="flex-1 min-w-0">
+                        <div className="w-20 h-3 bg-gray-300 rounded mb-2"></div>
+                        <div className="w-full h-4 bg-gray-300 rounded mb-1"></div>
+                        <div className="w-32 h-3 bg-gray-300 rounded"></div>
+                      </div>
+                    </div>
+                  ))
+                ) : articles.length > 0 ? (
+                  articles.map((item: iArticleType, index) => (
+                    <Link
+                      to={`/news/${item.slug}`}
+                      key={index}
+                      className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
+                    >
+                      <div className="flex w-full border-b border-gray-200 pb-4">
+                        <div className="w-24 h-16 mr-3 flex-shrink-0">
+                          <img
+                            src={item.coverImage}
+                            alt="Article"
+                            className="w-full h-full object-cover rounded-lg"
+                            loading="lazy"
+                          />
+                        </div>
                         <div className="flex-1 min-w-0">
-                          <div className="w-20 h-3 bg-gray-300 rounded mb-2"></div>
-                          <div className="w-full h-4 bg-gray-300 rounded mb-1"></div>
-                          <div className="w-32 h-3 bg-gray-300 rounded"></div>
+                          <span className="text-xs font-medium text-blue-600 mb-1 block">
+                            {item.category || 'Uncategorized'}
+                          </span>
+                          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2">
+                            {item.title}
+                          </h2>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatDistanceToNow(new Date(item.createdAt), {
+                              addSuffix: true,
+                            })}
+                          </p>
                         </div>
                       </div>
-                    ))
-                  : articles.map((item: iArticleType, index) => (
-                      <Link
-                        to={`/news/${item.slug}`}
-                        key={index}
-                        className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
+                    </Link>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-10 text-center">
+                    <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-blue-100">
+                      <ExclamationTriangleIcon className="h-16 w-16 text-blue-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      Nta nkuru bijyanye
+                    </h2>
+                    <p className="text-gray-600 mb-6 max-w-md">
+                      Nta nkuru twabonye bijyanye na {query}, reba inkuru zose.
+                      Cyangwa uhindure amagambo.
+                    </p>
+                    <div className="flex gap-3">
+                      <a
+                        href="/news"
+                        className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition"
                       >
-                        <div className="flex w-full border-b border-gray-200 pb-4">
-                          <div className="w-24 h-16 mr-3 flex-shrink-0">
-                            <img
-                              src={item.coverImage}
-                              alt="Article"
-                              className="w-full h-full object-cover rounded-lg"
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <span className="text-xs font-medium text-blue-600 mb-1 block">
-                              {item.category || 'Uncategorized'}
-                            </span>
-                            <h2 className="text-sm font-semibold text-gray-900 line-clamp-2">
-                              {item.title}
-                            </h2>
-                            <p className="text-xs text-gray-500 mt-1">
-                              {formatDistanceToNow(new Date(item.createdAt), {
-                                addSuffix: true,
-                              })}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
+                        Reba inkuru zose
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {totalPages > 1 && (

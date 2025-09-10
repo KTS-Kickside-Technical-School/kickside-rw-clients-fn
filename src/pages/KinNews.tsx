@@ -1,7 +1,7 @@
-import MainTopKSAd from '../component/ads/MainTopKSAd';
+import KinMainTopKSAd from '../component/ads/KinMainTopKSAd';
 import Footer from '../component/Footer';
-import Header from '../component/Header';
 import KinAdvertisementSection from '../component/KinAdvertisementSection';
+import KinHeader from '../component/KinHeader';
 import KinHomeLatestNews from '../component/KinHomeLatestNews';
 import KinHomeProductsCategories from '../component/KinHomeProductsCategories';
 import KinMostPopular from '../component/KinMostPopularArticle';
@@ -23,9 +23,9 @@ const KinNews = () => {
         }}
         canonicalUrl="https://www.kickside.rw/"
       />
-      <MainTopKSAd />
+      <KinMainTopKSAd />
       <div className=" pb-5">
-        <Header />
+        <KinHeader />
       </div>
       <div>
         <div className="max-w-7xl px-4 mx-auto w-full">

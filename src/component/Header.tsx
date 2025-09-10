@@ -16,7 +16,7 @@ const Header = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (search.trim()) {
-      navigate(`/news/search/?query=${encodeURIComponent(search.trim())}`);
+      navigate(`/en/news/search/?query=${encodeURIComponent(search.trim())}`);
       setIsMenuOpen(false);
     }
   };
