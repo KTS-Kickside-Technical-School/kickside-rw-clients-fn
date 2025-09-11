@@ -39,7 +39,7 @@ const KinHero = ({}: KinHeroProps) => {
 
   if (loading) {
     return (
-      <div className="w-full px-4 mx-auto max-w-7xl">
+      <div className="w-full px-4 mx-auto max-w-7xl pt-7">
         <div className="flex flex-col md:flex-row gap-6 mb-8">
           {[1, 2].map((item) => (
             <div
@@ -77,7 +77,7 @@ const KinHero = ({}: KinHeroProps) => {
 
   if (error) {
     return (
-      <div className="w-full px-4 mx-auto max-w-7xl py-12 text-center">
+      <div className="w-full px-4 mx-auto max-w-7xl py-12 text-center pt-7">
         <div className="bg-blue-900/20 p-6 rounded-xl border border-blue-800">
           <h3 className="text-xl font-bold text-white mb-3">
             Oops! Habyeho ikibazo
@@ -95,7 +95,7 @@ const KinHero = ({}: KinHeroProps) => {
   }
 
   return (
-    <div className="w-full px-4 mx-auto max-w-7xl">
+    <div className="w-full px-4 mx-auto max-w-7xl  pt-7">
       <div className="flex flex-col md:flex-row gap-6 mb-8">
         {topFeaturedArticles.slice(0, 2).map((article, index) => (
           <div

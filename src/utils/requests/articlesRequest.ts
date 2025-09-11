@@ -129,7 +129,7 @@ export const getUserSearch = async (query: string, page = 1, limit = 35, languag
   }
 }
 
-export const getLatestCustomizedArticles = async (limit = 25) => {
+export const getLatestCustomizedArticles = async (limit = 30) => {
   try {
     const response = await axiosInstance.get(`/api/articles//get-latest-articles-customized?limit=${limit}`);
     return response.data

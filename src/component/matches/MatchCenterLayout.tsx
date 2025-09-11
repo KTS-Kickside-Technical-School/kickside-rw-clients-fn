@@ -9,7 +9,6 @@ import { FaBars, FaTimes, FaTrophy } from 'react-icons/fa';
 const MatchCenterLayout = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Function to close mobile menu
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
@@ -19,7 +18,6 @@ const MatchCenterLayout = () => {
       <MainTopKSAd />
       <Header />
 
-      {/* Mobile Navigation Bar */}
       <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
@@ -43,16 +41,13 @@ const MatchCenterLayout = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
           <div
             className="fixed inset-0 bg-black bg-opacity-50"
             onClick={closeMobileMenu}
           />
 
-          {/* Sidebar */}
           <div className="fixed inset-y-0 left-0 w-80 max-w-full bg-white shadow-xl">
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center">
@@ -78,7 +73,6 @@ const MatchCenterLayout = () => {
 
       <main className="max-w-7xl mx-auto p-4 px-6 min-h-screen">
         <div className="flex flex-col lg:flex-row gap-6 h-full">
-          {/* Desktop Sidebar - Hidden on mobile */}
           <div className="hidden lg:block">
             <SeasonsList />
           </div>

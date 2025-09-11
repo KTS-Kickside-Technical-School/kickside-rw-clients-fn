@@ -30,9 +30,7 @@ const Homepage: React.FC = () => {
 
       <MainTopKSAd />
 
-      <div className="bg-primary pb-5">
-        <Header />
-      </div>
+      <Header />
       <div className="bg-primary pb-5">
         <Hero />
       </div>
