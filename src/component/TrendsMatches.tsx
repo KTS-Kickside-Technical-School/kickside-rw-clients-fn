@@ -4,17 +4,9 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getHomepageMatches } from '../utils/requests/tournamentsRequest';
 import { formatTournamentsTime } from '../utils/helpers/tournamentsHelpers';
-import {
-  FaCircle,
-  FaExclamationTriangle,
-  FaClock,
-  FaCheckCircle,
-  FaTimesCircle,
-  FaVolleyballBall,
-  FaChevronDown,
-  FaChevronUp,
-} from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import MatchCard from './matches/MatchCard';
 
 const TrendsMatches = () => {
   const [tournaments, setTournaments] = useState<any[]>([]);
@@ -26,6 +18,7 @@ const TrendsMatches = () => {
     const fetchData = async () => {
       try {
         const response = await getHomepageMatches();
+        console.log(response);
         if (response.status === 200) {
           setTournaments(response.data);
 
@@ -47,72 +40,6 @@ const TrendsMatches = () => {
       ...prev,
       [tournamentName]: !prev[tournamentName],
     }));
-  };
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'in_progress':
-        return (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 500, damping: 15 }}
-          >
-            <FaCircle className="text-red-500 text-[10px]" />
-          </motion.div>
-        );
-      case 'scheduled':
-        return <FaClock className="text-blue-500 text-xs" />;
-      case 'postponed':
-        return <FaExclamationTriangle className="text-yellow-500 text-xs" />;
-      case 'finished':
-        return <FaCheckCircle className="text-green-500 text-xs" />;
-      case 'cancelled':
-        return <FaTimesCircle className="text-gray-500 text-xs" />;
-      case 'halftime':
-        return (
-          <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <FaVolleyballBall className="text-orange-500 text-xs" />
-          </motion.div>
-        );
-      default:
-        return <FaCircle className="text-gray-500 text-xs" />;
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'in_progress':
-        return 'LIVE';
-      case 'halftime':
-        return 'HT';
-      case 'scheduled':
-        return '';
-      default:
-        return status?.replace('_', ' ')?.toUpperCase();
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'in_progress':
-        return 'bg-red-500/10 text-red-600';
-      case 'scheduled':
-        return 'bg-blue-500/10 text-blue-600';
-      case 'postponed':
-        return 'bg-yellow-500/10 text-yellow-600';
-      case 'finished':
-        return 'bg-green-500/10 text-green-600';
-      case 'cancelled':
-        return 'bg-gray-500/10 text-gray-600';
-      case 'halftime':
-        return 'bg-orange-500/10 text-orange-600';
-      default:
-        return 'bg-gray-500/10 text-gray-600';
-    }
   };
 
   if (tournaments.length === 0) {
@@ -191,7 +118,6 @@ const TrendsMatches = () => {
                   onClick={() => toggleTournament(tournament.tournamentName)}
                 >
                   <div className="flex items-center gap-2">
-                    {/* Use tournament logo from either tournamentSeason or main tournament */}
                     <img
                       src={
                         tournament.tournament?.logo ||
@@ -217,7 +143,6 @@ const TrendsMatches = () => {
                   </div>
                 </div>
 
-                {/* Tournament Matches */}
                 <AnimatePresence>
                   {expandedTournaments[tournament.tournamentName] && (
                     <motion.div
@@ -241,71 +166,10 @@ const TrendsMatches = () => {
                               : 'border-gray-100'
                           } hover:shadow-xs transition`}
                         >
-                          <div className="w-12 text-xs text-gray-500 text-center">
-                            {formatTournamentsTime(
-                              match.matchTime,
-                              match.status === 'scheduled'
-                            )}
-                          </div>
-
-                          <div className="flex-1 flex flex-col gap-1 ml-2">
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center gap-1">
-                                <img
-                                  src={match.homeTeam.logo}
-                                  alt={match.homeTeam.name}
-                                  className="w-5 h-5 rounded-full object-cover border border-gray-200"
-                                />
-                                <span className="text-xs font-medium truncate max-w-[80px]">
-                                  {match.homeTeam.name}
-                                </span>
-                              </div>
-                              <span className="font-bold text-gray-900 text-sm">
-                                {match.status !== 'scheduled' &&
-                                  match.status !== 'postponed' &&
-                                  match.homeScore}
-                              </span>
-                            </div>
-
-                            <div className="flex justify-between items-center">
-                              <div className="flex items-center gap-1">
-                                <img
-                                  src={match.awayTeam.logo}
-                                  alt={match.awayTeam.name}
-                                  className="w-5 h-5 rounded-full object-cover border border-gray-200"
-                                />
-                                <span className="text-xs font-medium truncate max-w-[80px]">
-                                  {match.awayTeam.name}
-                                </span>
-                              </div>
-                              <span className="font-bold text-gray-900 text-sm">
-                                {match.status !== 'scheduled' &&
-                                  match.status !== 'postponed' &&
-                                  match.awayScore}
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Status */}
-                          <div className="flex flex-col items-end ml-2">
-                            <div className="flex items-center gap-1">
-                              {getStatusIcon(match.status)}
-                              {getStatusText(match.status) && (
-                                <span
-                                  className={`px-1.5 py-0.5 rounded-full text-[10px] font-medium ${getStatusColor(
-                                    match.status
-                                  )} ${
-                                    match.status === 'in_progress' ||
-                                    match.status === 'halftime'
-                                      ? 'animate-pulse'
-                                      : ''
-                                  }`}
-                                >
-                                  {getStatusText(match.status)}
-                                </span>
-                              )}
-                            </div>
-                          </div>
+                          <MatchCard
+                            match={match}
+                            formatTime={formatTournamentsTime}
+                          />
                         </motion.div>
                       ))}
                     </motion.div>

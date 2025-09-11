@@ -18,10 +18,10 @@ interface MatchCardProps {
 
 const MatchCard: React.FC<MatchCardProps> = ({ match, formatTime }) => {
   const isLive = match.status === 'in_progress';
-
+  console.log(match.slug);
   return (
     <div
-      className={`bg-white border rounded-xl shadow-sm hover:shadow-md transition-all  mb-3
+      className={`bg-white border rounded-xl shadow-sm hover:shadow-md transition-all  mb-3 w-full
       ${isLive ? 'border-l-4 border-l-green-600' : 'border-gray-200'}`}
     >
       <Link

@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import AdvertisementSection from '../component/AdvertisementSection';
 import Footer from '../component/Footer';
 import Header from '../component/Header';
@@ -49,7 +50,7 @@ const SearchResults = () => {
     <>
       <SEO
         mainData={{
-          title: `Search results for ${query} | Kickside Rw News`,
+          title: ` ${query} - Searhc Results | Kickside Rw News`,
           description:
             'Kickside is Rwanda’s leading digital newspaper covering tech, sports, entertainment, and business.',
           author: 'Kickside Rwanda',
@@ -71,51 +72,75 @@ const SearchResults = () => {
               </h1>
 
               <div className="space-y-4">
-                {loading
-                  ? Array.from({ length: 10 }).map((_, index) => (
-                      <div
-                        key={index}
-                        className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
-                      >
-                        <div className="w-24 h-16 bg-gray-200 rounded mr-3 flex-shrink-0"></div>
+                {loading ? (
+                  Array.from({ length: 10 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
+                    >
+                      <div className="w-24 h-16 bg-gray-200 rounded mr-3 flex-shrink-0"></div>
+                      <div className="flex-1 min-w-0">
+                        <div className="w-20 h-3 bg-gray-300 rounded mb-2"></div>
+                        <div className="w-full h-4 bg-gray-300 rounded mb-1"></div>
+                        <div className="w-32 h-3 bg-gray-300 rounded"></div>
+                      </div>
+                    </div>
+                  ))
+                ) : articles.length > 0 ? (
+                  articles.map((item: iArticleType, index) => (
+                    <Link
+                      to={`/news/${item.slug}`}
+                      key={index}
+                      className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
+                    >
+                      <div className="flex w-full border-b border-gray-200 pb-4">
+                        <div className="w-24 h-16 mr-3 flex-shrink-0">
+                          <img
+                            src={item.coverImage}
+                            alt="Article"
+                            className="w-full h-full object-cover rounded-lg"
+                            loading="lazy"
+                          />
+                        </div>
                         <div className="flex-1 min-w-0">
-                          <div className="w-20 h-3 bg-gray-300 rounded mb-2"></div>
-                          <div className="w-full h-4 bg-gray-300 rounded mb-1"></div>
-                          <div className="w-32 h-3 bg-gray-300 rounded"></div>
+                          <span className="text-xs font-medium text-blue-600 mb-1 block">
+                            {item.category || 'Uncategorized'}
+                          </span>
+                          <h2 className="text-sm font-semibold text-gray-900 line-clamp-2">
+                            {item.title}
+                          </h2>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {formatDistanceToNow(new Date(item.createdAt), {
+                              addSuffix: true,
+                            })}
+                          </p>
                         </div>
                       </div>
-                    ))
-                  : articles.map((item: iArticleType, index) => (
-                      <Link
-                        to={`/news/${item.slug}`}
-                        key={index}
-                        className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
+                    </Link>
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-10 text-center">
+                    <div className="w-16 h-16 mb-4 flex items-center justify-center rounded-full bg-blue-100">
+                      <ExclamationTriangleIcon className="h-16 w-16 text-blue-600" />
+                    </div>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      No results found
+                    </h2>
+                    <p className="text-gray-600 mb-6 max-w-md">
+                      We couldn't find any articles matching your search. Try
+                      adjusting your keywords or check out our latest stories
+                      below.
+                    </p>
+                    <div className="flex gap-3">
+                      <a
+                        href="/en/news"
+                        className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition"
                       >
-                        <div className="flex w-full border-b border-gray-200 pb-4">
-                          <div className="w-24 h-16 mr-3 flex-shrink-0">
-                            <img
-                              src={item.coverImage}
-                              alt="Article"
-                              className="w-full h-full object-cover rounded-lg"
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <span className="text-xs font-medium text-blue-600 mb-1 block">
-                              {item.category || 'Uncategorized'}
-                            </span>
-                            <h2 className="text-sm font-semibold text-gray-900 line-clamp-2">
-                              {item.title}
-                            </h2>
-                            <p className="text-xs text-gray-500 mt-1">
-                              {formatDistanceToNow(new Date(item.createdAt), {
-                                addSuffix: true,
-                              })}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
+                        Browse All News
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {totalPages > 1 && (

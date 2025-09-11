@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
   getSingleArticle,
   postComment,
@@ -36,6 +36,7 @@ const ArticleDetails: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<iArticleType | null>(null);
   const [articles, setArticles] = useState<iArticleType[]>([]);
+  const navigate = useNavigate();
 
   const [comments, setComments] = useState<iComment[]>([]);
 
@@ -56,6 +57,8 @@ const ArticleDetails: React.FC = () => {
       try {
         const response = await getSingleArticle(slug);
         setArticle(response.data.article);
+        if (response.data.article.language === 'kinyarwanda')
+          navigate(`/news/${response.data.article.slug}`);
 
         setComments(response.data.comments);
         setArticles(response.data.related);

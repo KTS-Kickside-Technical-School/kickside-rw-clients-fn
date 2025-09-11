@@ -61,7 +61,7 @@ const MatchDetails = () => {
     return () => clearInterval(interval);
   }, [slug, isLive]);
 
-  const Mvs = `${match?.homeTeam?.name} vs ${match?.awayTeam?.name}`;
+  const Mvs = `${match?.homeTeam?.name} ${match?.homeScore} - ${match?.awayScore} vs ${match?.awayTeam?.name}`;
 
   if (loading) {
     return (
@@ -72,8 +72,6 @@ const MatchDetails = () => {
             description: 'Match details loading',
           }}
         />
-        <MainTopKSAd />
-        <Header />
         <main className="max-w-7xl mx-auto p-4 px-6 min-h-screen">
           <div className="animate-pulse">
             <div className="h-6 bg-gray-200 rounded w-1/4 mb-6"></div>
@@ -92,7 +90,6 @@ const MatchDetails = () => {
             </div>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
