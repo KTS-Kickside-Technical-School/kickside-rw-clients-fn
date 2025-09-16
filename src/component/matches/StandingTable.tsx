@@ -3,6 +3,7 @@ import {
   calculateStandings,
   StandingsTeam,
 } from '../../utils/helpers/calculateStandings';
+import { FaTrophy } from 'react-icons/fa';
 
 interface Team {
   _id: string;
@@ -61,43 +62,137 @@ const StandingsTable: React.FC<StandingsTableProps> = ({
 
   return (
     <div className="overflow-x-auto rounded-xl border border-gray-200">
-      <table className="w-full text-sm text-left">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="px-3 py-2">Pos</th>
-            <th className="px-3 py-2">Team</th>
-            <th className="px-3 py-2">P</th>
-            <th className="px-3 py-2">W</th>
-            <th className="px-3 py-2">D</th>
-            <th className="px-3 py-2">L</th>
-            <th className="px-3 py-2">GF</th>
-            <th className="px-3 py-2">GA</th>
-            <th className="px-3 py-2">GD</th>
-            <th className="px-3 py-2">Pts</th>
+      <table className="w-full">
+        <thead>
+          <tr className="bg-gradient-to-r from-gray-800 to-gray-900 text-white">
+            <th className="px-6 py-4 text-left font-bold text-sm tracking-wider">
+              POS
+            </th>
+            <th className="px-6 py-4 text-left font-bold text-sm tracking-wider">
+              TEAM
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              P
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              W
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              D
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              L
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              GF
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              GA
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              GD
+            </th>
+            <th className="px-4 py-4 text-center font-bold text-sm tracking-wider">
+              PTS
+            </th>
           </tr>
         </thead>
         <tbody>
           {standings.map((team: any, idx) => (
-            <tr key={idx} className="border-b">
-              <td className="px-3 py-2">{idx + 1}</td>
-              <td className="px-3 py-2 font-medium flex items-center gap-2">
-                {team.logo && (
-                  <img
-                    src={team.logo}
-                    alt={team.team}
-                    className="w-6 h-6 object-contain rounded-full"
-                  />
-                )}
-                {team.team}
+            <tr
+              key={idx}
+              className={`
+                    ${idx % 2 === 0 ? 'bg-gray-50/50' : 'bg-white'}
+                    ${
+                      idx < 1
+                        ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-l-4 border-yellow-400'
+                        : ''
+                    }
+                    hover:bg-blue-50/50 transition-all duration-200
+                  `}
+            >
+              <td className="px-6 py-4">
+                <div className="flex items-center space-x-2">
+                  {idx < 1 && (
+                    <FaTrophy
+                      className={`text-lg 
+                            text-amber-600
+                           
+                          `}
+                    />
+                  )}
+                  <span
+                    className={`font-bold text-lg ${
+                      idx < 1 ? 'text-gray-800' : 'text-gray-600'
+                    }`}
+                  >
+                    {idx + 1}
+                  </span>
+                </div>
               </td>
-              <td className="px-3 py-2">{team.P}</td>
-              <td className="px-3 py-2">{team.W}</td>
-              <td className="px-3 py-2">{team.D}</td>
-              <td className="px-3 py-2">{team.L}</td>
-              <td className="px-3 py-2">{team.GF}</td>
-              <td className="px-3 py-2">{team.GA}</td>
-              <td className="px-3 py-2">{team.GD}</td>
-              <td className="px-3 py-2">{team.Pts}</td>
+              <td className="px-6 py-4">
+                <div className="flex items-center space-x-4">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full p-1 shadow-md">
+                    {team.logo ? (
+                      <img
+                        src={team.logo}
+                        alt={team.team}
+                        className="w-full h-full object-contain rounded-full bg-white"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          const parent = target.parentElement;
+                          if (parent) {
+                            parent.innerHTML = `<div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">${team.team
+                              .substring(0, 2)
+                              .toUpperCase()}</div>`;
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                        {team.team.substring(0, 2).toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <span className="font-semibold text-gray-800 text-lg">
+                      {team.team}
+                    </span>
+                  </div>
+                </div>
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-gray-700">
+                {team.P}
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-green-600">
+                {team.W}
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-yellow-600">
+                {team.D}
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-red-600">
+                {team.L}
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-gray-700">
+                {team.GF}
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-gray-700">
+                {team.GA}
+              </td>
+              <td className="px-4 py-4 text-center font-medium text-gray-700">
+                <span
+                  className={team.GD >= 0 ? 'text-green-600' : 'text-red-600'}
+                >
+                  {team.GD > 0 ? '+' : ''}
+                  {team.GD}
+                </span>
+              </td>
+              <td className="px-4 py-4 text-center">
+                <span className="font-bold text-xl text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+                  {team.Pts}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>

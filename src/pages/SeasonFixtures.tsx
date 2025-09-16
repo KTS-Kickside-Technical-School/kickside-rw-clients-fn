@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import SEO from '../utils/SEO';
-import { FaFlag } from 'react-icons/fa';
 import { getTournamentMatches } from '../utils/requests/tournamentsRequest';
 import { formatTournamentsTime } from '../utils/helpers/tournamentsHelpers';
 import MatchCard from '../component/matches/MatchCard';
@@ -112,6 +111,7 @@ const SeasonFixtures = () => {
 
   const compName = season?.tournament?.name || season?.name || 'Tournament';
   const country = season?.tournament?.country?.name || '';
+  const flagUrl = season?.tournament?.country?.flagUrl || '';
   const logo = season?.tournament?.logo || '';
   const founded = season?.tournament?.foundedYear || '';
 
@@ -158,10 +158,11 @@ const SeasonFixtures = () => {
                 <div className="flex gap-3 text-sm text-gray-600 mt-1">
                   {country && (
                     <span className="flex items-center gap-1">
-                      <FaFlag className="text-gray-400" /> {country}
+                      <img src={flagUrl} alt={country} className="w-4 h-4" />
+                      {country}
                     </span>
                   )}
-                  {founded && <span>Founded {founded}</span>}
+                  {founded && <span>From: {founded}</span>}
                 </div>
               </div>
             </div>
@@ -187,113 +188,145 @@ const SeasonFixtures = () => {
 
           <div>
             {activeTab === 'overview' && (
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold text-gray-800 text-lg mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    Today's Fixtures
-                  </h3>
-                  {todaysFixtures.length ? (
-                    todaysFixtures.map((m: any) => (
-                      <MatchCard
-                        key={m._id}
-                        match={m}
-                        formatTime={formatTournamentsTime}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
-                      No fixtures scheduled for today
-                    </div>
-                  )}
-                </div>
+              <>
+                <SEO mainData={{ title: `${compName} - Overview` }} />
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-gray-800 text-lg mb-3 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                      Today's Fixtures
+                    </h3>
+                    {todaysFixtures.length ? (
+                      todaysFixtures.map((m: any) => (
+                        <MatchCard
+                          key={m._id}
+                          match={m}
+                          formatTime={formatTournamentsTime}
+                        />
+                      ))
+                    ) : (
+                      <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
+                        No fixtures scheduled for today
+                      </div>
+                    )}
+                  </div>
 
-                <div>
-                  <h3 className="font-semibold text-gray-800 text-lg mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    Today's Results
-                  </h3>
-                  {todaysResults.length ? (
-                    todaysResults.map((m: any) => (
-                      <MatchCard
-                        key={m._id}
-                        match={m}
-                        formatTime={formatTournamentsTime}
-                      />
-                    ))
-                  ) : (
-                    <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
-                      No results available for today
-                    </div>
-                  )}
+                  <div>
+                    <h3 className="font-semibold text-gray-800 text-lg mb-3 flex items-center gap-2">
+                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                      Today's Results
+                    </h3>
+                    {todaysResults.length ? (
+                      todaysResults.map((m: any) => (
+                        <MatchCard
+                          key={m._id}
+                          match={m}
+                          formatTime={formatTournamentsTime}
+                        />
+                      ))
+                    ) : (
+                      <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
+                        No results available for today
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              </>
             )}
 
             {activeTab === 'fixtures' && (
-              <div className="space-y-4">
-                <h3 className="font-semibold text-gray-800 text-lg mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                  Upcoming Fixtures
-                </h3>
-                {upcomingFixtures.length ? (
-                  upcomingFixtures.map((m) => (
-                    <MatchCard
-                      key={m._id}
-                      match={m}
-                      formatTime={formatTournamentsTime}
-                    />
-                  ))
-                ) : (
-                  <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
-                    No upcoming fixtures scheduled
-                  </div>
-                )}
-              </div>
+              <>
+                <SEO
+                  mainData={{
+                    title: `${compName} - Matches  and Season Results `,
+                  }}
+                />
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-gray-800 text-lg mb-4 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                    Upcoming Fixtures
+                  </h3>
+                  {upcomingFixtures.length ? (
+                    upcomingFixtures.map((m) => (
+                      <MatchCard
+                        key={m._id}
+                        match={m}
+                        formatTime={formatTournamentsTime}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
+                      No upcoming fixtures scheduled
+                    </div>
+                  )}
+                </div>
+              </>
             )}
 
             {activeTab === 'results' && (
-              <div className="space-y-4">
-                <h3 className="font-semibold text-gray-800 text-lg mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                  Past Results
-                </h3>
-                {pastResults.length ? (
-                  pastResults.map((m) => (
-                    <MatchCard
-                      key={m._id}
-                      match={m}
-                      formatTime={formatTournamentsTime}
-                    />
-                  ))
-                ) : (
-                  <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
-                    No past results available
-                  </div>
-                )}
-              </div>
+              <>
+                <SEO
+                  mainData={{
+                    title: `${compName} - Matches  and Season Results `,
+                  }}
+                />
+                <div className="space-y-4">
+                  <h3 className="font-semibold text-gray-800 text-lg mb-4 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                    Past Results
+                  </h3>
+                  {pastResults.length ? (
+                    pastResults.map((m) => (
+                      <MatchCard
+                        key={m._id}
+                        match={m}
+                        formatTime={formatTournamentsTime}
+                      />
+                    ))
+                  ) : (
+                    <div className="text-gray-400 text-sm bg-gray-50 rounded-lg p-4 text-center">
+                      No past results available
+                    </div>
+                  )}
+                </div>
+              </>
             )}
 
             {activeTab === 'standings' && (
-              <div>
-                <h3 className="font-semibold text-gray-800 text-lg mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                  League Standings
-                </h3>
-                <StandingsTable matches={matches} allTeams={teams} />
-              </div>
+              <>
+                <SEO
+                  mainData={{
+                    title: `${compName} - Standings and Season Teams`,
+                  }}
+                />
+                <div>
+                  <h3 className="font-semibold text-gray-800 text-lg mb-4 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                    League Standings
+                  </h3>
+                  <StandingsTable matches={matches} allTeams={teams} />
+                </div>
+              </>
             )}
 
             {activeTab === 'stats' && (
-              <div className="bg-gray-50 rounded-xl p-8 text-center">
-                <div className="text-gray-400 text-lg mb-2">📊</div>
-                <h3 className="font-semibold text-gray-700 mb-2">
-                  Tournament Statistics
-                </h3>
-                <p className="text-gray-500 text-sm">
-                  Detailed statistics and analytics will be available here soon
-                </p>
-              </div>
+              <>
+                <SEO
+                  mainData={{
+                    title: `${compName} - Stats  and Season Fixtures `,
+                  }}
+                />
+                <div className="bg-gray-50 rounded-xl p-8 text-center">
+                  <div className="text-gray-400 text-lg mb-2">📊</div>
+                  <h3 className="font-semibold text-gray-700 mb-2">
+                    Tournament Statistics
+                  </h3>
+                  <p className="text-gray-500 text-sm">
+                    Detailed statistics and analytics will be available here
+                    soon
+                  </p>
+                </div>
+              </>
             )}
           </div>
         </>
