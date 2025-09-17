@@ -108,7 +108,7 @@ const KinAuthorsProfile: React.FC = () => {
                   <img
                     src={author?.profile || Avatar}
                     alt={`${author?.firstName} ${author?.lastName}`}
-                    className="w-36 h-36 rounded-full object-cover mb-6 md:mb-0 md:mr-6 border-4 border-gray-200"
+                    className="w-36 h-36 rounded-full object-cover mb-6 md:mb-0 md:mr-6 border-4 border-gray-400"
                   />
                 )}
                 <div className="text-center md:text-left">
@@ -238,7 +238,7 @@ const KinAuthorsProfile: React.FC = () => {
                                 <img
                                   src={journalist.profile || Avatar}
                                   alt={journalist.username}
-                                  className="w-full h-full rounded-full object-cover border-2 border-gray-200 group-hover:border-primary"
+                                  className="w-full h-full rounded-full object-cover border-2 border-gray-400 group-hover:border-primary"
                                 />
                               </div>
                               <p className="text-sm sm:text-base font-semibold text-gray-800 group-hover:text-primary">

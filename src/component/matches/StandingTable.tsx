@@ -61,7 +61,7 @@ const StandingsTable: React.FC<StandingsTableProps> = ({
   }
 
   return (
-    <div className="overflow-x-auto rounded-xl border border-gray-200">
+    <div className="overflow-x-auto rounded-xl border border-gray-400">
       <table className="w-full">
         <thead>
           <tr className="bg-gradient-to-r from-gray-800 to-gray-900 text-white">

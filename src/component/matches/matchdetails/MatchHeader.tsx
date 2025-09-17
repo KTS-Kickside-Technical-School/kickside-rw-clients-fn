@@ -7,9 +7,9 @@ import MatchStatusBadge from '../MatchStatusBadge';
 
 const MatchHeader = ({ match, isLive }: any) => {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-6 overflow-hidden">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-400 mb-6 overflow-hidden">
       {/* Tournament Header */}
-      <div className="bg-gray-50 px-6 py-3 border-b border-gray-200">
+      <div className="bg-gray-50 px-6 py-3 border-b border-gray-400">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
@@ -98,7 +98,7 @@ const MatchHeader = ({ match, isLive }: any) => {
       </div>
 
       {/* Match Info */}
-      <div className="bg-gray-50 px-6 py-3 border-t border-gray-200">
+      <div className="bg-gray-50 px-6 py-3 border-t border-gray-400">
         <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
           <span>Referee: {match.referee || 'TBA'}</span>
           <span>•</span>

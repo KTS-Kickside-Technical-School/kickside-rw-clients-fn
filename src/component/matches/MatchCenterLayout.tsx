@@ -18,7 +18,7 @@ const MatchCenterLayout = () => {
       <MainTopKSAd />
       <Header />
 
-      <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 shadow-sm">
+      <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-400 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
@@ -49,7 +49,7 @@ const MatchCenterLayout = () => {
           />
 
           <div className="fixed inset-y-0 left-0 w-80 max-w-full bg-white shadow-xl">
-            <div className="flex items-center justify-between p-4 border-b border-gray-200">
+            <div className="flex items-center justify-between p-4 border-b border-gray-400">
               <h2 className="text-lg font-semibold text-gray-800 flex items-center">
                 <FaTrophy className="text-yellow-500 mr-2" />
                 Tournaments

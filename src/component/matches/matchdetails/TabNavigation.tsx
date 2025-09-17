@@ -1,6 +1,6 @@
 const TabNavigation = ({ tabs, activeTab, setActiveTab }: any) => {
   return (
-    <div className="flex border-b border-gray-200 mb-6">
+    <div className="flex border-b border-gray-400 mb-6">
       {tabs.map((tab: any) => (
         <button
           key={tab.id}

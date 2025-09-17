@@ -103,8 +103,7 @@ const MatchDetails = () => {
             description: 'Error loading match details',
           }}
         />
-        <MainTopKSAd />
-        <Header />
+
         <main className="max-w-7xl mx-auto p-4 px-6 min-h-screen">
           <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <div className="text-red-600 text-lg font-medium mb-2">
@@ -119,7 +118,6 @@ const MatchDetails = () => {
             </button>
           </div>
         </main>
-        <Footer />
       </>
     );
   }
@@ -142,7 +140,7 @@ const MatchDetails = () => {
       />
 
       {activeTab === 'summary' && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-400 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
             Match Summary
           </h3>
@@ -183,7 +181,7 @@ const MatchDetails = () => {
       )}
 
       {activeTab === 'events' && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-400 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
             Match Events
           </h3>
@@ -210,7 +208,7 @@ const MatchDetails = () => {
       )}
 
       {activeTab === 'lineups' && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-400 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
             Team Lineups
           </h3>
@@ -231,7 +229,6 @@ const MatchDetails = () => {
               </div>
             </div>
 
-            {/* Away Team */}
             <div>
               <h4 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
                 <img src={match.awayTeam?.logo} alt="" className="w-5 h-5" />
@@ -252,7 +249,7 @@ const MatchDetails = () => {
       )}
 
       {activeTab === 'stats' && (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-400 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4">
             Match Statistics
           </h3>

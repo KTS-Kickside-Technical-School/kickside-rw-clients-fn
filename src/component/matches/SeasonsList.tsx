@@ -53,7 +53,7 @@ const SeasonsList = ({ onTournamentSelect }: SeasonsListProps) => {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 lg:min-h-screen lg:w-80">
+    <div className="bg-white rounded-xl border border-gray-400 shadow-sm p-4 lg:min-h-screen lg:w-80">
       <div className="lg:hidden mb-4">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -113,7 +113,7 @@ const SeasonsList = ({ onTournamentSelect }: SeasonsListProps) => {
         </div>
       )}
 
-      <div className="mt-4 pt-4 border-t border-gray-200">
+      <div className="mt-4 pt-4 border-t border-gray-400">
         <p className="text-xs text-gray-500 text-center">
           Showing {filteredTournaments.length} of {tournaments.length}{' '}
           tournaments

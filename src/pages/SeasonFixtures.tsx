@@ -142,7 +142,7 @@ const SeasonFixtures = () => {
         </div>
       ) : (
         <>
-          <div className="bg-white border border-gray-200 rounded-2xl p-4 shadow-sm mb-6">
+          <div className="bg-white border border-gray-400 rounded-2xl p-4 shadow-sm mb-6">
             <div className="flex items-center gap-4">
               {logo ? (
                 <img

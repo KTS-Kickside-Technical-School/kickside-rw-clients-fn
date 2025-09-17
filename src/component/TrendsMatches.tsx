@@ -168,6 +168,7 @@ const TrendsMatches = () => {
                         >
                           <MatchCard
                             match={match}
+                            className={'w-full'}
                             formatTime={formatTournamentsTime}
                           />
                         </motion.div>

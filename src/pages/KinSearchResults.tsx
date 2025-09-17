@@ -76,7 +76,7 @@ const KinSearchResults = () => {
                   Array.from({ length: 10 }).map((_, index) => (
                     <div
                       key={index}
-                      className="w-full flex border-b border-gray-200 pb-4 animate-pulse"
+                      className="w-full flex border-b border-gray-400 pb-4 animate-pulse"
                     >
                       <div className="w-24 h-16 bg-gray-200 rounded mr-3 flex-shrink-0"></div>
                       <div className="flex-1 min-w-0">
@@ -93,7 +93,7 @@ const KinSearchResults = () => {
                       key={index}
                       className="block w-full group hover:bg-gray-50 rounded-lg transition-colors"
                     >
-                      <div className="flex w-full border-b border-gray-200 pb-4">
+                      <div className="flex w-full border-b border-gray-400 pb-4">
                         <div className="w-24 h-16 mr-3 flex-shrink-0">
                           <img
                             src={item.coverImage}
