@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
-import Footer from '../component/Footer';
 import { useParams } from 'react-router-dom';
-import Header from '../component/Header';
-import MainTopKSAd from '../component/ads/MainTopKSAd';
 import SEO from '../utils/SEO';
 import { getSingleMatch } from '../utils/requests/tournamentsRequest';
 import { FaFutbol, FaInfoCircle } from 'react-icons/fa';

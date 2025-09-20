@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import LanguageSwitcher from './clients/homepage/LanguageSwitcher';
@@ -6,10 +6,8 @@ import LanguageSwitcher from './clients/homepage/LanguageSwitcher';
 const KinHeader = () => {
   const [search, setSearch] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const moreMenuRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { label: 'Imikino', path: '/category/Imikino' },
@@ -22,22 +20,6 @@ const KinHeader = () => {
   useEffect(() => {
     setSearch('');
   }, [location]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        moreMenuRef.current &&
-        !moreMenuRef.current.contains(event.target as Node)
-      ) {
-        setIsMoreOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();

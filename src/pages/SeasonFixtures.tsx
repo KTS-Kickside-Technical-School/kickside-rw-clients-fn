@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import SEO from '../utils/SEO';
 import { getTournamentMatches } from '../utils/requests/tournamentsRequest';
 import { formatTournamentsTime } from '../utils/helpers/tournamentsHelpers';
@@ -143,7 +143,10 @@ const SeasonFixtures = () => {
       ) : (
         <>
           <div className="bg-white border border-gray-400 rounded-2xl p-4 shadow-sm mb-6">
-            <div className="flex items-center gap-4">
+            <Link
+              to={`/en/match-center/fixtures/${season.slug}`}
+              className="flex items-center gap-4"
+            >
               {logo ? (
                 <img
                   src={logo}
@@ -162,10 +165,10 @@ const SeasonFixtures = () => {
                       {country}
                     </span>
                   )}
-                  {founded && <span>From: {founded}</span>}
+                  {season.year.name && <span>Season: {season.year.name}</span>}
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
 
           <div className="flex gap-2 border-b mb-4 overflow-x-auto">
@@ -202,6 +205,7 @@ const SeasonFixtures = () => {
                           key={m._id}
                           match={m}
                           formatTime={formatTournamentsTime}
+                          className={''}
                         />
                       ))
                     ) : (
@@ -222,6 +226,7 @@ const SeasonFixtures = () => {
                           key={m._id}
                           match={m}
                           formatTime={formatTournamentsTime}
+                          className={''}
                         />
                       ))
                     ) : (
@@ -252,6 +257,7 @@ const SeasonFixtures = () => {
                         key={m._id}
                         match={m}
                         formatTime={formatTournamentsTime}
+                        className={''}
                       />
                     ))
                   ) : (
@@ -281,6 +287,7 @@ const SeasonFixtures = () => {
                         key={m._id}
                         match={m}
                         formatTime={formatTournamentsTime}
+                        className={''}
                       />
                     ))
                   ) : (
