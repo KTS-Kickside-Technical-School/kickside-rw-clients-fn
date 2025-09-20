@@ -54,3 +54,13 @@ export const getSingleMatch = async (slug: string) => {
         return handleError(error);
     }
 }
+
+export const getFeaturedSeasonInfo = async () => {
+    try {
+        const response = await axiosInstance.get("/api/tr/tr-season/season/get-1-featured-season");
+
+        return response.data;
+    } catch (error) {
+        return handleError(error);
+    }
+}

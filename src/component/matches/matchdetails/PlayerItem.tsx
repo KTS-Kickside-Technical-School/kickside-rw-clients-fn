@@ -1,4 +1,5 @@
 const PlayerItem = ({ player, isHomeTeam }: any) => {
+  console.log(player);
   return (
     <div
       className={`flex items-center py-2 px-3 rounded-lg hover:bg-gray-50 ${
@@ -7,7 +8,17 @@ const PlayerItem = ({ player, isHomeTeam }: any) => {
     >
       <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center mr-3">
         <span className="text-xs font-medium text-gray-600">
-          {player?.jerseyNumber !== 0 ? player?.jerseyNumber : '?'}
+          {player?.player?.image ? (
+            <img
+              src={player?.player?.image}
+              alt={player?.player?.firstname}
+              className="w-6 h-6 rounded-full"
+            />
+          ) : player?.jerseyNumber ? (
+            player?.jerseyNumber
+          ) : (
+            '?'
+          )}
         </span>
       </div>
       <div className="flex-1">

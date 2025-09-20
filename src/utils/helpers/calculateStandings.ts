@@ -16,7 +16,7 @@ export const calculateStandings = (matches: any[]): StandingsTeam[] => {
     const standings: Record<string, StandingsTeam> = {};
 
     matches.forEach((m) => {
-        if (m.status !== 'finished') return;
+        if (m.status !== 'finished' && m.status !== 'in_progress') return;
 
         const homeScore = Number(m.homeScore) || 0;
         const awayScore = Number(m.awayScore) || 0;

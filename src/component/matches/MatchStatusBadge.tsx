@@ -27,24 +27,27 @@ const MatchStatusBadge: React.FC<StatusBadgeProps> = ({
       Icon = FaCheck;
       text = 'FT';
       break;
+
     case 'in_progress':
       color =
         'bg-green-100 text-green-700 border border-green-300 animate-pulse';
       Icon = FaPlay;
       text = 'LIVE';
       break;
+
     case 'postponed':
       color = 'bg-yellow-100 text-yellow-700 border border-yellow-300';
       Icon = FaExclamationTriangle;
       text = 'PP';
       break;
+
+    case 'scheduled':
+      break;
+
     default:
       color = 'bg-blue-100 text-blue-700 border border-blue-300';
       Icon = FaClock;
-      const formatted = formatTournamentsTime(new Date(), true);
-      text = formatted.includes(' ')
-        ? formatted.split(' ').slice(-1)[0]
-        : formatted;
+      text = formatTournamentsTime(new Date(), true);
   }
 
   return (
@@ -54,7 +57,7 @@ const MatchStatusBadge: React.FC<StatusBadgeProps> = ({
       }`}
     >
       {Icon && <Icon className="w-3 h-3" />}
-      <span className={isMini ? 'hidden' : 'block'}>{text}</span>
+      {text && <span className={isMini ? 'hidden' : 'block'}>{text}</span>}
     </div>
   );
 };

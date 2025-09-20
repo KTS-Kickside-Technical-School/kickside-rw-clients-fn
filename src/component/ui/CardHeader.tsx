@@ -7,7 +7,7 @@ interface CardHeaderProps {
 
 const CardHeader: React.FC<CardHeaderProps> = ({ children, className = '' }) => {
   return (
-    <div className={`p-6 border-b border-gray-200 ${className}`}>
+    <div className={`p-6 border-b border-gray-400 ${className}`}>
       {children}
     </div>
   );

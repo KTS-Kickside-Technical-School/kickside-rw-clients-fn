@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { FaSearch, FaTimes, FaBars } from 'react-icons/fa';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import LanguageSwitcher from './clients/homepage/LanguageSwitcher';
@@ -6,10 +6,8 @@ import LanguageSwitcher from './clients/homepage/LanguageSwitcher';
 const KinHeader = () => {
   const [search, setSearch] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const moreMenuRef = useRef<HTMLDivElement>(null);
 
   const navItems = [
     { label: 'Imikino', path: '/category/Imikino' },
@@ -22,22 +20,6 @@ const KinHeader = () => {
   useEffect(() => {
     setSearch('');
   }, [location]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        moreMenuRef.current &&
-        !moreMenuRef.current.contains(event.target as Node)
-      ) {
-        setIsMoreOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +43,25 @@ const KinHeader = () => {
 
         <div className="hidden lg:flex gap-4 xl:gap-6">
           <div className="flex items-center gap-4 xl:gap-6 flex-wrap justify-end max-w-full">
+            <div className="relative">
+              <Link
+                to="/en/match-center"
+                className={`relative px-3 py-1 rounded-md transition ${
+                  isActiveLink('/en/match-center')
+                    ? 'bg-blue-600 text-white font-semibold'
+                    : 'text-gray-300 hover:bg-blue-500 hover:text-white'
+                }`}
+                title="Check out the new Match Center!"
+              >
+                Match Center
+              </Link>
+
+              <div className="absolute -top-4 right-1">
+                <span className="bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-md animate-pulse">
+                  NEW
+                </span>
+              </div>
+            </div>
             {navItems.slice(0, 3).map((item) =>
               item.external ? (
                 <a
@@ -90,47 +91,6 @@ const KinHeader = () => {
                 </Link>
               )
             )}
-
-            {navItems.length > 3 && (
-              <div className="relative" ref={moreMenuRef}>
-                <button
-                  onClick={() => setIsMoreOpen(!isMoreOpen)}
-                  className="px-3 py-1 rounded-md text-gray-300 hover:bg-blue-500 hover:text-white transition flex items-center gap-1 whitespace-nowrap"
-                  aria-label="More menu"
-                  aria-expanded={isMoreOpen}
-                >
-                  <span>Ibindi</span>
-                </button>
-
-                {isMoreOpen && (
-                  <div className="absolute top-full right-0 mt-1 bg-gray-800 rounded-md shadow-lg py-2 z-50 min-w-[150px]">
-                    {navItems.slice(3).map((item) =>
-                      item.external ? (
-                        <a
-                          key={item.label}
-                          href={item.path}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block px-4 py-2 text-gray-300 hover:bg-blue-500 hover:text-white transition whitespace-nowrap"
-                          onClick={() => setIsMoreOpen(false)}
-                        >
-                          {item.label}
-                        </a>
-                      ) : (
-                        <Link
-                          key={item.label}
-                          to={item.path}
-                          className="block px-4 py-2 text-gray-300 hover:bg-blue-500 hover:text-white transition whitespace-nowrap"
-                          onClick={() => setIsMoreOpen(false)}
-                        >
-                          {item.label}
-                        </Link>
-                      )
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
@@ -145,7 +105,7 @@ const KinHeader = () => {
               placeholder="Shakisha..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-400 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </form>
 
@@ -186,7 +146,7 @@ const KinHeader = () => {
                 placeholder="Shakisha..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-400 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </form>
 

@@ -34,7 +34,11 @@ const Homepage: React.FC = () => {
       <div className="bg-primary pb-5">
         <Hero />
       </div>
-
+      <div className="max-w-7xl px-4 mx-auto w-full">
+        <div className="flex flex-col lg:flex-row gap-6 w-full">
+          <TrendsMatches />
+        </div>{' '}
+      </div>
       <div className="max-w-7xl px-4 mx-auto w-full">
         <div className="flex flex-col lg:flex-row gap-6 w-full">
           <div className="w-full lg:w-1/5 xl:w-2/10">
@@ -42,7 +46,6 @@ const Homepage: React.FC = () => {
           </div>
 
           <div className="w-full lg:w-3/5 xl:w-6/10">
-            <TrendsMatches />
             <HomeProductsCategories />
           </div>
 

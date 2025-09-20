@@ -34,7 +34,27 @@ const Header = () => {
         </Link>
 
         <nav className="hidden lg:flex gap-4 xl:gap-6">
-          {['Business', 'Technology', 'Sports', 'Entertainment'].map((cat) => (
+          <div className="relative">
+            <Link
+              to="/en/match-center"
+              className={`relative px-3 py-1 rounded-md transition ${
+                isActiveLink('/match-center')
+                  ? 'bg-blue-600 text-white font-semibold'
+                  : 'text-gray-200 hover:bg-blue-500 hover:text-white'
+              }`}
+              title="Check out the new Match Center!"
+            >
+              Match Center
+            </Link>
+
+            <div className="absolute -top-4 right-1">
+              <span className="bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-md animate-pulse">
+                NEW
+              </span>
+            </div>
+          </div>
+
+          {['Technology', 'Sports', 'Entertainment'].map((cat) => (
             <Link
               key={cat}
               to={`/en/category/${cat}`}
@@ -47,16 +67,6 @@ const Header = () => {
               {cat}
             </Link>
           ))}
-          <Link
-            to="/en/match-center"
-           className={`px-3 py-1 rounded-md transition ${
-              isActiveLink('/match-center')
-                ? 'bg-blue-600 text-white font-semibold'
-                : 'text-gray-300 hover:bg-blue-500 hover:text-white'
-            }`}
-          >
-            Match Center
-          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -70,7 +80,7 @@ const Header = () => {
               placeholder="Search..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-400 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </form>
 
@@ -110,7 +120,7 @@ const Header = () => {
                 placeholder="Search articles..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full pl-9 pr-4 py-2 rounded-full shadow-sm border border-gray-400 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </form>
 

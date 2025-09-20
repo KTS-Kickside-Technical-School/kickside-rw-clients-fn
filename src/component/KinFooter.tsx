@@ -59,7 +59,7 @@ const KinFooter = () => {
       <div className="text-center">
         <p className="flex items-center justify-center gap-2">
           <BiCopyright size={16} />
-          2023 - {new Date().getFullYear()} Dukora Byemewe.
+          2023 - {new Date().getFullYear()} All rights reserved.
         </p>
       </div>
     </footer>

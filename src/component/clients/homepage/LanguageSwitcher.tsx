@@ -43,7 +43,7 @@ const LanguageSwitcher: React.FC = () => {
     <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
         type="button"
-        className="inline-flex items-center justify-between w-full px-3 py-2 text-sm bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-offset-1 transition-all duration-150 md:px-4 md:py-2.5 md:rounded-xl md:w-48 lg:w-52"
+        className="inline-flex items-center justify-between w-full px-3 py-2 text-sm bg-white border border-gray-400 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:ring-offset-1 transition-all duration-150 md:px-4 md:py-2.5 md:rounded-xl md:w-48 lg:w-52"
         id="language-menu"
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -64,7 +64,7 @@ const LanguageSwitcher: React.FC = () => {
 
       {isOpen && (
         <div
-          className="absolute right-0 z-50 w-48 mt-1 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-opacity duration-150 md:w-56 md:rounded-xl md:mt-2"
+          className="absolute right-0 z-50 w-48 mt-1 origin-top-right bg-white border border-gray-400 divide-y divide-gray-100 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-opacity duration-150 md:w-56 md:rounded-xl md:mt-2"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="language-menu"
